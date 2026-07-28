@@ -95,23 +95,26 @@
 
   /* ---------- barra ---------- */
   .barra{
-    display:flex; align-items:center; gap:8px; padding:10px 12px;
+    display:flex; align-items:center; gap:6px; padding:10px 8px;
     background:#fff; border-bottom:3px solid rgba(0,0,0,.06); position:sticky; top:0; z-index:5;
   }
   .btn-icone{
-    width:50px; height:50px; border-radius:18px; background:#EDE9FF; color:var(--roxo);
-    font-size:24px; display:flex; align-items:center; justify-content:center; font-weight:800; flex:0 0 auto;
+    width:clamp(42px,12vw,50px); height:clamp(42px,12vw,50px); border-radius:16px; background:#EDE9FF; color:var(--roxo);
+    font-size:clamp(19px,5.4vw,24px); display:flex; align-items:center; justify-content:center; font-weight:800; flex:0 0 auto;
   }
   .btn-icone:active{background:#ddd6ff}
   .titulo-jogo{flex:1; font-size:clamp(15px,4.2vw,20px); font-weight:800; text-align:center; line-height:1.15}
   .placar{
-    background:#FFF4D1; color:#8a6100; font-weight:800; border-radius:16px; padding:8px 12px;
-    font-size:clamp(14px,4vw,18px); white-space:nowrap;
+    background:#FFF4D1; color:#8a6100; font-weight:800; border-radius:16px; padding:8px 10px;
+    font-size:clamp(13px,3.6vw,18px); white-space:nowrap;
   }
+  .btn-icone.mudo{background:#FFE0E0; color:#c33}
   .progresso{height:10px; background:#E6E1FA}
   .progresso i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--verde),#7BE3AE); transition:width .3s}
 
   /* ---------- palco ---------- */
+  .palco.compacto{justify-content:flex-start; gap:8px; padding-top:10px}
+  .palco.compacto .pergunta{font-size:clamp(17px,4.4vw,24px)}
   .palco{
     flex:1; display:flex; flex-direction:column; align-items:center; justify-content:space-evenly;
     gap:10px; padding:16px 14px 26px; min-height:0; text-align:center;
@@ -216,18 +219,121 @@
   .peca.sel{outline-color:var(--roxo); transform:scale(.9)}
   .miniatura{width:clamp(56px,16vw,88px); border-radius:12px; box-shadow:0 4px 0 rgba(0,0,0,.12)}
 
-  /* ---------- mira ---------- */
-  .arena{
-    position:relative; width:100%; max-width:600px; flex:1; min-height:min(58vh,430px);
-    background:linear-gradient(160deg,#E8F4FF,#fff); border-radius:24px; overflow:hidden;
-    box-shadow:inset 0 0 0 4px rgba(91,75,224,.08);
+  /* ---------- cena com física (estilingue / duelo) ---------- */
+  .cena{
+    width:100%; max-width:860px; aspect-ratio:16/9; border-radius:22px; display:block;
+    background:#BDE3FF; box-shadow:0 6px 0 rgba(0,0,0,.12); touch-action:none; cursor:grab;
   }
-  .alvo{
-    position:absolute; transform:translate(-50%,-50%) scale(0); font-size:clamp(44px,13vw,72px);
-    transition:transform .16s ease-out; line-height:1;
+  .cena:active{cursor:grabbing}
+  .hud{display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap;
+       font-size:clamp(14px,4vw,18px); font-weight:800}
+  .hud .chip{background:#fff; border-radius:999px; padding:7px 12px; box-shadow:0 4px 0 rgba(0,0,0,.1);
+             font-size:clamp(12px,3.4vw,16px)}
+  .hud .alvo-eu{background:#DCEBFF; color:#1E4FA3}
+  .hud .alvo-pc{background:#FFE2E2; color:#A32020}
+  .hud .vez{background:#FFF4D1; color:#8a6100}
+  .niveis{display:flex; flex-direction:column; gap:12px; width:100%; max-width:460px; margin:auto}
+  .nivel{
+    display:grid; grid-template-columns:auto 1fr; gap:4px 14px; align-items:center; text-align:left;
+    background:#fff; border-radius:22px; padding:16px 18px; box-shadow:0 6px 0 rgba(0,0,0,.12);
   }
-  .alvo.entrou{transform:translate(-50%,-50%) scale(1)}
-  .alvo.pequeno{font-size:clamp(34px,10vw,56px)}
+  .nivel:active{transform:translateY(4px); box-shadow:0 2px 0 rgba(0,0,0,.12)}
+  .nivel .ni{grid-row:1/4; font-size:clamp(34px,10vw,46px)}
+  .nivel .nn{font-size:clamp(18px,5vw,23px); font-weight:900; color:var(--roxo)}
+  .nivel .nd{font-size:clamp(13px,3.6vw,16px); opacity:.7}
+  .nivel .nv{font-size:12px; opacity:.85}
+
+  /* ---------- forca ---------- */
+  .forca-area{display:flex; gap:14px; align-items:center; justify-content:center; flex-wrap:wrap}
+  .forca-desenho svg{width:min(38vw,22vh,180px); height:auto; display:block}
+  .forca-lado{display:flex; flex-direction:column; gap:8px; align-items:center}
+  .palavraForca{display:flex; gap:5px; flex-wrap:wrap; justify-content:center; max-width:min(56vw,330px)}
+  .slotForca{
+    width:clamp(24px,6.4vw,34px); height:clamp(34px,9vw,46px); border-radius:10px; background:#EDE9FF;
+    display:flex; align-items:center; justify-content:center;
+    font-size:clamp(16px,4.4vw,24px); font-weight:900; color:var(--roxo);
+  }
+  .slotForca.cheio{background:#fff; box-shadow:0 3px 0 rgba(0,0,0,.12); color:var(--escuro)}
+  .vidasForca{font-size:clamp(13px,3.6vw,17px); letter-spacing:2px}
+  .teclado{display:grid; grid-template-columns:repeat(7,1fr); gap:6px; width:100%; max-width:420px}
+  .tecla{
+    height:clamp(38px,10vw,46px); border-radius:12px; background:#fff; font-weight:900;
+    font-size:clamp(15px,4vw,19px); color:var(--escuro); box-shadow:0 4px 0 rgba(0,0,0,.12);
+  }
+  .tecla:active{transform:translateY(3px); box-shadow:0 1px 0 rgba(0,0,0,.12)}
+  .tecla.ok{background:#D6F7E6; box-shadow:0 4px 0 #2FBF71; color:#12794a}
+  .tecla.nao{background:#EFEFEF; color:#aaa; box-shadow:none; opacity:.6}
+
+  /* ---------- salão de beleza ---------- */
+  .salao{display:flex; flex-direction:column; align-items:center; gap:10px; width:100%}
+  .rosto svg{width:min(56vw,30vh,260px); height:auto; display:block;
+             filter:drop-shadow(0 6px 0 rgba(0,0,0,.10))}
+  .abas{display:flex; gap:6px; flex-wrap:wrap; justify-content:center; max-width:620px}
+  .aba{background:#EDE9FF; color:var(--roxo); border-radius:999px; padding:7px 11px;
+       font-size:12.5px; font-weight:800; white-space:nowrap}
+  .aba.on{background:var(--roxo); color:#fff}
+  .opcoesSalao{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; max-width:600px; min-height:52px}
+  .chip-cor{width:44px; height:44px; border-radius:14px; box-shadow:0 4px 0 rgba(0,0,0,.15);
+            outline:4px solid transparent; outline-offset:2px}
+  .chip-cor.on{outline-color:var(--roxo)}
+  .chip-est.corte{min-width:56px; height:auto; padding:4px; overflow:hidden}
+  .chip-est.corte svg{width:clamp(42px,12vw,54px); height:auto; display:block}
+  .chip-est{min-width:54px; height:44px; border-radius:14px; background:#fff; font-size:22px;
+            display:flex; align-items:center; justify-content:center; box-shadow:0 4px 0 rgba(0,0,0,.12);
+            outline:4px solid transparent; outline-offset:2px}
+  .chip-est.on{outline-color:var(--roxo)}
+  .btn-banho{
+    background:#6EC6FF; color:#083b5c; font-size:clamp(17px,4.8vw,23px); font-weight:900;
+    padding:18px 28px; border-radius:999px; box-shadow:0 7px 0 #2E9BD6; width:min(90%,380px);
+  }
+  .btn-banho:active{transform:translateY(5px); box-shadow:0 2px 0 #2E9BD6}
+  .passos-banho{display:flex; gap:10px; justify-content:center; font-size:clamp(20px,5.6vw,26px)}
+  .bolinha{opacity:.3; transition:opacity .2s, transform .2s}
+  .bolinha.feito{opacity:1}
+  .bolinha.agora{opacity:1; transform:scale(1.25); animation:pulsa 1s infinite}
+  @keyframes pulsa{0%,100%{transform:scale(1.2)}50%{transform:scale(1.38)}}
+  .area-banho{position:relative; touch-action:none; cursor:grab; user-select:none}
+  .area-banho:active{cursor:grabbing}
+  .ferramenta{
+    position:absolute; transform:translate(-50%,-60%) scale(.9); font-size:clamp(30px,8vw,44px);
+    pointer-events:none; opacity:0; transition:opacity .15s, transform .15s; left:50%; top:50%;
+  }
+  .ferramenta.ativa{opacity:1; transform:translate(-50%,-60%) scale(1.1) rotate(-12deg)}
+  .instrucao-banho{font-size:clamp(13px,3.8vw,17px); font-weight:700; opacity:.8; text-align:center}
+  .barra-banho{width:min(80%,340px); height:16px; border-radius:999px; background:#E6E1FA; overflow:hidden}
+  .barra-banho i{display:block; height:100%; width:0; border-radius:999px;
+                 background:linear-gradient(90deg,#4FC3F7,#7BE3AE); transition:width .12s}
+  .aba.pedida{box-shadow:0 0 0 3px #FFC93C}
+  .cliente-tag{font-weight:900; margin-right:4px}
+  .cp-texto{margin-right:6px}
+  .pedido-chips{display:inline-flex; gap:8px; flex-wrap:wrap; justify-content:center; vertical-align:middle}
+  .chip-pedido{
+    display:inline-flex; align-items:center; gap:6px; background:#fff; border-radius:999px;
+    padding:6px 12px 6px 8px; box-shadow:0 3px 0 rgba(0,0,0,.14); font-weight:800;
+    font-size:clamp(12px,3.4vw,15px); color:var(--escuro);
+  }
+  .chip-pedido.ok{background:#D6F7E6; box-shadow:0 3px 0 #2FBF71}
+  .cp-ico{font-size:clamp(15px,4.2vw,19px)}
+  .cp-amostra{
+    width:clamp(22px,6vw,28px); height:clamp(22px,6vw,28px); border-radius:50%;
+    display:inline-block; box-shadow:inset 0 0 0 2px rgba(0,0,0,.12);
+  }
+  .cp-amostra.emoji{background:#F3F0FF; display:inline-flex; align-items:center;
+                    justify-content:center; font-size:clamp(14px,4vw,18px); border-radius:9px}
+  .cp-amostra.corte{background:none; box-shadow:none; border-radius:9px; overflow:hidden;
+                    width:auto; height:clamp(28px,7.5vw,34px); display:inline-flex; align-items:center}
+  .cp-amostra.corte svg{height:100%; width:auto}
+  .cp-nome{opacity:.75; font-weight:700}
+  .cp-check{font-size:13px}
+  @media (max-width:430px){ .cp-nome{display:none} }
+  .rosto.penteavel{cursor:pointer; position:relative}
+  .rosto.penteavel svg{animation:brilha 1.3s infinite}
+  @keyframes brilha{
+    0%,100%{filter:drop-shadow(0 6px 0 rgba(0,0,0,.10))}
+    50%{filter:drop-shadow(0 6px 0 rgba(0,0,0,.10)) drop-shadow(0 0 14px rgba(91,75,224,.55))}
+  }
+  .pedido{background:#FFF4D1; color:#8a6100; border-radius:16px; padding:9px 14px; font-weight:700;
+          font-size:clamp(13px,3.8vw,17px); text-align:center; max-width:600px; line-height:1.3}
 
   /* ---------- memoria ---------- */
   .grade{display:grid; gap:10px; width:100%; max-width:min(460px,58vh); margin:auto}
@@ -270,6 +376,32 @@
   .rodape{text-align:center; font-size:12px; opacity:.5; padding:8px}
   .sw{display:flex; align-items:center; gap:6px; font-size:14px; font-weight:700; color:var(--roxo);
       background:#EDE9FF; padding:9px 12px; border-radius:999px}
+  #vozes{padding-top:14px}
+  #vozes .topo{padding:0 14px}
+  .vozes-corpo{flex:1; overflow-y:auto; padding:0 14px 20px; display:flex; flex-direction:column; gap:12px}
+  .velocidade{display:flex; gap:8px; justify-content:center; flex-wrap:wrap}
+  .vel{background:#EDE9FF; color:var(--roxo); font-weight:800; border-radius:999px;
+       padding:10px 16px; font-size:clamp(13px,3.8vw,16px)}
+  .vel.on{background:var(--roxo); color:#fff}
+  .lista-vozes{display:flex; flex-direction:column; gap:10px; max-width:560px; width:100%; margin:0 auto}
+  .cartao-voz{
+    display:grid; grid-template-columns:1fr auto auto; gap:10px; align-items:center;
+    background:#fff; border-radius:20px; padding:12px 14px; box-shadow:0 5px 0 rgba(0,0,0,.1);
+    outline:3px solid transparent;
+  }
+  .cartao-voz.on{outline-color:var(--roxo); background:#F6F3FF}
+  .cv-nome{font-weight:800; font-size:clamp(14px,4vw,17px); line-height:1.2; text-align:left; min-width:0;
+           overflow:hidden; text-overflow:ellipsis}
+  .cv-selo{font-size:11.5px; font-weight:800; opacity:.8; display:block; margin-top:2px}
+  .cv-selo.bom{color:#12794a} .cv-selo.ruim{color:#b34}
+  .cv-btn{background:#EDE9FF; color:var(--roxo); border-radius:14px; padding:10px 12px;
+          font-size:18px; font-weight:800}
+  .cv-btn.usar{background:var(--verde); color:#fff}
+  .dica-voz{
+    background:#FFF4D1; color:#7a5a10; border-radius:18px; padding:14px 16px; max-width:560px;
+    width:100%; margin:0 auto; font-size:clamp(12.5px,3.6vw,15px); line-height:1.45; text-align:left;
+  }
+  .dica-voz b{color:#5a4200}
   .selvoz{
     font-family:inherit; font-size:12.5px; font-weight:700; color:var(--roxo); background:#EDE9FF;
     border:none; border-radius:999px; padding:10px 8px; max-width:32vw; appearance:none;
@@ -313,12 +445,26 @@
     <button class="btn-icone" id="btnVoltarIdades" aria-label="Trocar idade">←</button>
     <h2 id="tituloMenu">Escolha uma brincadeira</h2>
     <span class="topo-dir">
-      <select class="selvoz" id="selVoz" aria-label="Escolher voz" hidden></select>
+      <button class="sw" id="btnAbrirVozes" aria-label="Escolher a voz">🎙️</button>
       <button class="sw" id="btnVoz" aria-pressed="true">🔊</button>
     </span>
   </div>
   <div class="cartoes" id="cartoes"></div>
   <div class="rodape">Feito com carinho • funciona sem internet</div>
+</section>
+
+<!-- ================= VOZES ================= -->
+<section id="vozes" class="tela">
+  <div class="topo">
+    <button class="btn-icone" id="btnVozVoltar" aria-label="Voltar">←</button>
+    <h2>🎙️ Escolher a voz</h2>
+    <span class="topo-dir"></span>
+  </div>
+  <div class="vozes-corpo">
+    <div class="velocidade" id="velocidade"></div>
+    <div class="lista-vozes" id="listaVozes"></div>
+    <div class="dica-voz" id="dicaVoz"></div>
+  </div>
 </section>
 
 <!-- ================= JOGO ================= -->
@@ -327,6 +473,7 @@
     <button class="btn-icone" id="btnVoltar" aria-label="Voltar">←</button>
     <div class="titulo-jogo" id="tituloJogo">Jogo</div>
     <button class="btn-icone" id="btnRepetir" aria-label="Repetir instrução">🔁</button>
+    <button class="btn-icone" id="btnSom" aria-label="Ligar ou desligar o som" aria-pressed="true">🔊</button>
     <div class="placar" id="placar">⭐ 0</div>
   </div>
   <div class="progresso"><i id="barraProg"></i></div>
@@ -366,6 +513,7 @@ function limparTimers(){
   timers.forEach(clearTimeout); timers = [];
   intervalos.forEach(clearInterval); intervalos = [];
   corridaAtiva = false;
+  if(typeof pararCena === 'function') pararCena();
 }
 
 function mostrarTela(id){
@@ -377,13 +525,14 @@ function mostrarTela(id){
 }
 
 /* ============ som ============ */
-let ctx=null;
+let ctx=null, mudo=false;
 function audio(){
   if(!ctx){ try{ ctx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ return null; } }
   if(ctx.state==='suspended') ctx.resume();
   return ctx;
 }
 function tocar(freqs, dur=0.14, tipo='sine', vol=0.18){
+  if(mudo) return;
   const c = audio(); if(!c) return;
   freqs.forEach((f,i)=>{
     const o=c.createOscillator(), g=c.createGain();
@@ -400,6 +549,27 @@ const somAcerto = ()=>tocar([523,659,784,1047],0.12,'triangle',0.22);
 const somErro   = ()=>tocar([300,220],0.16,'sine',0.15);
 const somToque  = ()=>tocar([660],0.06,'square',0.08);
 const somFesta  = ()=>tocar([523,659,784,1047,1319,1047,1319],0.13,'triangle',0.2);
+// ruído branco filtrado: serve de chuveiro, espuma e secador
+function somRuido(dur=0.9, corte=1200, vol=0.13){
+  if(mudo) return;
+  const c = audio(); if(!c) return;
+  const n = Math.floor(c.sampleRate*dur);
+  const buf = c.createBuffer(1, n, c.sampleRate);
+  const dados = buf.getChannelData(0);
+  for(let i=0;i<n;i++) dados[i] = (Math.random()*2-1);
+  const src = c.createBufferSource(); src.buffer = buf;
+  const f = c.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = corte; f.Q.value = 0.8;
+  const g = c.createGain();
+  g.gain.setValueAtTime(0, c.currentTime);
+  g.gain.linearRampToValueAtTime(vol, c.currentTime+0.08);
+  g.gain.linearRampToValueAtTime(0.0001, c.currentTime+dur);
+  src.connect(f); f.connect(g); g.connect(c.destination);
+  src.start(); src.stop(c.currentTime+dur+0.05);
+}
+const somChuveiro = ()=>somRuido(1.0, 2600, 0.12);
+const somEspuma   = ()=>{ somRuido(0.7, 900, 0.10); tocar([880,1180,1480],0.07,'sine',0.09); };
+const somSecador  = ()=>somRuido(1.1, 700, 0.13);
+const somPente    = ()=>tocar([1400,1150,1500],0.045,'square',0.07);
 
 /* ============ voz (pt-BR, feminina e alegre) ============ */
 let vozLigada = true;
@@ -408,7 +578,7 @@ let vozesPt = [];
 
 const NOMES_FEM = /luciana|francisca|maria|joana|in[eê]s|fernanda|camila|helena|leticia|let[ií]cia|thalita|catarina|raquel|brenda|giovanna|yara|female|mulher/i;
 const NOMES_MASC = /daniel|ricardo|felipe|ant[oô]nio|j[uú]lio|heitor|donato|f[aá]bio|duarte|male|masculin|homem/i;
-const MELHORES = /premium|enhanced|neural|natural|siri|wavenet|studio/i;
+const MELHORES = /premium|enhanced|aprimorad|melhorad|neural|natural|siri|wavenet|studio|hd\b/i;
 
 function pontuarVoz(v){
   const nome = (v.name||'');
@@ -416,12 +586,21 @@ function pontuarVoz(v){
   if(/pt[-_]BR/i.test(v.lang)) p += 100;
   else if(/^pt/i.test(v.lang)) p += 45;
   else return -1;
-  if(MELHORES.test(nome)) p += 35;
-  if(/google/i.test(nome)) p += 25;
-  if(NOMES_FEM.test(nome)) p += 30;
+  // qualidade pesa mais que qualquer outra coisa: é o que tira o som de robô
+  if(MELHORES.test(nome)) p += 70;
+  if(v.localService === false) p += 55;   // vozes online (Google/Microsoft) são bem mais naturais
+  if(/google/i.test(nome)) p += 30;
+  if(NOMES_FEM.test(nome)) p += 25;
   if(NOMES_MASC.test(nome)) p -= 60;
-  if(v.localService === false) p += 5;
+  if(/compact|compacta|comprimid|eloquence/i.test(nome)) p -= 45;
   return p;
+}
+function selo(v){
+  const n = v.name || '';
+  if(MELHORES.test(n)) return {t:'✨ Aprimorada', c:'bom'};
+  if(/google/i.test(n) || v.localService === false) return {t:'🌐 Online', c:'bom'};
+  if(/compact|compacta|comprimid/i.test(n)) return {t:'📻 Comprimida', c:'ruim'};
+  return {t:'🔈 Padrão', c:''};
 }
 function carregarVozes(){
   if(!('speechSynthesis' in window)) return;
@@ -431,15 +610,78 @@ function carregarVozes(){
   montarSeletorVoz();
 }
 function montarSeletorVoz(){
-  const sel = $('#selVoz'); if(!sel) return;
-  if(vozesPt.length < 2){ sel.hidden = true; return; }
-  const atual = vozEscolhida ? vozEscolhida.name : '';
-  if(sel.dataset.qtd !== String(vozesPt.length)){
-    sel.innerHTML = vozesPt.map(v=>`<option value="${esc(v.name)}">🎙️ ${esc(v.name.replace(/\(.*?\)/g,'').trim().slice(0,20))}</option>`).join('');
-    sel.dataset.qtd = String(vozesPt.length);
+  if($('#vozes').classList.contains('ativa')) desenharVozes();
+}
+
+const FRASE_TESTE = 'Oi! Eu sou a sua amiga dos jogos. Vamos brincar de contar? Um, dois, três!';
+const VELOCIDADES = [
+  {n:'🐢 Devagar', v:0.88}, {n:'🙂 Normal', v:1.0}, {n:'🐇 Rápida', v:1.12}
+];
+
+function dicaDoAparelho(){
+  const ua = navigator.userAgent || '';
+  if(/iPhone|iPad|iPod/i.test(ua)) return `
+    <b>Para a voz ficar bem melhor no iPhone:</b><br>
+    Ajustes → Acessibilidade → Conteúdo Falado → <b>Vozes</b> → Português (Brasil) →
+    baixe a <b>Luciana (Aprimorada)</b> ou <b>(Premium)</b>. Depois volte aqui e escolha
+    a voz com o selo ✨ Aprimorada. A voz que já vem instalada é a comprimida — é ela
+    que soa robótica, e nenhum site consegue melhorar isso por conta própria.`;
+  if(/Android/i.test(ua)) return `
+    <b>Para a voz ficar bem melhor no Android:</b><br>
+    Configurações → Sistema → Idiomas → <b>Saída de texto para voz</b> → use o
+    <b>Serviço de voz do Google</b> e instale os dados de voz em Português (Brasil).
+    Depois volte aqui e escolha a voz com o selo 🌐 Online.`;
+  if(/Windows/i.test(ua)) return `
+    <b>Para a voz ficar bem melhor no Windows:</b><br>
+    Configurações → Hora e Idioma → Fala → <b>Adicionar vozes</b> → Português (Brasil).
+    No Chrome, as vozes <b>Google</b> (selo 🌐 Online) costumam ser as mais naturais.`;
+  return `<b>Dica:</b> as vozes com selo ✨ Aprimorada ou 🌐 Online são as mais naturais.
+    As comprimidas 📻 vêm instaladas de fábrica e são as que soam robóticas.`;
+}
+
+function abrirVozes(){
+  carregarVozes();
+  mostrarTela('vozes');
+  desenharVozes();
+}
+function desenharVozes(){
+  const lista = $('#listaVozes'); if(!lista) return;
+  $('#velocidade').innerHTML = VELOCIDADES.map(v=>
+    `<button class="vel${Math.abs(taxaVoz-v.v)<0.01?' on':''}" data-v="${v.v}">${v.n}</button>`).join('');
+  $('#velocidade').querySelectorAll('.vel').forEach(b=>b.onclick=()=>{
+    taxaVoz = +b.dataset.v; somToque(); desenharVozes();
+    vozLigada = true; falar(FRASE_TESTE, false);
+  });
+
+  if(!vozesPt.length){
+    lista.innerHTML = `<div class="cartao-voz"><span class="cv-nome">Nenhuma voz em português encontrada neste aparelho.</span></div>`;
+  }else{
+    lista.innerHTML = vozesPt.map((v,i)=>{
+      const s = selo(v);
+      const atual = vozEscolhida && vozEscolhida.name === v.name;
+      return `<div class="cartao-voz${atual?' on':''}">
+        <span class="cv-nome">${esc(v.name)}<span class="cv-selo ${s.c}">${s.t} · ${esc(v.lang)}</span></span>
+        <button class="cv-btn" data-ouvir="${i}" aria-label="Ouvir">▶️</button>
+        <button class="cv-btn ${atual?'usar':''}" data-usar="${i}" aria-label="Usar esta voz">${atual?'✓':'Usar'}</button>
+      </div>`;
+    }).join('');
+    lista.querySelectorAll('[data-ouvir]').forEach(b=>b.onclick=()=>{
+      const v = vozesPt[+b.dataset.ouvir];
+      const antes = vozEscolhida; vozEscolhida = v; vozLigada = true;
+      falar(FRASE_TESTE, false);
+      if(!(vozEscolhida && antes && antes.name === v.name)) { /* mantém para ouvir */ }
+      desenharVozes();
+    });
+    lista.querySelectorAll('[data-usar]').forEach(b=>b.onclick=()=>{
+      vozEscolhida = vozesPt[+b.dataset.usar];
+      vozLigada = true; mudo = false;
+      $('#btnVoz').textContent = '🔊';
+      somToque();
+      falar('Pronto! Agora eu falo assim.', false, 'festa');
+      desenharVozes();
+    });
   }
-  sel.value = atual;
-  sel.hidden = false;
+  $('#dicaVoz').innerHTML = dicaDoAparelho();
 }
 if('speechSynthesis' in window){
   carregarVozes();
@@ -447,22 +689,45 @@ if('speechSynthesis' in window){
 }
 
 let ultimaFala = '';
-// tom: 'normal' (instrução) | 'festa' (elogio) | 'calmo' (incentivo)
+let taxaVoz = 1.0;   // 0.88 devagar · 1.0 normal · 1.12 rápida
+
+// Tons próximos da fala normal. Pitch alto soa "desenho animado" nas vozes
+// compactas do celular e é o que mais dá sensação de robô — por isso ficamos perto de 1.
+const TONS = {
+  normal: {rate:1.00, pitch:1.06},
+  festa:  {rate:1.04, pitch:1.16},
+  calmo:  {rate:0.94, pitch:1.00}
+};
+
+// deixa o texto mais "falável": números viram palavras, símbolos viram pausa
+const NUM_FALA = ['zero','um','dois','três','quatro','cinco','seis','sete','oito','nove','dez',
+  'onze','doze','treze','quatorze','quinze','dezesseis','dezessete','dezoito','dezenove','vinte'];
+function textoFalavel(t){
+  return String(t)
+    .replace(/×/g,' vezes ').replace(/÷/g,' dividido por ')
+    .replace(/\s\+\s/g,' mais ').replace(/\s−\s|\s-\s/g,' menos ')
+    .replace(/\b(\d{1,2})\b/g, (m,n)=> (+n <= 20 ? NUM_FALA[+n] : m))
+    .replace(/\s{2,}/g,' ')
+    .trim();
+}
+
 function falar(texto, guardar=true, tom='normal'){
   if(guardar) ultimaFala = texto;
-  if(!vozLigada || !('speechSynthesis' in window) || !texto) return;
+  if(mudo || !vozLigada || !('speechSynthesis' in window) || !texto) return;
   try{
     speechSynthesis.cancel();
-    const partes = (String(texto).match(/[^,.!?]+[,.!?]*/g) || [String(texto)])
-                    .map(s=>s.trim()).filter(Boolean);
-    partes.forEach((parte, i)=>{
+    const t = TONS[tom] || TONS.normal;
+    const limpo = textoFalavel(texto);
+    // uma fala só (menos cortes = menos "robô"); só quebra se for bem longa
+    const partes = limpo.length <= 110
+      ? [limpo]
+      : (limpo.match(/[^.!?]+[.!?]*/g) || [limpo]).map(x=>x.trim()).filter(Boolean);
+    partes.forEach(parte=>{
       const u = new SpeechSynthesisUtterance(parte);
       u.lang = 'pt-BR';
       try{ if(vozEscolhida) u.voice = vozEscolhida; }catch(e){}
-      if(tom === 'festa'){ u.rate = 1.05; u.pitch = 1.45; }
-      else if(tom === 'calmo'){ u.rate = 0.9; u.pitch = 1.12; u.volume = .95; }
-      else { u.rate = 0.97; u.pitch = 1.28; }
-      u.pitch += (i % 2 ? -0.04 : 0.04);
+      u.rate = Math.max(0.6, Math.min(1.4, t.rate * taxaVoz));
+      u.pitch = t.pitch;
       speechSynthesis.speak(u);
     });
   }catch(e){}
@@ -1065,60 +1330,1260 @@ async function tocarPeca(pos){
   }
 }
 
-/* ============ MIRA ============ */
-let miraRestantes = 0, miraTotal = 12;
-function jogoMira(dificil){
-  miraTotal = 12; miraRestantes = miraTotal; maxPontos = miraTotal;
-  $('#palco').innerHTML = `
-    <div class="pergunta">Toque nos alvos!</div>
-    <div class="subtexto">${dificil ? 'Cuidado: não toque nas bombas 💣' : 'Seja rápido!'}</div>
-    <div class="arena" id="arena"></div>`;
-  falar(dificil ? 'Toque nos alvos! Mas não toque nas bombas.' : 'Toque nos alvos bem rápido!');
-  agendar(()=>soltarAlvo(dificil), 500);
-}
-function soltarAlvo(dificil){
-  const arena = $('#arena');
-  if(!arena || miraRestantes <= 0) return;
-  const bomba = dificil && Math.random() < 0.28;
-  const vida = dificil ? 1150 : 1700;
-  const el = document.createElement('button');
-  el.className = 'alvo' + (dificil ? ' pequeno' : '');
-  el.textContent = bomba ? '💣' : escolha(['🎯','🐤','🎈','🍎','⭐','🐸','🍓','🦋']);
-  el.style.left = (14 + Math.random()*72) + '%';
-  el.style.top  = (16 + Math.random()*68) + '%';
-  arena.appendChild(el);
-  requestAnimationFrame(()=>el.classList.add('entrou'));
+/* ==========================================================
+   MOTOR DE FÍSICA SIMPLES (caixas com impulso e destruição)
+   Mundo fixo de 800 x 450 unidades, desenhado em canvas.
+   ========================================================== */
+const MUNDO_L = 800, MUNDO_A = 450, CHAO_Y = 396, GRAV = 900;
+let corpos = [], estilhacos = [], raf = null, cenaViva = false;
 
-  let tratado = false;
-  const sumir = ()=>{
-    if(tratado) return; tratado = true;
-    el.classList.remove('entrou');
-    agendar(()=>el.remove(), 200);
-    if(!bomba){ miraRestantes--; $('#barraProg').style.width = ((miraTotal-miraRestantes)/miraTotal*100)+'%'; }
-    if(miraRestantes <= 0) agendar(fimDeJogo, 500);
-    else agendar(()=>soltarAlvo(dificil), 260 + rnd(320));
-  };
-  el.onclick = ()=>{
-    if(tratado) return;
-    if(bomba){
-      tratado = true;
-      somErro(); aviso('Bomba! 💣', false); falar('Essa era uma bomba! Cuidado.', false, 'calmo');
-      if(estrelas > 0){ estrelas--; $('#placar').textContent = '⭐ ' + estrelas; }
-      el.remove();
-      agendar(()=>soltarAlvo(dificil), 400);
-      return;
+function corpo(o){
+  return Object.assign({
+    x:0, y:0, w:20, h:20, vx:0, vy:0,
+    estatico:false, massa:1, hp:Infinity, tipo:'bloco',
+    cor:'#C08A4E', emoji:null, ang:0, vang:0, vivo:true, dormindo:false
+  }, o);
+}
+const meiaL = b => b.w/2, meiaA = b => b.h/2;
+
+function resolverPar(a, b){
+  if(a.estatico && b.estatico) return 0;
+  const dx = b.x - a.x, px = meiaL(a) + meiaL(b) - Math.abs(dx);
+  if(px <= 0) return 0;
+  const dy = b.y - a.y, py = meiaA(a) + meiaA(b) - Math.abs(dy);
+  if(py <= 0) return 0;
+
+  let nx = 0, ny = 0, pen;
+  if(px < py){ nx = dx < 0 ? -1 : 1; pen = px; }
+  else       { ny = dy < 0 ? -1 : 1; pen = py; }
+
+  const ima = a.estatico ? 0 : 1/a.massa;
+  const imb = b.estatico ? 0 : 1/b.massa;
+  const soma = ima + imb;
+  if(soma === 0) return 0;
+
+  const corr = (pen/soma) * 0.8;
+  a.x -= nx*corr*ima; a.y -= ny*corr*ima;
+  b.x += nx*corr*imb; b.y += ny*corr*imb;
+
+  const rvx = b.vx - a.vx, rvy = b.vy - a.vy;
+  const vn = rvx*nx + rvy*ny;
+  if(vn > 0) return 0;
+
+  const e = 0.14;
+  const j = -(1+e)*vn/soma;
+  a.vx -= j*nx*ima; a.vy -= j*ny*ima;
+  b.vx += j*nx*imb; b.vy += j*ny*imb;
+
+  const tx = -ny, ty = nx;
+  const vt = rvx*tx + rvy*ty;
+  const jt = (-vt/soma) * 0.45;
+  a.vx -= jt*tx*ima; a.vy -= jt*ty*ima;
+  b.vx += jt*tx*imb; b.vy += jt*ty*imb;
+
+  a.dormindo = b.dormindo = false;
+  return Math.abs(vn);
+}
+
+// dano por impacto: devolve true se algo foi destruído
+function aplicarDano(a, b, forca){
+  let quebrou = false;
+  [a,b].forEach(c=>{
+    if(c.estatico || !Number.isFinite(c.hp)) return;
+    if(forca > 130){
+      c.hp -= (forca - 130)/70;
+      if(c.hp <= 0 && c.vivo){ c.vivo = false; quebrou = true; espalhar(c); }
     }
-    tratado = true;
-    estrelas++; $('#placar').textContent = '⭐ ' + estrelas;
-    miraRestantes--; $('#barraProg').style.width = ((miraTotal-miraRestantes)/miraTotal*100)+'%';
-    somAcerto(); aviso(escolha(ELOGIOS), true); confete(8);
-    el.style.transform = 'translate(-50%,-50%) scale(1.6)';
-    el.style.opacity = '0';
-    agendar(()=>el.remove(), 200);
-    if(miraRestantes <= 0) agendar(fimDeJogo, 700);
-    else agendar(()=>soltarAlvo(dificil), 240 + rnd(280));
+  });
+  return quebrou;
+}
+function espalhar(c){
+  for(let i=0;i<10;i++){
+    estilhacos.push({
+      x:c.x + (Math.random()-0.5)*c.w, y:c.y + (Math.random()-0.5)*c.h,
+      vx:(Math.random()-0.5)*260, vy:-Math.random()*260,
+      t:6+Math.random()*8, ang:Math.random()*6, vang:(Math.random()-0.5)*14,
+      cor:c.cor, vida:1
+    });
+  }
+}
+
+function passoFisica(dt){
+  for(const b of corpos){
+    if(b.estatico || !b.vivo || b.dormindo) continue;
+    b.vy += GRAV*dt;
+    b.x += b.vx*dt;
+    b.y += b.vy*dt;
+    b.vx *= 0.999;
+    b.ang += b.vang*dt;
+  }
+  const vivos = corpos.filter(b=>b.vivo);
+  for(let it=0; it<4; it++){
+    for(let i=0;i<vivos.length;i++){
+      for(let j=i+1;j<vivos.length;j++){
+        const f = resolverPar(vivos[i], vivos[j]);
+        if(f > 0 && it === 0) aplicarDano(vivos[i], vivos[j], f);
+      }
+    }
+  }
+  for(const b of corpos){
+    if(b.estatico || !b.vivo) continue;
+    if(Math.abs(b.vx) < 4 && Math.abs(b.vy) < 4) b.vx *= 0.86;
+    if(b.y > MUNDO_A + 200) b.vivo = false;
+  }
+  for(let i=estilhacos.length-1;i>=0;i--){
+    const p = estilhacos[i];
+    p.vy += GRAV*dt; p.x += p.vx*dt; p.y += p.vy*dt; p.ang += p.vang*dt;
+    p.vida -= dt*0.8;
+    if(p.vida <= 0 || p.y > MUNDO_A + 60) estilhacos.splice(i,1);
+  }
+}
+function tudoParado(){
+  return corpos.every(b => b.estatico || !b.vivo || (Math.abs(b.vx) < 14 && Math.abs(b.vy) < 14));
+}
+
+/* ---------- desenho ---------- */
+function ctxDaCena(){
+  const cv = $('#tela'); if(!cv) return null;
+  const r = cv.getBoundingClientRect();
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const lp = Math.round(r.width*dpr), ap = Math.round(r.width*dpr*MUNDO_A/MUNDO_L);
+  if(cv.width !== lp || cv.height !== ap){ cv.width = lp; cv.height = ap; }
+  const ctx = cv.getContext('2d');
+  const s = cv.width/MUNDO_L;
+  ctx.setTransform(s,0,0,s,0,0);
+  return ctx;
+}
+function fundo(ctx, noite){
+  const g = ctx.createLinearGradient(0,0,0,CHAO_Y);
+  if(noite){ g.addColorStop(0,'#243B7A'); g.addColorStop(1,'#6C7FD6'); }
+  else { g.addColorStop(0,'#7FC7F5'); g.addColorStop(1,'#CDEBFF'); }
+  ctx.fillStyle = g; ctx.fillRect(0,0,MUNDO_L,CHAO_Y);
+  ctx.fillStyle = noite ? '#FFF7C2' : '#FFE45E';
+  ctx.beginPath(); ctx.arc(700,62,30,0,7); ctx.fill();
+  ctx.fillStyle = 'rgba(255,255,255,.85)';
+  [[120,70,26],[160,74,20],[430,52,22],[466,56,17]].forEach(([x,y,r])=>{
+    ctx.beginPath(); ctx.arc(x,y,r,0,7); ctx.fill();
+  });
+  ctx.fillStyle = '#4CAF50'; ctx.fillRect(0,CHAO_Y,MUNDO_L,20);
+  ctx.fillStyle = '#8D6E63'; ctx.fillRect(0,CHAO_Y+20,MUNDO_L,MUNDO_A-CHAO_Y-20);
+}
+function caixaArredondada(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+}
+function desenharCorpos(ctx){
+  for(const b of corpos){
+    if(!b.vivo || b.tipo === 'chao') continue;
+    ctx.save();
+    ctx.translate(b.x, b.y); ctx.rotate(b.ang);
+    if(b.emoji){
+      ctx.font = `${Math.max(b.w,b.h)*1.15}px serif`;
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(b.emoji, 0, 1);
+    }else{
+      ctx.fillStyle = b.cor;
+      caixaArredondada(ctx, -b.w/2, -b.h/2, b.w, b.h, Math.min(6, b.w/3, b.h/3));
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(0,0,0,.16)'; ctx.lineWidth = 2; ctx.stroke();
+    }
+    ctx.restore();
+  }
+  for(const p of estilhacos){
+    ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.ang);
+    ctx.globalAlpha = Math.max(0, p.vida);
+    ctx.fillStyle = p.cor; ctx.fillRect(-p.t/2,-p.t/2,p.t,p.t);
+    ctx.restore();
+  }
+  ctx.globalAlpha = 1;
+}
+function pontoDoEvento(ev){
+  const cv = $('#tela'); if(!cv) return {x:0,y:0};
+  const r = cv.getBoundingClientRect();
+  const t = ev.touches && ev.touches[0] ? ev.touches[0] : ev;
+  return { x:(t.clientX - r.left)/r.width*MUNDO_L, y:(t.clientY - r.top)/r.width*MUNDO_L };
+}
+function pararCena(){
+  cenaViva = false;
+  if(raf) cancelAnimationFrame(raf);
+  raf = null;
+}
+function rodarCena(quadro){
+  cenaViva = true;
+  let anterior = performance.now();
+  const laco = (agora)=>{
+    if(!cenaViva) return;
+    let dt = (agora - anterior)/1000; anterior = agora;
+    dt = Math.min(dt, 0.033);
+    quadro(dt);
+    raf = requestAnimationFrame(laco);
   };
-  agendar(sumir, vida);
+  raf = requestAnimationFrame(laco);
+}
+
+/* ==========================================================
+   ESTILINGUE  (estilo Angry Birds)
+   ========================================================== */
+const ANC = {x:150, y:296};
+const FORCA_EST = 9.0, FORCA_DUELO = 9.0;
+let estFase = 0, estFacil = true, estBolas = 0, estBola = null, estPuxando = false,
+    estPonta = {x:ANC.x,y:ANC.y}, estEstrelasFase = 0, estEsperando = false;
+
+function montarFase(n, facil){
+  corpos = []; estilhacos = [];
+  corpos.push(corpo({x:MUNDO_L/2, y:CHAO_Y+120, w:MUNDO_L*3, h:240, estatico:true, tipo:'chao'}));
+  const madeira = '#C99055', pedra = '#9AA5B1';
+  const bloco = (x,y,w,h,cor)=>corpos.push(corpo({x,y,w,h,cor:cor||madeira,massa:w*h/900,hp:2.2}));
+  const porco = (x,y)=>corpos.push(corpo({x,y,w:34,h:34,tipo:'porco',emoji:'🐷',massa:1.1,hp:facil?0.55:1.0}));
+  const base = CHAO_Y;
+
+  if(n === 0){
+    bloco(510, base-30, 20, 60);
+    bloco(610, base-30, 20, 60);
+    bloco(560, base-70, 130, 20);
+    porco(560, base-17);
+    porco(560, base-97);
+  }else if(n === 1){
+    bloco(500, base-35, 20, 70);
+    bloco(570, base-35, 20, 70);
+    bloco(550, base-80, 130, 20, pedra);
+    bloco(520, base-118, 20, 56);
+    bloco(580, base-118, 20, 56);
+    bloco(550, base-156, 100, 20);
+    porco(550, base-19);
+    porco(550, base-104);
+    porco(550, base-182);
+  }else{
+    bloco(490, base-35, 20, 70);
+    bloco(600, base-35, 20, 70);
+    bloco(650, base-35, 20, 70);
+    bloco(570, base-80, 200, 20, pedra);
+    bloco(530, base-120, 20, 60);
+    bloco(610, base-120, 20, 60);
+    bloco(570, base-160, 120, 20);
+    bloco(570, base-196, 40, 52, pedra);
+    porco(530, base-19);
+    porco(615, base-19);
+    porco(570, base-104);
+    porco(570, base-186);
+  }
+  estBolas = (facil ? 8 : 6);
+  estEstrelasFase = 0;
+  novaBola();
+}
+function porcosVivos(){ return corpos.filter(b=>b.tipo==='porco' && b.vivo).length; }
+function novaBola(){
+  estBola = corpo({x:ANC.x, y:ANC.y, w:30, h:30, tipo:'bola', emoji:'🐤', massa:1.6, estatico:true});
+  estBola.vivo = true;
+  corpos.push(estBola);
+  estPonta = {x:ANC.x, y:ANC.y};
+  estEsperando = false;
+  atualizarHudEstilingue();
+}
+function atualizarHudEstilingue(){
+  const h = $('#hudEst');
+  if(h) h.innerHTML = `<span class="chip">Fase ${estFase+1}/3</span>
+    <span class="chip">🐤 ${estBolas}</span>
+    <span class="chip">🐷 ${porcosVivos()}</span>`;
+  $('#barraProg').style.width = ((estFase)/3*100) + '%';
+}
+
+function jogoEstilingue(facil){
+  estFacil = facil; estFase = 0; maxPontos = 9;
+  $('#palco').className = 'palco compacto';
+  $('#palco').innerHTML = `
+    <div class="pergunta">Derrube os porquinhos!</div>
+    <div class="subtexto">Puxe para trás e solte para atirar</div>
+    <canvas class="cena" id="tela"></canvas>
+    <div class="hud" id="hudEst"></div>`;
+  falar('Puxe o passarinho para trás e solte para derrubar os porquinhos!');
+  montarFase(0, facil);
+  ligarEstilingue();
+  rodarCena(quadroEstilingue);
+}
+function ligarEstilingue(){
+  const cv = $('#tela');
+  const inicio = ev=>{
+    if(!estBola || !estBola.estatico || estEsperando) return;
+    ev.preventDefault();
+    try{ cv.setPointerCapture(ev.pointerId); }catch(e){}
+    estPuxando = true; mover(ev);
+  };
+  const mover = ev=>{
+    if(!estPuxando) return;
+    ev.preventDefault();
+    const p = pontoDoEvento(ev);
+    let dx = p.x - ANC.x, dy = p.y - ANC.y;
+    const d = Math.hypot(dx,dy), max = 78;
+    if(d > max){ dx = dx/d*max; dy = dy/d*max; }
+    estPonta = {x:ANC.x+dx, y:ANC.y+dy};
+    if(estBola){ estBola.x = estPonta.x; estBola.y = estPonta.y; }
+  };
+  const soltar = ev=>{
+    if(!estPuxando) return;
+    ev.preventDefault(); estPuxando = false;
+    const dx = ANC.x - estPonta.x, dy = ANC.y - estPonta.y;
+    if(Math.hypot(dx,dy) < 12){ estBola.x = ANC.x; estBola.y = ANC.y; estPonta = {x:ANC.x,y:ANC.y}; return; }
+    estBola.estatico = false;
+    estBola.vx = dx*FORCA_EST; estBola.vy = dy*FORCA_EST;
+    estBola.vang = dx*0.05;
+    estBolas--;
+    estEsperando = true;
+    tocar([300,520],0.09,'sine',0.16);
+    atualizarHudEstilingue();
+    agendar(()=>{ if(cenaViva) verificarEstilingue(0); }, 2000);
+  };
+  cv.addEventListener('pointerdown', inicio);
+  cv.addEventListener('pointermove', mover);
+  cv.addEventListener('pointerup', soltar);
+  cv.addEventListener('pointercancel', soltar);
+}
+let estPorcosAntes = -1;
+function quadroEstilingue(dt){
+  passoFisica(dt);
+  const ctx = ctxDaCena(); if(!ctx) return;
+  fundo(ctx, false);
+  // estilingue
+  ctx.strokeStyle = '#8D6E63'; ctx.lineWidth = 9; ctx.lineCap='round';
+  ctx.beginPath(); ctx.moveTo(ANC.x, CHAO_Y); ctx.lineTo(ANC.x, ANC.y+6); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(ANC.x, ANC.y+14); ctx.lineTo(ANC.x-16, ANC.y-6); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(ANC.x, ANC.y+14); ctx.lineTo(ANC.x+16, ANC.y-6); ctx.stroke();
+  if(estBola && estBola.estatico){
+    ctx.strokeStyle = '#5D4037'; ctx.lineWidth = 6;
+    ctx.beginPath(); ctx.moveTo(ANC.x-16, ANC.y-6); ctx.lineTo(estBola.x, estBola.y); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(ANC.x+16, ANC.y-6); ctx.lineTo(estBola.x, estBola.y); ctx.stroke();
+    if(estPuxando){
+      const vx = (ANC.x-estBola.x)*FORCA_EST, vy = (ANC.y-estBola.y)*FORCA_EST;
+      ctx.fillStyle = 'rgba(255,255,255,.75)';
+      for(let i=1;i<=14;i++){
+        const t = i*0.055;
+        const px = estBola.x + vx*t, py = estBola.y + vy*t + 0.5*GRAV*t*t;
+        if(py > CHAO_Y) break;
+        ctx.beginPath(); ctx.arc(px,py, 4 - i*0.13, 0, 7); ctx.fill();
+      }
+    }
+  }
+  desenharCorpos(ctx);
+
+  const vivos = porcosVivos();
+  if(estPorcosAntes < 0) estPorcosAntes = vivos;
+  if(vivos < estPorcosAntes){
+    const ganhos = estPorcosAntes - vivos;
+    estPorcosAntes = vivos;
+    estrelas += ganhos; estEstrelasFase += ganhos;
+    $('#placar').textContent = '⭐ ' + estrelas;
+    somAcerto(); confete(10); atualizarHudEstilingue();
+  }
+  if(estEsperando && vivos === 0){
+    estEsperando = false;
+    pararCena();
+    aviso('Fase vencida! 🏆', true);
+    falar('Você derrubou todos! Muito bem!', false, 'festa');
+    confete(26);
+    agendar(()=>{
+      estFase++;
+      if(estFase >= 3){ fimDeJogo(); return; }
+      estPorcosAntes = -1;
+      montarFase(estFase, estFacil);
+      rodarCena(quadroEstilingue);
+    }, 1800);
+  }
+}
+function verificarEstilingue(tentativas){
+  tentativas = tentativas || 0;
+  if(!estEsperando || porcosVivos() === 0) return;
+  if(!tudoParado() && tentativas < 6){
+    agendar(()=>{ if(cenaViva) verificarEstilingue(tentativas+1); }, 600);
+    return;
+  }
+  if(estBola){ estBola.vivo = false; }
+  if(estBolas > 0){ novaBola(); return; }
+  // acabou as bolinhas: repete a fase sem perder o que já era
+  pararCena();
+  aviso('Vamos tentar de novo!', false);
+  falar('Acabaram os passarinhos. Vamos tentar de novo!', false, 'calmo');
+  estrelas -= estEstrelasFase;
+  if(estrelas < 0) estrelas = 0;
+  $('#placar').textContent = '⭐ ' + estrelas;
+  agendar(()=>{
+    estPorcosAntes = -1;
+    montarFase(estFase, estFacil);
+    rodarCena(quadroEstilingue);
+  }, 1700);
+}
+
+/* ==========================================================
+   DUELO DE CANHÕES  (jogador x computador)
+   ========================================================== */
+const D_EU = {x:168}, D_PC = {x:632};
+let dRoboAgendado = false;
+const NIVEIS_DUELO = [
+  {id:'facil',   nome:'Fácil',   ico:'😀', erroV:0.32, erroA:0.30, vidaEu:4, vidaPc:2, desc:'O robô erra bastante'},
+  {id:'medio',   nome:'Médio',   ico:'😎', erroV:0.16, erroA:0.15, vidaEu:3, vidaPc:3, desc:'Duelo parelho'},
+  {id:'dificil', nome:'Difícil', ico:'😈', erroV:0.055,erroA:0.05, vidaEu:3, vidaPc:4, desc:'O robô quase não erra'}
+];
+let dNivel = NIVEIS_DUELO[0];
+let dVida = {eu:3, pc:3}, dVez = 'eu', dTiro = null, dPuxando = false,
+    dPonta = {x:0,y:0}, dDuelo = 0, dFacil = true, dFimDeDuelo = false;
+
+function baseCanhao(){ return CHAO_Y - 26; }
+function montarDuelo(){
+  corpos = []; estilhacos = [];
+  corpos.push(corpo({x:MUNDO_L/2, y:CHAO_Y+120, w:MUNDO_L*3, h:240, estatico:true, tipo:'chao'}));
+  // morro no meio
+  corpos.push(corpo({x:400, y:CHAO_Y-50, w:52, h:100, estatico:true, cor:'#7E9B57', tipo:'morro'}));
+  corpos.push(corpo({x:D_EU.x, y:baseCanhao(), w:52, h:52, estatico:true, cor:'#5B8DEF', tipo:'torreEu'}));
+  corpos.push(corpo({x:D_PC.x, y:baseCanhao(), w:52, h:52, estatico:true, cor:'#E05C5C', tipo:'torrePc'}));
+  dTiro = null; dPonta = {x:D_EU.x, y:baseCanhao()-50};
+  dFimDeDuelo = false;
+}
+function atualizarHudDuelo(){
+  const h = $('#hudDuelo');
+  if(!h) return;
+  const p = n => n === 1 ? '1 acerto' : n + ' acertos';
+  h.innerHTML = `
+    <span class="chip">🧒 Você ${'❤️'.repeat(dVida.eu) || '💔'}</span>
+    <span class="chip">🤖 Robô ${'❤️'.repeat(dVida.pc) || '💔'}</span>
+    <span class="chip alvo-eu">🎯 Faltam <b>${p(dVida.pc)}</b> para você ganhar</span>
+    <span class="chip alvo-pc">🤖 Faltam <b>${p(dVida.eu)}</b> para o robô ganhar</span>
+    <span class="chip">${dNivel.ico} ${dNivel.nome} · Duelo ${Math.min(dDuelo+1,3)}/3</span>
+    <span class="chip vez">${dFimDeDuelo ? '⏳' : (dVez === 'eu' ? '👉 Sua vez!' : '🤖 Vez do robô')}</span>`;
+}
+function jogoDuelo(facil){
+  dFacil = facil; dDuelo = 0; maxPontos = 3;
+  pararCena();
+  $('#palco').className = 'palco compacto';
+  $('#palco').innerHTML = `
+    <div class="pergunta">Escolha a dificuldade</div>
+    <div class="niveis">${NIVEIS_DUELO.map((n,i)=>`
+      <button class="nivel" data-n="${i}">
+        <span class="ni">${n.ico}</span>
+        <span class="nn">${n.nome}</span>
+        <span class="nd">${n.desc}</span>
+        <span class="nv">🧒 ${'❤️'.repeat(n.vidaEu)} &nbsp;·&nbsp; 🤖 ${'❤️'.repeat(n.vidaPc)}</span>
+      </button>`).join('')}</div>`;
+  falar('Escolha a dificuldade: fácil, médio ou difícil.');
+  $('#palco').querySelectorAll('.nivel').forEach(b=>b.onclick=()=>{
+    somToque();
+    dNivel = NIVEIS_DUELO[+b.dataset.n];
+    comecarDuelo();
+  });
+}
+function comecarDuelo(){
+  dDuelo = 0; maxPontos = 3;
+  $('#palco').className = 'palco compacto';
+  $('#palco').innerHTML = `
+    <div class="pergunta">Duelo contra o robô</div>
+    <div class="subtexto">Puxe para mirar e solte para atirar</div>
+    <canvas class="cena" id="tela"></canvas>
+    <div class="hud" id="hudDuelo"></div>
+    <button class="btn2" id="btnTrocarNivel">${'⚙️'} Trocar dificuldade</button>`;
+  falar(`Dificuldade ${dNivel.nome}. Puxe para mirar e solte para atirar no robô!`);
+  novoDuelo();
+  ligarDuelo();
+  $('#btnTrocarNivel').onclick = ()=>{ somToque(); pararCena(); estrelas = 0; $('#placar').textContent='⭐ 0'; jogoDuelo(dFacil); };
+  rodarCena(quadroDuelo);
+}
+function novoDuelo(){
+  dVida = {eu:dNivel.vidaEu, pc:dNivel.vidaPc}; dVez = 'eu'; dRoboAgendado = false;
+  montarDuelo();
+  atualizarHudDuelo();
+  $('#barraProg').style.width = (dDuelo/3*100) + '%';
+}
+function criarTiro(x, y, vx, vy, dono){
+  const t = corpo({x, y, w:18, h:18, tipo:'tiro', emoji: dono==='eu' ? '🔵' : '🔴', massa:1.2});
+  t.dono = dono; t.vx = vx; t.vy = vy;
+  corpos.push(t); dTiro = t;
+  tocar([220,420],0.09,'square',0.14);
+}
+function ligarDuelo(){
+  const cv = $('#tela');
+  const inicio = ev=>{
+    if(dVez !== 'eu' || dTiro || dFimDeDuelo) return;
+    ev.preventDefault();
+    try{ cv.setPointerCapture(ev.pointerId); }catch(e){}
+    dPuxando = true; mover(ev);
+  };
+  const mover = ev=>{
+    if(!dPuxando) return;
+    ev.preventDefault();
+    const p = pontoDoEvento(ev);
+    const ax = D_EU.x, ay = baseCanhao()-40;
+    let dx = p.x-ax, dy = p.y-ay;
+    const d = Math.hypot(dx,dy), max = 92;
+    if(d > max){ dx = dx/d*max; dy = dy/d*max; }
+    dPonta = {x:ax+dx, y:ay+dy};
+  };
+  const soltar = ev=>{
+    if(!dPuxando) return;
+    ev.preventDefault(); dPuxando = false;
+    const ax = D_EU.x, ay = baseCanhao()-40;
+    const dx = ax - dPonta.x, dy = ay - dPonta.y;
+    if(Math.hypot(dx,dy) < 12) return;
+    criarTiro(ax + (dx>0?26:-26)*0.6, ay-6, dx*FORCA_DUELO, dy*FORCA_DUELO, 'eu');
+  };
+  cv.addEventListener('pointerdown', inicio);
+  cv.addEventListener('pointermove', mover);
+  cv.addEventListener('pointerup', soltar);
+  cv.addEventListener('pointercancel', soltar);
+}
+function tiroDoRobo(){
+  const ax = D_PC.x, ay = baseCanhao()-46;
+  const alvoX = D_EU.x;
+  const dist = Math.abs(ax - alvoX);
+  const vIdeal = Math.sqrt(dist*GRAV);          // ângulo de 45°, mesma altura
+  const erroV = dNivel.erroV * (dFacil ? 1.25 : 1);
+  const erroA = dNivel.erroA * (dFacil ? 1.25 : 1);
+  const v = vIdeal * (1 + (Math.random()-0.5)*2*erroV);
+  const ang = Math.PI/4 * (1 + (Math.random()-0.5)*2*erroA);
+  criarTiro(ax-26, ay, -Math.cos(ang)*v, -Math.sin(ang)*v, 'pc');
+}
+function bateuNoAlvo(alvo, t){
+  const b = corpos.find(c=>c.tipo===alvo);
+  if(!b) return false;
+  return Math.abs(t.x-b.x) < (t.w+b.w)/2 && Math.abs(t.y-b.y) < (t.h+b.h)/2;
+}
+async function resolverTiro(){
+  const t = dTiro;
+  const alvo = t.dono === 'eu' ? 'torrePc' : 'torreEu';
+  const bateu = bateuNoAlvo(alvo, t);
+  const alvoBody = corpos.find(c=>c.tipo===alvo);
+  dTiro.vivo = false; dTiro = null;
+
+  if(bateu){
+    if(alvoBody) espalhar(alvoBody);
+    if(t.dono === 'eu'){
+      dVida.pc--; somAcerto(); aviso('Acertou o robô! 🎯', true);
+      falar('Acertou o robô!', false, 'festa'); confete(14);
+    }else{
+      dVida.eu--; somErro(); aviso('O robô te acertou!', false);
+      falar('O robô acertou. Sua vez!', false, 'calmo');
+    }
+    atualizarHudDuelo();
+  }else{
+    tocar([180,140],0.12,'sine',0.12);
+    if(t.dono === 'eu') aviso('Errou! Tenta de novo.', false);
+  }
+
+  if(dVida.pc <= 0 || dVida.eu <= 0){
+    dFimDeDuelo = true;
+    pararCena();
+    const ganhou = dVida.pc <= 0;
+    if(ganhou){
+      estrelas++; $('#placar').textContent = '⭐ ' + estrelas;
+      aviso('Você venceu o duelo! 🏆', true);
+      falar('Uhul! Você venceu o duelo!', false, 'festa'); confete(30);
+    }else{
+      aviso('O robô venceu essa!', false);
+      falar('O robô venceu essa. Vamos de novo!', false, 'calmo');
+    }
+    agendar(()=>{
+      dDuelo++;
+      if(dDuelo >= 3){ fimDeJogo(); return; }
+      novoDuelo();
+      rodarCena(quadroDuelo);
+    }, 2000);
+    return;
+  }
+
+  dVez = t.dono === 'eu' ? 'pc' : 'eu';
+  atualizarHudDuelo();
+  if(dVez === 'pc'){
+    dRoboAgendado = true;
+    agendar(()=>{ dRoboAgendado = false; if(cenaViva && !dFimDeDuelo && dVez==='pc' && !dTiro) tiroDoRobo(); }, 900);
+  }
+}
+function quadroDuelo(dt){
+  passoFisica(dt);
+  const ctx = ctxDaCena(); if(!ctx) return;
+  fundo(ctx, false);
+
+  // canhões
+  const desenharCanhao = (x, cor, emoji)=>{
+    ctx.fillStyle = cor;
+    caixaArredondada(ctx, x-26, baseCanhao()-26, 52, 52, 8); ctx.fill();
+    ctx.font = '30px serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(emoji, x, baseCanhao()-46);
+  };
+  desenharCanhao(D_EU.x, '#5B8DEF', '🧒');
+  desenharCanhao(D_PC.x, '#E05C5C', '🤖');
+  ctx.font = '20px serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText('❤️'.repeat(dVida.eu) || '💔', D_EU.x, baseCanhao()-78);
+  ctx.fillText('❤️'.repeat(dVida.pc) || '💔', D_PC.x, baseCanhao()-78);
+  // morro
+  ctx.fillStyle = '#7E9B57';
+  caixaArredondada(ctx, 374, CHAO_Y-100, 52, 100, 10); ctx.fill();
+
+  if(dPuxando && dVez === 'eu'){
+    const ax = D_EU.x, ay = baseCanhao()-40;
+    ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(dPonta.x,dPonta.y); ctx.stroke();
+    const vx = (ax-dPonta.x)*FORCA_DUELO, vy = (ay-dPonta.y)*FORCA_DUELO;
+    ctx.fillStyle = 'rgba(255,255,255,.8)';
+    for(let i=1;i<=18;i++){
+      const tt = i*0.05;
+      const px = ax + vx*tt, py = ay + vy*tt + 0.5*GRAV*tt*tt;
+      if(py > CHAO_Y) break;
+      ctx.beginPath(); ctx.arc(px,py, 4-i*0.11, 0, 7); ctx.fill();
+    }
+  }
+  desenharCorpos(ctx);
+
+  // fim do voo do tiro
+  if(dTiro && dTiro.vivo){
+    const forA = dTiro.x < -40 || dTiro.x > MUNDO_L+40;
+    const parou = dTiro.y > CHAO_Y - 12 && Math.abs(dTiro.vy) < 40;
+    if(bateuNoAlvo(dTiro.dono==='eu'?'torrePc':'torreEu', dTiro) || forA || parou){
+      resolverTiro();
+    }
+  }
+  // turno do robô caso nada esteja voando
+  if(dVez === 'pc' && !dTiro && !dFimDeDuelo && !dRoboAgendado){
+    dRoboAgendado = true;
+    agendar(()=>{ dRoboAgendado = false; if(cenaViva && !dFimDeDuelo && dVez==='pc' && !dTiro) tiroDoRobo(); }, 600);
+  }
+}
+
+/* ==========================================================
+   SALÃO DE BELEZA — cabelo, maquiagem e rosto
+   ========================================================== */
+const PELES = [
+  {n:'clara',  h:'#F6D3B4'}, {n:'dourada', h:'#E5B183'},
+  {n:'morena', h:'#C68642'}, {n:'escura',  h:'#8D5524'}, {n:'retinta', h:'#5C3317'}
+];
+const CORES_CABELO = [
+  {n:'preto', h:'#2B2118'}, {n:'castanho', h:'#6B4226'}, {n:'loiro', h:'#E8C170'},
+  {n:'ruivo', h:'#C1440E'}, {n:'rosa', h:'#FF6FB5'}, {n:'roxo', h:'#8B5CF6'},
+  {n:'azul', h:'#2D7FF9'}, {n:'verde', h:'#2FBF71'}
+];
+const CORES_OLHO = [
+  {n:'castanho', h:'#6B4226'}, {n:'preto', h:'#22201E'}, {n:'azul', h:'#2D7FF9'},
+  {n:'verde', h:'#2FBF71'}, {n:'mel', h:'#C98A2B'}, {n:'cinza', h:'#8A97A6'}
+];
+const CORES_BATOM = [
+  {n:'vermelho', h:'#E23744'}, {n:'rosa', h:'#FF6FB5'}, {n:'coral', h:'#FF8A5B'},
+  {n:'vinho', h:'#8E2749'}, {n:'roxo', h:'#8B5CF6'}, {n:'nude', h:'#D79C86'}
+];
+const CORES_SOMBRA = [
+  {n:'nenhuma', h:null}, {n:'azul', h:'#5AA9F7'}, {n:'roxa', h:'#A98BF3'},
+  {n:'rosa', h:'#FF9AC4'}, {n:'dourada', h:'#F2C14E'}, {n:'verde', h:'#63D3A6'}
+];
+const CORES_BLUSH = [ {n:'nenhum', h:null}, {n:'rosa', h:'#FF9AA2'}, {n:'pêssego', h:'#FFB98A'}, {n:'coral', h:'#FF8FA0'} ];
+const CORES_FUNDO = [
+  {n:'rosa', h:'#FFE3F1'}, {n:'azul', h:'#DCEEFF'}, {n:'verde', h:'#DDF6E6'},
+  {n:'lilás', h:'#EBE4FF'}, {n:'amarelo', h:'#FFF3CF'}
+];
+const ESTILOS_CABELO = [
+  {n:'curto',   ico:'💇'}, {n:'longo', ico:'👩'}, {n:'cachos', ico:'🦱'},
+  {n:'coque',   ico:'🎀'}, {n:'chanel', ico:'💇‍♀️'}, {n:'careca', ico:'🧑‍🦲'}
+];
+const ACESSORIOS = [
+  {n:'nenhum', e:null}, {n:'óculos', e:'👓'}, {n:'laço', e:'🎀'},
+  {n:'coroa', e:'👑'}, {n:'flor', e:'🌸'}, {n:'chapéu', e:'🧢'}
+];
+
+let salao = null, salaoAba = 'cabelo', salaoPedido = null, salaoCliente = 0, salaoDificil = false;
+
+function capaCabelo(cor){
+  return `<path d="M38 106 Q38 30 100 30 Q162 30 162 106 Q150 76 100 74 Q50 76 38 106 Z" fill="${cor}"/>`;
+}
+function desenhoCabelo(estilo, cor){
+  if(estilo === 5) return '';                                  // careca
+  const capa = capaCabelo(cor);
+  if(estilo === 0)  // curto
+    return capa;
+  if(estilo === 1)  // longo
+    return `<path d="M34 96 Q34 26 100 26 Q166 26 166 96 L166 200 Q152 208 146 188 L146 112 Q100 134 54 112 L54 188 Q48 208 34 200 Z" fill="${cor}"/>` + capa;
+  if(estilo === 2)  // cachos
+    return capa + [[52,72],[74,52],[100,44],[126,52],[148,72],[40,100],[160,100],[46,126],[154,126]]
+      .map(([x,y])=>`<circle cx="${x}" cy="${y}" r="17" fill="${cor}"/>`).join('');
+  if(estilo === 3)  // coque
+    return capa + `<circle cx="100" cy="26" r="24" fill="${cor}"/><circle cx="100" cy="26" r="24" fill="rgba(0,0,0,.08)"/>`;
+  // chanel
+  return `<path d="M34 96 Q34 26 100 26 Q166 26 166 96 L166 150 Q152 160 146 142 L146 112 Q100 134 54 112 L54 142 Q48 160 34 150 Z" fill="${cor}"/>` + capa;
+}
+
+function svgRosto(s, tamanho){
+  const olho = (cx)=>`
+    <ellipse cx="${cx}" cy="112" rx="14" ry="10" fill="#fff"/>
+    <circle cx="${cx}" cy="112" r="7.5" fill="${s.corOlho}"/>
+    <circle cx="${cx}" cy="112" r="3.4" fill="#141414"/>
+    <circle cx="${cx-2.6}" cy="109.4" r="2" fill="#fff"/>
+    <path d="M${cx-15} 106 q15 -9 30 0" stroke="#2B2118" stroke-width="2.4" fill="none" stroke-linecap="round"/>`;
+  const sombra = s.sombra ? `
+    <path d="M56 103 q14 -10 28 0 q-14 5 -28 0Z" fill="${s.sombra}" opacity=".75"/>
+    <path d="M116 103 q14 -10 28 0 q-14 5 -28 0Z" fill="${s.sombra}" opacity=".75"/>` : '';
+  const blush = s.blush ? `
+    <ellipse cx="62" cy="134" rx="13" ry="8" fill="${s.blush}" opacity=".6"/>
+    <ellipse cx="138" cy="134" rx="13" ry="8" fill="${s.blush}" opacity=".6"/>` : '';
+  const acess = s.acess ? `<text x="100" y="${s.acessY||46}" font-size="46" text-anchor="middle">${s.acess}</text>` : '';
+  // fios despenteados espetados para fora
+  const FIOS = [[64,56,46,26],[86,44,76,14],[112,42,122,12],[138,54,158,28],[52,84,26,68],[150,86,176,72],[100,38,100,8]];
+  const nFios = Math.round((s.bagunca||0) * FIOS.length);
+  const fios = (nFios > 0 && s.cabelo !== 5)
+    ? FIOS.slice(0, nFios).map(([x1,y1,x2,y2])=>
+        `<path d="M${x1} ${y1} Q${(x1+x2)/2 + 8} ${(y1+y2)/2 - 6} ${x2} ${y2}" stroke="${s.corCabelo}" stroke-width="6" fill="none" stroke-linecap="round"/>`).join('')
+    : '';
+  const sj = Math.max(0, Math.min(1, s.sujo||0));
+  const sujeira = sj > 0.02 ? `<g fill="#8D6E63" opacity="${(sj*0.55).toFixed(2)}">
+    <ellipse cx="70" cy="140" rx="11" ry="6" transform="rotate(-14 70 140)"/>
+    <ellipse cx="132" cy="146" rx="9" ry="5" transform="rotate(10 132 146)"/>
+    <ellipse cx="104" cy="92" rx="8" ry="5" transform="rotate(-8 104 92)"/>
+    <ellipse cx="150" cy="118" rx="7" ry="4"/></g>` : '';
+  const ag = Math.max(0, Math.min(1, s.agua||0));
+  const GOTAS = [[60,52],[84,40],[112,38],[140,50],[48,84],[154,86],[70,116],[130,120],[100,34]];
+  const agua = ag > 0.02 ? `
+    <g opacity="${(0.85*ag).toFixed(2)}" fill="#7FC7F5">
+      ${GOTAS.slice(0, Math.round(GOTAS.length*ag)).map(([x,y],i)=>
+        `<ellipse cx="${x}" cy="${y}" rx="3" ry="5" opacity="${(0.5+((i%3)*0.15)).toFixed(2)}"/>`).join('')}
+    </g>
+    <g stroke="#9BD4FF" stroke-width="3" opacity="${(0.7*ag).toFixed(2)}" stroke-linecap="round">
+      ${[54,74,96,120,142].map(x=>`<path d="M${x} 0 L${x-4} 26"/>`).join('')}
+    </g>` : '';
+  const ep = Math.max(0, Math.min(1, s.espuma||0));
+  const BOLHAS = [[100,38,24],[70,52,20],[132,50,20],[86,64,18],[116,62,18],[52,74,16],[150,74,16],[100,84,14]];
+  const MINI = [[40,110,8],[164,104,7],[30,60,6],[172,58,6]];
+  const espuma = ep > 0.02 ? `
+    <g fill="#FFFFFF" opacity=".95">
+      ${BOLHAS.slice(0, Math.max(1, Math.round(BOLHAS.length*ep))).map(([x,y,r])=>
+        `<circle cx="${x}" cy="${y}" r="${(r*(0.5+0.5*ep)).toFixed(1)}"/>`).join('')}
+    </g>
+    <g fill="#EAF6FF" opacity="${(0.9*ep).toFixed(2)}">
+      ${MINI.slice(0, Math.round(MINI.length*ep)).map(([x,y,r])=>`<circle cx="${x}" cy="${y}" r="${r}"/>`).join('')}
+    </g>` : '';
+  return `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 230"${tamanho?` width="${tamanho}" height="${Math.round(tamanho*230/200)}"`:''}>
+  <rect width="200" height="230" rx="24" fill="${s.fundo}"/>
+  <rect x="86" y="158" width="28" height="30" rx="10" fill="${s.pele}"/>
+  <path d="M56 230 q0 -34 44 -40 q44 6 44 40 Z" fill="#7C6CF0"/>
+  ${s.cabelo===1||s.cabelo===4 ? desenhoCabelo(s.cabelo, s.corCabelo) : ''}
+  <ellipse cx="100" cy="108" rx="58" ry="68" fill="${s.pele}"/>
+  <circle cx="42" cy="116" r="11" fill="${s.pele}"/>
+  <circle cx="158" cy="116" r="11" fill="${s.pele}"/>
+  ${s.cabelo===1||s.cabelo===4 ? capaCabelo(s.corCabelo) : desenhoCabelo(s.cabelo, s.corCabelo)}
+  ${sombra}
+  ${olho(70)}
+  ${olho(130)}
+  <path d="M100 118 q6 12 -2 16" stroke="rgba(0,0,0,.25)" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+  ${blush}
+  <path d="M78 150 q22 -8 44 0 q-22 22 -44 0Z" fill="${s.batom}"/>
+  <path d="M78 150 q22 6 44 0" stroke="rgba(0,0,0,.18)" stroke-width="1.6" fill="none"/>
+  ${sujeira}
+  ${fios}
+  ${acess}
+  ${agua}
+  ${espuma}
+</svg>`;
+}
+
+function novoVisual(){
+  return {
+    pele: PELES[0].h, cabelo:0, corCabelo: CORES_CABELO[1].h, corOlho: CORES_OLHO[0].h,
+    batom: CORES_BATOM[1].h, blush: null, sombra: null, acess: null, fundo: CORES_FUNDO[0].h,
+    sujo:0, agua:0, espuma:0, bagunca:0
+  };
+}
+
+const ABAS = [
+  {id:'pele',    ico:'🖐️', nome:'Pele'},
+  {id:'cabelo',  ico:'💇', nome:'Corte'},
+  {id:'corCabelo', ico:'🎨', nome:'Cor do cabelo'},
+  {id:'corOlho', ico:'👁️', nome:'Olhos'},
+  {id:'batom',   ico:'💄', nome:'Batom'},
+  {id:'sombra',  ico:'✨', nome:'Sombra'},
+  {id:'blush',   ico:'😊', nome:'Blush'},
+  {id:'acess',   ico:'👑', nome:'Enfeite'},
+  {id:'fundo',   ico:'🖼️', nome:'Fundo'}
+];
+
+const PASSOS_BANHO = [
+  {id:'molhar',   ico:'🚿', txt:'Molhe o cabelo',      fala:'Hora do banho! Esfregue o chuveiro no cabelo para molhar.'},
+  {id:'shampoo',  ico:'🧴', txt:'Passe o shampoo',     fala:'Agora esfregue o shampoo, fazendo bastante espuma!'},
+  {id:'enxaguar', ico:'🚿', txt:'Enxágue tudo',        fala:'Enxágue bem, esfregando até sair toda a espuma.'},
+  {id:'secar',    ico:'🌬️', txt:'Seque o cabelo',      fala:'Agora o secador. Passe no cabelo até secar tudo.'},
+  {id:'pentear',  ico:'🪮', txt:'Penteie o cabelo',    fala:'Falta pentear! Passe o pente até o cabelo ficar liso.'}
+];
+const DISTANCIA_PASSO = 520;   // pixels de esfregada para completar um passo
+let salaoFase = 'banho', banhoPasso = 0, esfregando = false, ultimoPonto = null,
+    distanciaFeita = 0, ultimoSomAgua = 0;
+
+/* ---------- pedidos variados ---------- */
+function miniRosto(corte, tam, cor){
+  const base = salao || novoVisual();
+  const v = Object.assign({}, base, {
+    cabelo: corte, corCabelo: cor || base.corCabelo,
+    sujo:0, agua:0, espuma:0, bagunca:0, acess:null, fundo:'#F5F2FF'
+  });
+  return svgRosto(v, tam);
+}
+const cor2 = v => `<span class="cp-amostra" style="background:${v}"></span>`;
+const emo2 = v => `<span class="cp-amostra emoji">${v}</span>`;
+const ITENS_PEDIDO = [
+  {id:'corCabelo', rotulo:'cor do cabelo', aba:'corCabelo', mostra:cor2,
+   opcoes:()=>CORES_CABELO.map(c=>({v:c.h, n:'cabelo '+c.n}))},
+  {id:'cabelo', rotulo:'corte', aba:'cabelo', mostra:v=>`<span class="cp-amostra corte">${miniRosto(v, 30, '#6B4226')}</span>`,
+   opcoes:()=>ESTILOS_CABELO.map((e,i)=>({v:i, n:'corte '+e.n}))},
+  {id:'batom', rotulo:'batom', aba:'batom', mostra:cor2,
+   opcoes:()=>CORES_BATOM.map(c=>({v:c.h, n:'batom '+c.n}))},
+  {id:'sombra', rotulo:'sombra', aba:'sombra', mostra:cor2,
+   opcoes:()=>CORES_SOMBRA.filter(c=>c.h).map(c=>({v:c.h, n:'sombra '+c.n}))},
+  {id:'blush', rotulo:'blush', aba:'blush', mostra:cor2,
+   opcoes:()=>CORES_BLUSH.filter(c=>c.h).map(c=>({v:c.h, n:'blush '+c.n}))},
+  {id:'corOlho', rotulo:'cor dos olhos', aba:'corOlho', mostra:cor2,
+   opcoes:()=>CORES_OLHO.map(c=>({v:c.h, n:'olhos '+c.n}))},
+  {id:'acess', rotulo:'enfeite', aba:'acess', mostra:emo2,
+   opcoes:()=>ACESSORIOS.filter(a=>a.e).map(a=>({v:a.e, n:a.n+' '+a.e}))},
+  {id:'fundo', rotulo:'fundo', aba:'fundo', mostra:cor2,
+   opcoes:()=>CORES_FUNDO.map(c=>({v:c.h, n:'fundo '+c.n}))},
+  {id:'pele', rotulo:'tom de pele', aba:'pele', mostra:cor2,
+   opcoes:()=>PELES.map(c=>({v:c.h, n:'pele '+c.n}))}
+];
+let filaPedidos = [];
+
+function sortearPedido(){
+  const quantos = salaoDificil ? 3 : 2;
+  if(filaPedidos.length < quantos) filaPedidos = embaralhar(ITENS_PEDIDO.map(i=>i.id));
+  const ids = filaPedidos.splice(0, quantos);
+  return ids.map(id=>{
+    const item = ITENS_PEDIDO.find(i=>i.id===id);
+    const possiveis = item.opcoes().filter(o=>o.v !== salao[id]);
+    const alvo = escolha(possiveis.length ? possiveis : item.opcoes());
+    const aba = ABAS.find(x=>x.id===item.aba);
+    return {id, aba:item.aba, rotulo:item.rotulo, valor:alvo.v, nome:alvo.n,
+            ico:(aba?aba.ico:'✨'), amostra:item.mostra(alvo.v)};
+  });
+}
+
+/* ---------- ciclo do jogo ---------- */
+function jogoSalao(dificil){
+  salaoDificil = dificil;
+  salaoCliente = 0;
+  maxPontos = 5;
+  totalRodadas = 5;
+  salao = novoVisual();
+  salaoAba = 'cabelo';
+  filaPedidos = [];
+  $('#palco').className = 'palco compacto';
+  $('#palco').innerHTML = `
+    <div class="pedido" id="pedido"></div>
+    <div class="salao" id="salaoBox"></div>`;
+  novoCliente();
+}
+
+function novoCliente(){
+  salaoPedido = { itens: sortearPedido() };
+  salaoPedido.texto = salaoPedido.itens.map(i=>`<b>${i.nome}</b>`).join(' + ');
+  const fala = 'Oi! Depois do banho eu quero ' +
+    salaoPedido.itens.map(i=>i.nome).join(', e ') + ', por favor.';
+  salao.sujo = 1; salao.agua = 0; salao.espuma = 0; salao.bagunca = 1;
+  salaoFase = 'banho'; banhoPasso = 0; distanciaFeita = 0;
+  falar(fala);
+  desenharSalao();
+}
+
+function progressoAtual(){
+  const p = PASSOS_BANHO[banhoPasso];
+  if(!p) return 1;
+  if(p.id === 'molhar')   return salao.agua;
+  if(p.id === 'shampoo')  return salao.espuma;
+  if(p.id === 'enxaguar') return 1 - salao.espuma;
+  if(p.id === 'secar')    return 1 - salao.agua;
+  return 1 - salao.bagunca;
+}
+
+function cabecalhoPedido(){
+  const p = $('#pedido'); if(!p) return;
+  if(salaoFase === 'banho'){
+    p.innerHTML = `<span class="cliente-tag">🛁 ${salaoCliente+1}/5</span>
+      <span class="cp-texto"><b>Hora do banho!</b></span>`;
+    return;
+  }
+  const feito = i => salao[i.id] === i.valor;
+  p.innerHTML = `<span class="cliente-tag">👧 ${salaoCliente+1}/5</span>
+    <span class="cp-texto">quero assim:</span>
+    <span class="pedido-chips">${salaoPedido.itens.map((i,k)=>`
+      <button class="chip-pedido${feito(i)?' ok':''}" data-k="${k}" title="${esc(i.nome)}">
+        <span class="cp-ico">${i.ico}</span>${i.amostra}
+        <span class="cp-nome">${esc(i.nome)}</span>
+        <span class="cp-check">${feito(i)?'✅':''}</span>
+      </button>`).join('')}</span>`;
+  p.querySelectorAll('.chip-pedido').forEach(b=>b.onclick=()=>{
+    somToque();
+    salaoAba = salaoPedido.itens[+b.dataset.k].aba;
+    desenharSalao();
+  });
+}
+
+function desenharSalao(){
+  cabecalhoPedido();
+  const box = $('#salaoBox'); if(!box) return;
+
+  if(salaoFase === 'banho'){
+    const passo = PASSOS_BANHO[banhoPasso];
+    const pct = Math.round(Math.max(0, Math.min(1, progressoAtual()))*100);
+    box.innerHTML = `
+      <div class="passos-banho">${PASSOS_BANHO.map((p,i)=>
+        `<span class="bolinha${i<banhoPasso?' feito':''}${i===banhoPasso?' agora':''}">${p.ico}</span>`).join('')}</div>
+      <div class="area-banho" id="areaBanho">
+        <div class="rosto" id="rosto"></div>
+        <span class="ferramenta" id="ferramenta">${passo.ico}</span>
+      </div>
+      <div class="instrucao-banho">${passo.ico} ${passo.txt} — <b>esfregue com o dedo!</b></div>
+      <div class="barra-banho"><i id="barraBanho" style="width:${pct}%"></i></div>
+      <button class="btn2" id="btnRefazerBanho">🔄 Refazer banho</button>`;
+    $('#rosto').innerHTML = svgRosto(salao);
+    ligarEsfregar();
+    $('#btnRefazerBanho').onclick = ()=>{
+      somToque();
+      salao.sujo = 1; salao.agua = 0; salao.espuma = 0; salao.bagunca = 1;
+      banhoPasso = 0; distanciaFeita = 0;
+      falar('Vamos começar o banho de novo!', false);
+      desenharSalao();
+    };
+    return;
+  }
+
+  box.innerHTML = `
+    <div class="rosto" id="rosto"></div>
+    <div class="abas" id="abas"></div>
+    <div class="opcoesSalao" id="opcoesSalao"></div>
+    <div class="linha-botoes">
+      <button class="btn2" id="btnPronto">✨ Pronto!</button>
+      <button class="btn2" id="btnRefazer">🔄 Refazer</button>
+      <button class="btn2" id="btnFoto">📷 Salvar</button>
+      <button class="btn2" id="btnBanhoDeNovo">🛁 Banho</button>
+    </div>`;
+  $('#rosto').innerHTML = svgRosto(salao);
+  $('#btnPronto').onclick = conferirVisual;
+  $('#btnFoto').onclick = salvarFoto;
+  $('#btnRefazer').onclick = ()=>{
+    if(bloqueado) return;
+    somToque();
+    const limpo = novoVisual();
+    Object.keys(limpo).forEach(k=>{ if(!['sujo','agua','espuma','bagunca'].includes(k)) salao[k] = limpo[k]; });
+    aviso('Tudo apagado! 🔄', true);
+    falar('Apaguei tudo. Pode começar de novo!', false);
+    desenharSalao();
+  };
+  $('#btnBanhoDeNovo').onclick = ()=>{
+    if(bloqueado) return;
+    somToque();
+    salao.agua = 0; salao.espuma = 0; salao.bagunca = 1;
+    salaoFase = 'banho'; banhoPasso = 0; distanciaFeita = 0;
+    falar('Mais um banho? Vamos lá!', false);
+    desenharSalao();
+  };
+
+  $('#abas').innerHTML = ABAS.map(a=>{
+    const pedido = salaoPedido.itens.some(i=>i.aba===a.id);
+    return `<button class="aba${a.id===salaoAba?' on':''}${pedido?' pedida':''}" data-aba="${a.id}">${a.ico} ${a.nome}</button>`;
+  }).join('');
+  $('#abas').querySelectorAll('.aba').forEach(b=>b.onclick=()=>{ salaoAba=b.dataset.aba; somToque(); desenharSalao(); });
+
+  const cont = $('#opcoesSalao');
+  const cores = (lista, chave)=> lista.map(c=>
+    `<button class="chip-cor${salao[chave]===c.h?' on':''}" data-chave="${chave}" data-valor="${c.h||''}"
+       title="${c.n}" aria-label="${c.n}"
+       style="background:${c.h || 'repeating-linear-gradient(45deg,#eee 0 6px,#fff 6px 12px)'}"></button>`).join('');
+
+  if(salaoAba === 'cabelo'){
+    cont.innerHTML = ESTILOS_CABELO.map((e,i)=>
+      `<button class="chip-est corte${salao.cabelo===i?' on':''}" data-chave="cabelo" data-valor="${i}" title="${e.n}" aria-label="${e.n}">${miniRosto(i, 54)}</button>`).join('');
+  }else if(salaoAba === 'acess'){
+    cont.innerHTML = ACESSORIOS.map(a=>
+      `<button class="chip-est${salao.acess===(a.e||null)?' on':''}" data-chave="acess" data-valor="${a.e||''}" title="${a.n}">${a.e||'🚫'}</button>`).join('');
+  }else if(salaoAba === 'pele')      cont.innerHTML = cores(PELES,'pele');
+  else if(salaoAba === 'corCabelo')  cont.innerHTML = cores(CORES_CABELO,'corCabelo');
+  else if(salaoAba === 'corOlho')    cont.innerHTML = cores(CORES_OLHO,'corOlho');
+  else if(salaoAba === 'batom')      cont.innerHTML = cores(CORES_BATOM,'batom');
+  else if(salaoAba === 'sombra')     cont.innerHTML = cores(CORES_SOMBRA,'sombra');
+  else if(salaoAba === 'blush')      cont.innerHTML = cores(CORES_BLUSH,'blush');
+  else                                cont.innerHTML = cores(CORES_FUNDO,'fundo');
+
+  cont.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    const chave = b.dataset.chave, v = b.dataset.valor;
+    salao[chave] = chave==='cabelo' ? +v : (v || null);
+    somToque();
+    desenharSalao();
+  });
+}
+
+/* ---------- esfregar ---------- */
+function ligarEsfregar(){
+  const area = $('#areaBanho'); if(!area) return;
+  const ferramenta = $('#ferramenta');
+
+  const posicao = ev=>{
+    const r = area.getBoundingClientRect();
+    return {x: ev.clientX - r.left, y: ev.clientY - r.top};
+  };
+  const inicio = ev=>{
+    if(bloqueado) return;
+    ev.preventDefault();
+    try{ area.setPointerCapture(ev.pointerId); }catch(e){}
+    esfregando = true;
+    ultimoPonto = posicao(ev);
+    ferramenta.classList.add('ativa');
+    mostrarFerramenta(ultimoPonto);
+    avancarBanho(70);          // um toque simples já rende um pouquinho
+  };
+  const mover = ev=>{
+    const p = posicao(ev);
+    mostrarFerramenta(p);
+    if(!esfregando || !ultimoPonto) return;
+    ev.preventDefault();
+    const d = Math.min(60, Math.hypot(p.x-ultimoPonto.x, p.y-ultimoPonto.y));
+    ultimoPonto = p;
+    if(d > 1) avancarBanho(d);
+  };
+  const fim = ()=>{ esfregando = false; ultimoPonto = null; ferramenta.classList.remove('ativa'); };
+
+  function mostrarFerramenta(p){
+    ferramenta.style.left = p.x + 'px';
+    ferramenta.style.top  = p.y + 'px';
+  }
+
+  area.addEventListener('pointerdown', inicio);
+  area.addEventListener('pointermove', mover);
+  area.addEventListener('pointerup', fim);
+  area.addEventListener('pointercancel', fim);
+}
+
+function avancarBanho(dist){
+  const passo = PASSOS_BANHO[banhoPasso];
+  if(!passo || bloqueado) return;
+  const passoFrac = dist / DISTANCIA_PASSO;
+
+  if(passo.id === 'molhar'){
+    salao.agua = Math.min(1, salao.agua + passoFrac);
+    salao.sujo = Math.max(0.45, salao.sujo - passoFrac*0.4);
+  }else if(passo.id === 'shampoo'){
+    salao.espuma = Math.min(1, salao.espuma + passoFrac);
+    salao.sujo = Math.max(0, salao.sujo - passoFrac*1.3);
+  }else if(passo.id === 'enxaguar'){
+    salao.espuma = Math.max(0, salao.espuma - passoFrac);
+    salao.sujo = 0;
+  }else if(passo.id === 'secar'){
+    salao.agua = Math.max(0, salao.agua - passoFrac);
+  }else{
+    salao.bagunca = Math.max(0, salao.bagunca - passoFrac);
+  }
+
+  // som contínuo enquanto esfrega
+  const agora = performance.now();
+  if(agora - ultimoSomAgua > 320){
+    ultimoSomAgua = agora;
+    if(passo.id === 'molhar' || passo.id === 'enxaguar') somRuido(0.35, 2600, 0.09);
+    else if(passo.id === 'shampoo') somRuido(0.35, 900, 0.08);
+    else if(passo.id === 'secar') somRuido(0.35, 700, 0.10);
+    else somPente();
+  }
+
+  $('#rosto').innerHTML = svgRosto(salao);
+  const barra = $('#barraBanho');
+  if(barra) barra.style.width = Math.round(Math.max(0, Math.min(1, progressoAtual()))*100) + '%';
+
+  if(progressoAtual() >= 0.995) concluirPasso();
+}
+
+function concluirPasso(){
+  const passo = PASSOS_BANHO[banhoPasso];
+  if(passo.id === 'molhar') salao.agua = 1;
+  if(passo.id === 'shampoo') salao.espuma = 1;
+  if(passo.id === 'enxaguar'){ salao.espuma = 0; salao.sujo = 0; confete(8); }
+  if(passo.id === 'secar') salao.agua = 0;
+  if(passo.id === 'pentear') salao.bagunca = 0;
+
+  banhoPasso++;
+  esfregando = false; ultimoPonto = null;
+  somAcerto();
+
+  if(banhoPasso >= PASSOS_BANHO.length){
+    salaoFase = 'visual';
+    confete(18);
+    aviso('Limpinha e penteada! ✨', true);
+    falar('Prontinho, limpinha e penteada! Agora o visual.', false, 'festa');
+  }else{
+    falar(PASSOS_BANHO[banhoPasso].fala, false);
+  }
+  desenharSalao();
+}
+
+async function conferirVisual(){
+  if(bloqueado) return;
+  somToque();
+  const faltas = salaoPedido.itens.filter(i=>salao[i.id] !== i.valor);
+
+  if(faltas.length){
+    errou();
+    aviso('Faltou: ' + faltas[0].nome, false);
+    falar('Ainda falta ' + faltas.map(f=>f.nome).join(' e ') + '.', false, 'calmo');
+    // leva direto para a aba do que falta
+    salaoAba = faltas[0].aba;
+    desenharSalao();
+    return;
+  }
+  bloqueado = true;
+  acertou('Ficou lindo!');
+  confete(26);
+  salaoCliente++;
+  rodada = salaoCliente;
+  atualizaPlacar();
+  await espera(1600);
+  bloqueado = false;
+  if(salaoCliente >= 5){ fimDeJogo(); return; }
+  novoCliente();
+}
+
+function salvarFoto(){
+  somToque();
+  try{
+    const svg = svgRosto(salao);
+    const url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    const img = new Image();
+    img.onload = ()=>{
+      const cv = document.createElement('canvas');
+      cv.width = 600; cv.height = 690;
+      const c = cv.getContext('2d');
+      c.drawImage(img, 0, 0, 600, 690);
+      const a = document.createElement('a');
+      a.download = 'meu-visual.png';
+      a.href = cv.toDataURL('image/png');
+      a.click();
+      aviso('Foto salva! 📷', true);
+    };
+    img.onerror = ()=>aviso('Não deu para salvar', false);
+    img.src = url;
+  }catch(e){ aviso('Não deu para salvar', false); }
+}
+
+/* ==========================================================
+   JOGO DA FORCA (8 a 11 anos)
+   ========================================================== */
+const PALAVRAS_FORCA = [
+  {p:'ELEFANTE',   d:'animal'},   {p:'TARTARUGA',  d:'animal'},
+  {p:'BORBOLETA',  d:'animal'},   {p:'GOLFINHO',   d:'animal'},
+  {p:'JACARE',     d:'animal'},   {p:'PINGUIM',    d:'animal'},
+  {p:'GIRAFA',     d:'animal'},   {p:'BALEIA',     d:'animal'},
+  {p:'CHOCOLATE',  d:'comida'},   {p:'MELANCIA',   d:'comida'},
+  {p:'ABACAXI',    d:'comida'},   {p:'SORVETE',    d:'comida'},
+  {p:'MORANGO',    d:'comida'},   {p:'PIPOCA',     d:'comida'},
+  {p:'BRIGADEIRO', d:'comida'},   {p:'LASANHA',    d:'comida'},
+  {p:'ESCOLA',     d:'lugar'},    {p:'BIBLIOTECA', d:'lugar'},
+  {p:'FLORESTA',   d:'lugar'},    {p:'MONTANHA',   d:'lugar'},
+  {p:'CASTELO',    d:'lugar'},    {p:'AEROPORTO',  d:'lugar'},
+  {p:'PADARIA',    d:'lugar'},    {p:'HOSPITAL',   d:'lugar'},
+  {p:'BICICLETA',  d:'objeto'},   {p:'COMPUTADOR', d:'objeto'},
+  {p:'GUITARRA',   d:'objeto'},   {p:'TELEFONE',   d:'objeto'},
+  {p:'MOCHILA',    d:'objeto'},   {p:'RELOGIO',    d:'objeto'},
+  {p:'GELADEIRA',  d:'objeto'},   {p:'TESOURA',    d:'objeto'},
+  {p:'VULCAO',     d:'natureza'}, {p:'CACHOEIRA',  d:'natureza'},
+  {p:'ARCOIRIS',   d:'natureza'}, {p:'PLANETA',    d:'natureza'},
+  {p:'TEMPESTADE', d:'natureza'}, {p:'GIRASSOL',   d:'natureza'},
+  {p:'FUTEBOL',    d:'esporte'},  {p:'NATACAO',    d:'esporte'},
+  {p:'VOLEIBOL',   d:'esporte'},  {p:'BASQUETE',   d:'esporte'},
+  {p:'CICLISMO',   d:'esporte'}
+];
+const ALFABETO = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const MAX_ERROS = 6;
+let forcaAlvo = null, forcaUsadas = [], forcaErros = 0, forcaJaSorteadas = [];
+
+// bonequinho pendurado na barra como quem brinca no trapézio (nada sombrio)
+function desenhoForca(erros){
+  const t = '#6B4226';
+  let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+    <rect width="200" height="200" fill="#F7F4FF" rx="18"/>
+    <rect x="26" y="168" width="120" height="12" rx="6" fill="${t}"/>
+    <rect x="46" y="34" width="12" height="140" rx="6" fill="${t}"/>
+    <rect x="46" y="28" width="98" height="12" rx="6" fill="${t}"/>
+    <rect x="136" y="34" width="7" height="26" rx="3.5" fill="#B98B5E"/>`;
+  if(erros >= 1) s += `<circle cx="139" cy="80" r="20" fill="#FFD9A8" stroke="#C79A6B" stroke-width="3"/>
+    <circle cx="132" cy="77" r="2.6" fill="#3A2B20"/><circle cx="146" cy="77" r="2.6" fill="#3A2B20"/>
+    <path d="M131 88 q8 7 16 0" stroke="#3A2B20" stroke-width="2.6" fill="none" stroke-linecap="round"/>`;
+  if(erros >= 2) s += `<rect x="131" y="99" width="16" height="42" rx="8" fill="#5B8DEF"/>`;
+  if(erros >= 3) s += `<path d="M133 104 L120 74" stroke="#FFD9A8" stroke-width="8" stroke-linecap="round"/>`;
+  if(erros >= 4) s += `<path d="M145 104 L158 74" stroke="#FFD9A8" stroke-width="8" stroke-linecap="round"/>`;
+  if(erros >= 5) s += `<path d="M134 140 L126 168" stroke="#3F51B5" stroke-width="9" stroke-linecap="round"/>`;
+  if(erros >= 6) s += `<path d="M144 140 L152 168" stroke="#3F51B5" stroke-width="9" stroke-linecap="round"/>`;
+  return s + '</svg>';
+}
+
+function jogoForca(){
+  maxPontos = 6; totalRodadas = 6;
+  forcaJaSorteadas = [];
+  $('#palco').className = 'palco compacto';
+  novaPalavraForca();
+}
+function novaPalavraForca(){
+  let pool = PALAVRAS_FORCA.filter(w=>!forcaJaSorteadas.includes(w.p));
+  if(!pool.length){ forcaJaSorteadas = []; pool = PALAVRAS_FORCA; }
+  forcaAlvo = escolha(pool);
+  forcaJaSorteadas.push(forcaAlvo.p);
+  forcaUsadas = []; forcaErros = 0;
+  $('#palco').innerHTML = `
+    <div class="pergunta">Adivinhe a palavra</div>
+    <div class="pedido" id="dicaForca">Dica: <b>${forcaAlvo.d}</b> — palavra ${rodada+1} de 6</div>
+    <div class="forca-area">
+      <div class="forca-desenho" id="desenhoForca"></div>
+      <div class="forca-lado">
+        <div class="palavraForca" id="palavraForca"></div>
+        <div class="vidasForca" id="vidasForca"></div>
+      </div>
+    </div>
+    <div class="teclado" id="teclado"></div>`;
+  desenharForca();
+  falar(`Adivinhe a palavra. A dica é: ${forcaAlvo.d}.`);
+}
+function desenharForca(){
+  $('#desenhoForca').innerHTML = desenhoForca(forcaErros);
+  $('#palavraForca').innerHTML = forcaAlvo.p.split('').map(l=>
+    `<span class="slotForca${forcaUsadas.includes(l)?' cheio':''}">${forcaUsadas.includes(l)?l:''}</span>`).join('');
+  $('#vidasForca').innerHTML = '❤️'.repeat(MAX_ERROS - forcaErros) + '🤍'.repeat(forcaErros);
+  $('#teclado').innerHTML = ALFABETO.map(l=>{
+    const usada = forcaUsadas.includes(l);
+    const cls = usada ? (forcaAlvo.p.includes(l) ? 'tecla ok' : 'tecla nao') : 'tecla';
+    return `<button class="${cls}" data-l="${l}" ${usada?'disabled':''}>${l}</button>`;
+  }).join('');
+  $('#teclado').querySelectorAll('.tecla').forEach(b=>b.onclick=()=>chutarLetra(b.dataset.l));
+}
+async function chutarLetra(l){
+  if(bloqueado || forcaUsadas.includes(l)) return;
+  somToque();
+  forcaUsadas.push(l);
+  const tem = forcaAlvo.p.includes(l);
+  if(!tem) forcaErros++;
+  desenharForca();
+
+  const completou = forcaAlvo.p.split('').every(c=>forcaUsadas.includes(c));
+  if(completou){
+    bloqueado = true;
+    acertou(`A palavra era ${forcaAlvo.p}.`);
+    confete(20);
+    rodada++; atualizaPlacar();
+    await espera(1700);
+    bloqueado = false;
+    if(rodada >= totalRodadas){ fimDeJogo(); return; }
+    novaPalavraForca();
+    return;
+  }
+  if(!tem){
+    if(forcaErros >= MAX_ERROS){
+      bloqueado = true;
+      somErro(); aviso(`Era ${forcaAlvo.p}!`, false);
+      falar(`A palavra era ${forcaAlvo.p}. Vamos para a próxima!`, false, 'calmo');
+      // mostra a palavra inteira antes de seguir
+      forcaUsadas = [...new Set([...forcaUsadas, ...forcaAlvo.p.split('')])];
+      desenharForca();
+      rodada++; atualizaPlacar();
+      await espera(2400);
+      bloqueado = false;
+      if(rodada >= totalRodadas){ fimDeJogo(); return; }
+      novaPalavraForca();
+    }else{
+      errou();
+    }
+  }
 }
 
 /* ============ catálogo ============ */
@@ -1132,7 +2597,9 @@ const CATALOGO = [
   {id:'memoria',  g:'p', ico:'🧠', nome:'Memória',          desc:'6 pares de bichinhos',    cor:'c4', fn:()=>jogoMemoria(6)},
   {id:'corrida',  g:'p', ico:'🚗', nome:'Corrida',          desc:'Toque rápido e vença',    cor:'c2', fn:()=>jogoCorrida(false), rodadas:3},
   {id:'puzzle',   g:'p', ico:'🧩', nome:'Quebra-cabeça',    desc:'Monte a figura (3×3)',    cor:'c3', fn:()=>jogoPuzzle(3), rodadas:3},
-  {id:'mira',     g:'p', ico:'🎯', nome:'Mira Certeira',    desc:'Toque nos alvos',         cor:'c1', fn:()=>jogoMira(false), rodadas:12},
+  {id:'estilingue',g:'p', ico:'🎯', nome:'Estilingue',       desc:'Derrube os porquinhos',   cor:'c1', fn:()=>jogoEstilingue(true), rodadas:3},
+  {id:'duelo',    g:'p', ico:'💥', nome:'Duelo de Canhões',  desc:'Mire e derrube o robô',   cor:'c5', fn:()=>jogoDuelo(true), rodadas:3},
+  {id:'salao',    g:'p', ico:'💄', nome:'Salão de Beleza',   desc:'Cabelo, maquiagem e rosto', cor:'c6', fn:()=>jogoSalao(false), rodadas:5},
   // 8 a 11 anos
   {id:'tabuada',  g:'g', ico:'✖️', nome:'Tabuada',          desc:'Do 2 ao 10',              cor:'c2', fn:jogoTabuada},
   {id:'contas',   g:'g', ico:'🧮', nome:'Contas Rápidas',   desc:'+  −  ×  ÷',              cor:'c3', fn:jogoContas},
@@ -1142,7 +2609,10 @@ const CATALOGO = [
   {id:'memoria2', g:'g', ico:'🧠', nome:'Memória Turbo',    desc:'8 pares',                 cor:'c4', fn:()=>jogoMemoria(8)},
   {id:'corrida2', g:'g', ico:'🏎️', nome:'Corrida Turbo',    desc:'Rival mais rápido',       cor:'c2', fn:()=>jogoCorrida(true), rodadas:3},
   {id:'puzzle2',  g:'g', ico:'🧩', nome:'Quebra-cabeça',    desc:'Monte a figura (4×4)',    cor:'c3', fn:()=>jogoPuzzle(4), rodadas:3},
-  {id:'mira2',    g:'g', ico:'🎯', nome:'Mira Turbo',       desc:'Alvos rápidos e bombas',  cor:'c1', fn:()=>jogoMira(true), rodadas:12}
+  {id:'estilingue2',g:'g',ico:'🎯', nome:'Estilingue Turbo', desc:'Fases mais difíceis',     cor:'c1', fn:()=>jogoEstilingue(false), rodadas:3},
+  {id:'duelo2',   g:'g', ico:'💥', nome:'Duelo Turbo',      desc:'Robô com boa pontaria',   cor:'c5', fn:()=>jogoDuelo(false), rodadas:3},
+  {id:'salao2',   g:'g', ico:'💄', nome:'Salão de Beleza',   desc:'Pedidos com 3 itens',     cor:'c6', fn:()=>jogoSalao(true), rodadas:5},
+  {id:'forca',    g:'g', ico:'🔠', nome:'Jogo da Forca',     desc:'Adivinhe a palavra',      cor:'c3', fn:jogoForca, rodadas:6}
 ];
 const porId = id => CATALOGO.find(j=>j.id===id);
 
@@ -1164,6 +2634,7 @@ function abrirMenu(grupo){
 function iniciarJogo(id){
   const j = porId(id); if(!j) return;
   limparTimers();
+  $('#palco').className = 'palco';
   jogoAtual = id; rodada = 0; estrelas = 0; bloqueado = false;
   totalRodadas = j.rodadas || (j.g === 'g' ? 10 : 8);
   maxPontos = totalRodadas;
@@ -1200,6 +2671,15 @@ $('#btnVoltar').onclick = ()=>{ if('speechSynthesis' in window) speechSynthesis.
 $('#btnMenu').onclick   = ()=>{ somToque(); abrirMenu(grupoAtual); };
 $('#btnDeNovo').onclick = ()=>{ somToque(); iniciarJogo(jogoAtual); };
 $('#btnRepetir').onclick= ()=>{ somToque(); falar(ultimaFala, false); };
+$('#btnSom').onclick = ()=>{
+  mudo = !mudo;
+  const b = $('#btnSom');
+  b.textContent = mudo ? '🔇' : '🔊';
+  b.classList.toggle('mudo', mudo);
+  b.setAttribute('aria-pressed', String(!mudo));
+  if(mudo){ if('speechSynthesis' in window) speechSynthesis.cancel(); aviso('Som desligado 🔇', true); }
+  else { somToque(); aviso('Som ligado 🔊', true); }
+};
 $('#btnVoz').onclick = ()=>{
   vozLigada = !vozLigada;
   $('#btnVoz').textContent = vozLigada ? '🔊' : '🔇';
@@ -1208,12 +2688,8 @@ $('#btnVoz').onclick = ()=>{
   else falar('Oi! Vamos brincar?', false, 'festa');
   somToque();
 };
-$('#selVoz').onchange = (e)=>{
-  vozEscolhida = vozesPt.find(v=>v.name===e.target.value) || vozEscolhida;
-  vozLigada = true;
-  $('#btnVoz').textContent = '🔊';
-  falar('Oi! Eu sou a sua amiga dos jogos. Vamos brincar?', false, 'festa');
-};
+$('#btnAbrirVozes').onclick = ()=>{ somToque(); destravarVoz(); abrirVozes(); };
+$('#btnVozVoltar').onclick = ()=>{ somToque(); if('speechSynthesis' in window) speechSynthesis.cancel(); mostrarTela('menu'); };
 
 // evita zoom por duplo toque no iOS
 let ultimoToque = 0;
@@ -1230,7 +2706,23 @@ window.__jogo = {
   get estado(){ return {jogoAtual, rodada, estrelas, totalRodadas, grupoAtual}; },
   get anagrama(){ return anagramaAtual ? {palavra:anagramaAtual.palavra, montado:anagramaAtual.montado.slice()} : null; },
   get puzzle(){ return {n:puzN, ordem:puzOrdem.slice(), sel:puzSel}; },
-  get maxPontos(){ return maxPontos; }
+  get maxPontos(){ return maxPontos; },
+  svgRosto(v,t){ return svgRosto(v,t); },
+  abrirVozes, get taxaVoz(){ return taxaVoz; },
+  get vozes(){ return vozesPt.map(v=>({nome:v.name, lang:v.lang, local:v.localService, selo:selo(v).t})); },
+  get vozAtual(){ return vozEscolhida ? vozEscolhida.name : null; },
+  get forca(){ return forcaAlvo ? {palavra:forcaAlvo.p, dica:forcaAlvo.d, erros:forcaErros} : null; },
+  get salaoFase(){ return {fase:salaoFase, passo:banhoPasso, bagunca:salao?salao.bagunca:0,
+    sujo:salao?salao.sujo:0, agua:salao?salao.agua:0, espuma:salao?salao.espuma:0,
+    progresso: salao?progressoAtual():0}; },
+  get pedidoItens(){ return salaoPedido ? salaoPedido.itens.map(i=>({id:i.id, nome:i.nome, valor:i.valor})) : null; },
+  esfregar(d){ avancarBanho(d); },
+  get salaoInfo(){ return salaoPedido ? salaoPedido.itens.map(i=>i.nome) : null; },
+  atenderPedido(){ if(!salaoPedido) return; salaoPedido.itens.forEach(i=>{ salao[i.id] = i.valor; }); desenharSalao(); },
+  get cena(){ return {
+    corpos: corpos.filter(b=>b.vivo && b.tipo!=='chao').map(b=>({t:b.tipo,x:Math.round(b.x),y:Math.round(b.y)})),
+    bolas: estBolas, fase: estFase, pronto: !!(estBola && estBola.estatico && !estEsperando), vida: {eu:dVida.eu, pc:dVida.pc}, duelo: dDuelo, vez: dVez
+  }; }
 };
 })();
 </script>
