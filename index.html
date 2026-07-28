@@ -31,15 +31,13 @@
   }
   button{font-family:inherit; cursor:pointer; border:none; background:none; color:inherit}
 
-  /* ---------- telas ---------- */
   .tela{display:none; flex:1; flex-direction:column; min-height:0}
   .tela.ativa{display:flex}
 
   /* ---------- capa ---------- */
   #capa{
     align-items:center; justify-content:center; text-align:center; gap:6px; padding:20px;
-    background:linear-gradient(160deg,#6C5CE7,#8B7CF6 45%,#3AA3F5);
-    color:#fff;
+    background:linear-gradient(160deg,#6C5CE7,#8B7CF6 45%,#3AA3F5); color:#fff;
   }
   #capa h1{font-size:clamp(34px,10vw,64px); margin:0; line-height:1.05; text-shadow:0 6px 0 rgba(0,0,0,.15)}
   #capa p{font-size:clamp(15px,4.2vw,20px); opacity:.92; margin:4px 0 22px; max-width:22ch}
@@ -51,64 +49,101 @@
   .btn-grande:active{transform:translateY(6px); box-shadow:0 2px 0 #d99f00}
   .emojizinhos{font-size:clamp(30px,9vw,46px); letter-spacing:6px; margin-bottom:6px}
 
+  /* ---------- idades ---------- */
+  #idades{padding:18px 14px 24px; align-items:center; justify-content:center; gap:16px}
+  #idades h2{margin:0 0 4px; font-size:clamp(22px,6vw,32px); text-align:center}
+  .idade{
+    width:100%; max-width:520px; border-radius:var(--raio); padding:22px 18px; color:#fff; text-align:left;
+    display:flex; align-items:center; gap:16px;
+    box-shadow:0 8px 0 rgba(0,0,0,.18), 0 12px 24px rgba(0,0,0,.12);
+    transition:transform .1s, box-shadow .1s;
+  }
+  .idade:active{transform:translateY(5px); box-shadow:0 3px 0 rgba(0,0,0,.18)}
+  .idade .ico{font-size:clamp(42px,13vw,60px); line-height:1; flex:0 0 auto}
+  .idade .txt{flex:1}
+  .idade .nome{font-size:clamp(20px,5.6vw,26px); font-weight:800; display:block}
+  .idade .desc{font-size:clamp(13px,3.6vw,15px); opacity:.92; line-height:1.3}
+  .ip{background:linear-gradient(150deg,#FF7BC1,#E5468F)}
+  .ig{background:linear-gradient(150deg,#3AA3F5,#1E6FD9)}
+
   /* ---------- menu ---------- */
   #menu{padding:14px 14px 22px}
-  .topo{display:flex; align-items:center; gap:10px; margin-bottom:12px; flex-wrap:wrap}
-  .topo h2{margin:0; font-size:clamp(20px,5.5vw,28px); flex:1}
+  .topo{display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:8px; margin-bottom:12px}
+  .topo h2{margin:0; font-size:clamp(16px,4.4vw,24px); min-width:0; white-space:nowrap;
+           overflow:hidden; text-overflow:ellipsis}
+  .topo-dir{display:flex; align-items:center; gap:6px; justify-self:end}
   .cartoes{
-    display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px;
-    flex:1; align-content:center; width:100%; max-width:760px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(148px,1fr)); gap:12px;
+    flex:1; align-content:center; width:100%; max-width:820px; margin:0 auto;
   }
   .cartao{
-    border-radius:var(--raio); padding:18px 14px; color:#fff; text-align:center;
+    border-radius:var(--raio); padding:16px 12px; color:#fff; text-align:center;
     box-shadow:0 8px 0 rgba(0,0,0,.18), 0 12px 24px rgba(0,0,0,.12);
-    display:flex; flex-direction:column; align-items:center; gap:8px; min-height:150px; justify-content:center;
+    display:flex; flex-direction:column; align-items:center; gap:6px; min-height:142px; justify-content:center;
     transition:transform .1s, box-shadow .1s;
   }
   .cartao:active{transform:translateY(5px); box-shadow:0 3px 0 rgba(0,0,0,.18)}
-  .cartao .ico{font-size:clamp(40px,12vw,58px); line-height:1}
-  .cartao .nome{font-size:clamp(17px,4.6vw,21px); font-weight:800}
-  .cartao .desc{font-size:13px; opacity:.9; line-height:1.25}
+  .cartao .ico{font-size:clamp(34px,10vw,50px); line-height:1}
+  .cartao .nome{font-size:clamp(15px,4.2vw,19px); font-weight:800; line-height:1.15}
+  .cartao .desc{font-size:12.5px; opacity:.92; line-height:1.25}
   .c1{background:linear-gradient(150deg,#FF7BC1,#E5468F)}
   .c2{background:linear-gradient(150deg,#3AA3F5,#1E6FD9)}
   .c3{background:linear-gradient(150deg,#2FBF71,#159B58)}
   .c4{background:linear-gradient(150deg,#FF9448,#EA6A1B)}
+  .c5{background:linear-gradient(150deg,#8B7CF6,#5B4BE0)}
+  .c6{background:linear-gradient(150deg,#FFC93C,#E09A00)}
 
-  /* ---------- barra do jogo ---------- */
+  /* ---------- barra ---------- */
   .barra{
-    display:flex; align-items:center; gap:10px; padding:10px 12px;
+    display:flex; align-items:center; gap:8px; padding:10px 12px;
     background:#fff; border-bottom:3px solid rgba(0,0,0,.06); position:sticky; top:0; z-index:5;
   }
   .btn-icone{
-    width:52px; height:52px; border-radius:18px; background:#EDE9FF; color:var(--roxo);
-    font-size:26px; display:flex; align-items:center; justify-content:center; font-weight:800; flex:0 0 auto;
+    width:50px; height:50px; border-radius:18px; background:#EDE9FF; color:var(--roxo);
+    font-size:24px; display:flex; align-items:center; justify-content:center; font-weight:800; flex:0 0 auto;
   }
   .btn-icone:active{background:#ddd6ff}
-  .titulo-jogo{flex:1; font-size:clamp(16px,4.6vw,21px); font-weight:800; text-align:center}
+  .titulo-jogo{flex:1; font-size:clamp(15px,4.2vw,20px); font-weight:800; text-align:center; line-height:1.15}
   .placar{
     background:#FFF4D1; color:#8a6100; font-weight:800; border-radius:16px; padding:8px 12px;
-    font-size:clamp(15px,4.2vw,19px); white-space:nowrap;
+    font-size:clamp(14px,4vw,18px); white-space:nowrap;
   }
   .progresso{height:10px; background:#E6E1FA}
   .progresso i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--verde),#7BE3AE); transition:width .3s}
 
-  /* ---------- area de jogo ---------- */
+  /* ---------- palco ---------- */
   .palco{
     flex:1; display:flex; flex-direction:column; align-items:center; justify-content:space-evenly;
     gap:10px; padding:16px 14px 26px; min-height:0; text-align:center;
   }
-  .pergunta{font-size:clamp(19px,5vw,30px); font-weight:800; line-height:1.25; max-width:24ch}
+  .pergunta{font-size:clamp(19px,5vw,30px); font-weight:800; line-height:1.25; max-width:26ch}
+  .subtexto{font-size:clamp(13px,3.6vw,17px); opacity:.65; margin-top:-4px}
   .destaque{
     font-size:min(26vw,22vh,170px); font-weight:900; line-height:1;
     color:var(--roxo); text-shadow:0 6px 0 rgba(91,75,224,.18);
   }
   .destaque.pequeno{font-size:min(20vw,18vh,130px)}
+  .conta{
+    font-size:min(15vw,11vh,86px); font-weight:900; color:var(--roxo); line-height:1.1;
+    text-shadow:0 5px 0 rgba(91,75,224,.16); letter-spacing:2px;
+  }
   .contagem{
     display:grid; gap:6px 10px; justify-items:center; align-items:center;
     max-width:min(92vw,560px); font-size:min(13vw,8vh,68px); line-height:1;
   }
   .contagem span{animation:pop .3s backwards}
   @keyframes pop{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+  .grupos{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center;
+          font-size:min(11vw,7vh,54px); line-height:1.1}
+  .grupos .mais{font-size:min(9vw,6vh,44px); font-weight:900; color:var(--roxo)}
+  .grupos .caixa{background:#fff; border-radius:20px; padding:10px 12px; box-shadow:0 5px 0 rgba(0,0,0,.1);
+                 max-width:min(40vw,220px); line-height:1.15}
+
+  .sequencia{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; align-items:center;
+             font-size:min(11vw,7vh,56px)}
+  .sequencia .item{background:#fff; border-radius:18px; padding:6px 10px; box-shadow:0 4px 0 rgba(0,0,0,.1); min-width:1.4em}
+  .sequencia .item.num{font-size:min(8vw,5vh,40px); font-weight:900; color:var(--escuro)}
+  .sequencia .vazio{background:#EDE9FF; color:var(--roxo); font-weight:900}
 
   .opcoes{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; width:100%; max-width:620px}
   .op{
@@ -123,15 +158,83 @@
   .op.errado{background:#FFE0E0; box-shadow:0 6px 0 #FF5D5D; animation:tremer .4s}
   .op.apagado{opacity:.35}
   .op svg{width:min(18vw,10vh,100px); height:min(18vw,10vh,100px)}
+  .opcoes.num .op{font-size:min(11vw,7vh,54px); min-height:min(22vw,92px)}
+  .opcoes.texto{max-width:640px}
+  .opcoes.texto .op{
+    flex:1 1 44%; max-width:none; min-height:68px; padding:14px 12px;
+    font-size:clamp(15px,4.2vw,21px); font-weight:800; line-height:1.25; text-align:center; word-break:break-word;
+  }
   @keyframes tada{0%{transform:scale(1)}30%{transform:scale(1.16) rotate(-4deg)}60%{transform:scale(1.16) rotate(4deg)}100%{transform:scale(1)}}
   @keyframes tremer{0%,100%{transform:translateX(0)}25%{transform:translateX(-9px)}75%{transform:translateX(9px)}}
+
+  /* ---------- anagrama ---------- */
+  .montada{
+    display:flex; gap:6px; flex-wrap:wrap; justify-content:center; min-height:64px; align-items:center;
+  }
+  .montada .slot{
+    width:clamp(34px,9vw,52px); height:clamp(46px,12vw,66px); border-radius:14px; background:#EDE9FF;
+    display:flex; align-items:center; justify-content:center;
+    font-size:clamp(20px,5.5vw,32px); font-weight:900; color:var(--roxo);
+  }
+  .montada .slot.cheio{background:#fff; box-shadow:0 4px 0 rgba(0,0,0,.12); color:var(--escuro)}
+  .letras{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; max-width:600px}
+  .letra{
+    width:clamp(44px,12vw,66px); height:clamp(52px,14vw,74px); border-radius:16px; background:#fff;
+    box-shadow:0 5px 0 rgba(0,0,0,.14); font-size:clamp(22px,6vw,34px); font-weight:900;
+    display:flex; align-items:center; justify-content:center; transition:transform .1s, opacity .15s;
+  }
+  .letra:active{transform:translateY(4px)}
+  .letra.usada{opacity:.25; pointer-events:none}
+  .btn-apagar{background:#EDE9FF; color:var(--roxo); font-weight:800; border-radius:999px;
+              padding:12px 22px; font-size:clamp(15px,4vw,18px); box-shadow:0 5px 0 rgba(0,0,0,.1)}
+
+  /* ---------- corrida ---------- */
+  .pista{width:100%; max-width:600px; display:flex; flex-direction:column; gap:10px}
+  .faixa{
+    position:relative; height:clamp(58px,15vw,84px); border-radius:22px; overflow:hidden;
+    background:#fff; box-shadow:0 5px 0 rgba(0,0,0,.1);
+  }
+  .faixa.eu{background:linear-gradient(90deg,#EDE9FF,#fff)}
+  .faixa .chegada{position:absolute; right:8px; top:6px; bottom:6px; width:12px; border-radius:4px;
+    background:repeating-linear-gradient(45deg,#2C2350 0 6px,#fff 6px 12px)}
+  .faixa .veiculo{position:absolute; top:50%; transform:translate(-50%,-50%);
+    font-size:clamp(28px,8vw,44px); transition:left .12s linear}
+  .faixa .quem{position:absolute; left:10px; top:6px; font-size:12px; font-weight:800; opacity:.5}
+  .btn-turbo{
+    background:var(--amarelo); color:#5a3d00; font-size:clamp(20px,6vw,28px); font-weight:900;
+    padding:22px 44px; border-radius:999px; box-shadow:0 8px 0 #d99f00; width:min(90%,420px);
+  }
+  .btn-turbo:active{transform:translateY(6px); box-shadow:0 2px 0 #d99f00}
+
+  /* ---------- quebra-cabeça ---------- */
+  .puzzle{
+    display:grid; gap:4px; width:min(88vw,52vh,420px); aspect-ratio:1/1;
+    background:#fff; padding:6px; border-radius:22px; box-shadow:0 6px 0 rgba(0,0,0,.12);
+  }
+  .peca{background-repeat:no-repeat; border-radius:8px; transition:transform .12s, outline-color .12s;
+        outline:4px solid transparent; outline-offset:-4px}
+  .peca.sel{outline-color:var(--roxo); transform:scale(.9)}
+  .miniatura{width:clamp(56px,16vw,88px); border-radius:12px; box-shadow:0 4px 0 rgba(0,0,0,.12)}
+
+  /* ---------- mira ---------- */
+  .arena{
+    position:relative; width:100%; max-width:600px; flex:1; min-height:min(58vh,430px);
+    background:linear-gradient(160deg,#E8F4FF,#fff); border-radius:24px; overflow:hidden;
+    box-shadow:inset 0 0 0 4px rgba(91,75,224,.08);
+  }
+  .alvo{
+    position:absolute; transform:translate(-50%,-50%) scale(0); font-size:clamp(44px,13vw,72px);
+    transition:transform .16s ease-out; line-height:1;
+  }
+  .alvo.entrou{transform:translate(-50%,-50%) scale(1)}
+  .alvo.pequeno{font-size:clamp(34px,10vw,56px)}
 
   /* ---------- memoria ---------- */
   .grade{display:grid; gap:10px; width:100%; max-width:min(460px,58vh); margin:auto}
   .carta{position:relative; aspect-ratio:1/1; perspective:700px}
   .carta .face{
     position:absolute; inset:0; border-radius:20px; display:flex; align-items:center; justify-content:center;
-    font-size:clamp(30px,10vw,52px); backface-visibility:hidden; -webkit-backface-visibility:hidden;
+    font-size:min(9vw,7vh,46px); backface-visibility:hidden; -webkit-backface-visibility:hidden;
     transition:transform .35s; box-shadow:0 5px 0 rgba(0,0,0,.14);
   }
   .carta .costas{background:linear-gradient(150deg,var(--roxo2),var(--roxo)); color:#fff}
@@ -143,30 +246,35 @@
 
   /* ---------- feedback / fim ---------- */
   .aviso{
-    position:fixed; left:50%; top:16%; transform:translate(-50%,-20px); z-index:20;
-    background:#fff; padding:14px 26px; border-radius:999px; font-size:clamp(20px,5.5vw,28px); font-weight:900;
+    position:fixed; left:50%; top:14%; transform:translate(-50%,-20px); z-index:20;
+    background:#fff; padding:14px 26px; border-radius:999px; font-size:clamp(19px,5vw,27px); font-weight:900;
     box-shadow:0 10px 30px rgba(0,0,0,.2); opacity:0; pointer-events:none; transition:opacity .2s, transform .2s;
+    max-width:88vw; text-align:center;
   }
   .aviso.mostra{opacity:1; transform:translate(-50%,0)}
   .aviso.bom{color:var(--verde)} .aviso.ops{color:var(--vermelho)}
 
   #fim{align-items:center; justify-content:center; text-align:center; gap:14px; padding:24px;
        background:linear-gradient(160deg,#FFD86F,#FC9842)}
-  #fim .troféu{font-size:clamp(70px,22vw,130px); animation:tada 1s infinite}
+  #fim .trofeu{font-size:clamp(70px,22vw,130px); animation:tada 1s infinite}
   #fim h2{font-size:clamp(26px,8vw,44px); margin:0; color:#6b3d00; max-width:16ch}
   #fim p{font-size:clamp(16px,4.4vw,23px); margin:0; color:#7a4a00; font-weight:700; max-width:20ch; line-height:1.3}
   .linha-botoes{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:10px}
-  .btn2{background:#fff; color:var(--roxo); font-weight:800; font-size:clamp(17px,4.6vw,21px);
-        padding:16px 26px; border-radius:999px; box-shadow:0 6px 0 rgba(0,0,0,.15)}
+  .btn2{background:#fff; color:var(--roxo); font-weight:800; font-size:clamp(16px,4.4vw,20px);
+        padding:16px 24px; border-radius:999px; box-shadow:0 6px 0 rgba(0,0,0,.15)}
   .btn2:active{transform:translateY(4px); box-shadow:0 2px 0 rgba(0,0,0,.15)}
 
   .confete{position:fixed; top:-20px; font-size:24px; z-index:15; pointer-events:none; animation:cair linear forwards}
   @keyframes cair{to{transform:translateY(110vh) rotate(720deg); opacity:.2}}
 
   .rodape{text-align:center; font-size:12px; opacity:.5; padding:8px}
-  .sw{display:flex; align-items:center; gap:6px; font-size:14px; font-weight:700; color:#fff;
-      background:rgba(255,255,255,.18); padding:8px 12px; border-radius:999px}
-  #menu .sw{color:var(--roxo); background:#EDE9FF}
+  .sw{display:flex; align-items:center; gap:6px; font-size:14px; font-weight:700; color:var(--roxo);
+      background:#EDE9FF; padding:9px 12px; border-radius:999px}
+  .selvoz{
+    font-family:inherit; font-size:12.5px; font-weight:700; color:var(--roxo); background:#EDE9FF;
+    border:none; border-radius:999px; padding:10px 8px; max-width:32vw; appearance:none;
+  }
+  .sw{font-size:18px; padding:9px 13px}
 </style>
 </head>
 <body>
@@ -175,34 +283,41 @@
 <section id="capa" class="tela ativa">
   <div class="emojizinhos">🎈 🧸 🚀 🦄 🐠</div>
   <h1>Mundo dos Jogos</h1>
-  <p>Brincadeiras para aprender letras, números, cores e memória</p>
+  <p>Brincadeiras para aprender jogando</p>
   <button class="btn-grande" id="btnComecar">▶ Começar</button>
+</section>
+
+<!-- ================= IDADES ================= -->
+<section id="idades" class="tela">
+  <h2>Quantos anos você tem?</h2>
+  <button class="idade ip" data-grupo="p">
+    <span class="ico">🧸</span>
+    <span class="txt">
+      <span class="nome">5 a 7 anos</span>
+      <span class="desc">Letras, contar, cores, formas, sequências e memória</span>
+    </span>
+  </button>
+  <button class="idade ig" data-grupo="g">
+    <span class="ico">🚀</span>
+    <span class="txt">
+      <span class="nome">8 a 11 anos</span>
+      <span class="desc">Tabuada, contas, palavras, sequências, quiz e memória turbo</span>
+    </span>
+  </button>
+  <div class="rodape">Dá para trocar de idade a qualquer momento</div>
 </section>
 
 <!-- ================= MENU ================= -->
 <section id="menu" class="tela">
   <div class="topo">
-    <h2>Escolha uma brincadeira</h2>
-    <button class="sw" id="btnVoz" aria-pressed="true">🔊 Voz</button>
+    <button class="btn-icone" id="btnVoltarIdades" aria-label="Trocar idade">←</button>
+    <h2 id="tituloMenu">Escolha uma brincadeira</h2>
+    <span class="topo-dir">
+      <select class="selvoz" id="selVoz" aria-label="Escolher voz" hidden></select>
+      <button class="sw" id="btnVoz" aria-pressed="true">🔊</button>
+    </span>
   </div>
-  <div class="cartoes">
-    <button class="cartao c1" data-jogo="letras">
-      <span class="ico">🔤</span><span class="nome">Letras e Sons</span>
-      <span class="desc">Com que letra começa?</span>
-    </button>
-    <button class="cartao c2" data-jogo="numeros">
-      <span class="ico">🔢</span><span class="nome">Contar</span>
-      <span class="desc">Quantos você vê?</span>
-    </button>
-    <button class="cartao c3" data-jogo="cores">
-      <span class="ico">🎨</span><span class="nome">Cores e Formas</span>
-      <span class="desc">Ache o certo!</span>
-    </button>
-    <button class="cartao c4" data-jogo="memoria">
-      <span class="ico">🧠</span><span class="nome">Memória</span>
-      <span class="desc">Ache os pares</span>
-    </button>
-  </div>
+  <div class="cartoes" id="cartoes"></div>
   <div class="rodape">Feito com carinho • funciona sem internet</div>
 </section>
 
@@ -220,7 +335,7 @@
 
 <!-- ================= FIM ================= -->
 <section id="fim" class="tela">
-  <div class="troféu">🏆</div>
+  <div class="trofeu">🏆</div>
   <h2 id="fimTitulo">Muito bem!</h2>
   <p id="fimTexto"></p>
   <div class="linha-botoes">
@@ -241,11 +356,23 @@ const rnd = n => Math.floor(Math.random()*n);
 const escolha = a => a[rnd(a.length)];
 const embaralhar = a => { const b=a.slice(); for(let i=b.length-1;i>0;i--){const j=rnd(i+1);[b[i],b[j]]=[b[j],b[i]];} return b; };
 const espera = ms => new Promise(r=>setTimeout(r,ms));
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+// timers dos jogos com tempo (corrida / mira) — sempre limpos ao trocar de tela
+let timers = [], intervalos = [];
+function agendar(fn, ms){ const t=setTimeout(fn,ms); timers.push(t); return t; }
+function repetir(fn, ms){ const t=setInterval(fn,ms); intervalos.push(t); return t; }
+function limparTimers(){
+  timers.forEach(clearTimeout); timers = [];
+  intervalos.forEach(clearInterval); intervalos = [];
+  corridaAtiva = false;
+}
 
 function mostrarTela(id){
   document.querySelectorAll('.tela').forEach(t=>t.classList.remove('ativa'));
   $('#'+id).classList.add('ativa');
   document.querySelectorAll('.confete').forEach(c=>c.remove());
+  if(id !== 'jogo'){ limparTimers(); const p = $('#palco'); if(p) p.innerHTML = ''; }
   window.scrollTo(0,0);
 }
 
@@ -274,35 +401,78 @@ const somErro   = ()=>tocar([300,220],0.16,'sine',0.15);
 const somToque  = ()=>tocar([660],0.06,'square',0.08);
 const somFesta  = ()=>tocar([523,659,784,1047,1319,1047,1319],0.13,'triangle',0.2);
 
-/* ============ voz (pt-BR) ============ */
+/* ============ voz (pt-BR, feminina e alegre) ============ */
 let vozLigada = true;
-let vozPtBr = null;
+let vozEscolhida = null;
+let vozesPt = [];
+
+const NOMES_FEM = /luciana|francisca|maria|joana|in[eê]s|fernanda|camila|helena|leticia|let[ií]cia|thalita|catarina|raquel|brenda|giovanna|yara|female|mulher/i;
+const NOMES_MASC = /daniel|ricardo|felipe|ant[oô]nio|j[uú]lio|heitor|donato|f[aá]bio|duarte|male|masculin|homem/i;
+const MELHORES = /premium|enhanced|neural|natural|siri|wavenet|studio/i;
+
+function pontuarVoz(v){
+  const nome = (v.name||'');
+  let p = 0;
+  if(/pt[-_]BR/i.test(v.lang)) p += 100;
+  else if(/^pt/i.test(v.lang)) p += 45;
+  else return -1;
+  if(MELHORES.test(nome)) p += 35;
+  if(/google/i.test(nome)) p += 25;
+  if(NOMES_FEM.test(nome)) p += 30;
+  if(NOMES_MASC.test(nome)) p -= 60;
+  if(v.localService === false) p += 5;
+  return p;
+}
 function carregarVozes(){
   if(!('speechSynthesis' in window)) return;
-  const vs = speechSynthesis.getVoices()||[];
-  vozPtBr = vs.find(v=>/pt[-_]BR/i.test(v.lang)) || vs.find(v=>/^pt/i.test(v.lang)) || null;
+  const todas = speechSynthesis.getVoices() || [];
+  vozesPt = todas.filter(v=>/^pt/i.test(v.lang)).sort((a,b)=>pontuarVoz(b)-pontuarVoz(a));
+  if(vozesPt.length && (!vozEscolhida || !vozesPt.some(v=>v.name===vozEscolhida.name))) vozEscolhida = vozesPt[0];
+  montarSeletorVoz();
+}
+function montarSeletorVoz(){
+  const sel = $('#selVoz'); if(!sel) return;
+  if(vozesPt.length < 2){ sel.hidden = true; return; }
+  const atual = vozEscolhida ? vozEscolhida.name : '';
+  if(sel.dataset.qtd !== String(vozesPt.length)){
+    sel.innerHTML = vozesPt.map(v=>`<option value="${esc(v.name)}">🎙️ ${esc(v.name.replace(/\(.*?\)/g,'').trim().slice(0,20))}</option>`).join('');
+    sel.dataset.qtd = String(vozesPt.length);
+  }
+  sel.value = atual;
+  sel.hidden = false;
 }
 if('speechSynthesis' in window){
   carregarVozes();
   speechSynthesis.onvoiceschanged = carregarVozes;
 }
+
 let ultimaFala = '';
-function falar(texto, guardar=true){
+// tom: 'normal' (instrução) | 'festa' (elogio) | 'calmo' (incentivo)
+function falar(texto, guardar=true, tom='normal'){
   if(guardar) ultimaFala = texto;
   if(!vozLigada || !('speechSynthesis' in window) || !texto) return;
   try{
     speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(texto);
-    u.lang = 'pt-BR';
-    if(vozPtBr) u.voice = vozPtBr;
-    u.rate = 0.92; u.pitch = 1.15;
-    speechSynthesis.speak(u);
+    const partes = (String(texto).match(/[^,.!?]+[,.!?]*/g) || [String(texto)])
+                    .map(s=>s.trim()).filter(Boolean);
+    partes.forEach((parte, i)=>{
+      const u = new SpeechSynthesisUtterance(parte);
+      u.lang = 'pt-BR';
+      try{ if(vozEscolhida) u.voice = vozEscolhida; }catch(e){}
+      if(tom === 'festa'){ u.rate = 1.05; u.pitch = 1.45; }
+      else if(tom === 'calmo'){ u.rate = 0.9; u.pitch = 1.12; u.volume = .95; }
+      else { u.rate = 0.97; u.pitch = 1.28; }
+      u.pitch += (i % 2 ? -0.04 : 0.04);
+      speechSynthesis.speak(u);
+    });
   }catch(e){}
 }
 function destravarVoz(){
   if(!('speechSynthesis' in window)) return;
   try{ const u=new SpeechSynthesisUtterance(' '); u.volume=0; speechSynthesis.speak(u); }catch(e){}
   carregarVozes();
+  setTimeout(carregarVozes, 400);
+  setTimeout(carregarVozes, 1500);
 }
 
 /* ============ feedback visual ============ */
@@ -361,117 +531,81 @@ const CORES = [
   {n:'rosa', h:'#FF6FB5'}, {n:'marrom', h:'#A0693C'}
 ];
 const FORMAS = {
-  'círculo':      c=>`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="${c}"/></svg>`,
-  'quadrado':     c=>`<svg viewBox="0 0 100 100"><rect x="8" y="8" width="84" height="84" rx="8" fill="${c}"/></svg>`,
-  'triângulo':    c=>`<svg viewBox="0 0 100 100"><polygon points="50,8 94,90 6,90" fill="${c}"/></svg>`,
-  'estrela':      c=>`<svg viewBox="0 0 100 100"><polygon points="50,5 61,38 96,38 68,59 79,93 50,72 21,93 32,59 4,38 39,38" fill="${c}"/></svg>`,
-  'coração':      c=>`<svg viewBox="0 0 100 100"><path d="M50 88 L14 52 A21 21 0 0 1 50 24 A21 21 0 0 1 86 52 Z" fill="${c}"/></svg>`,
-  'retângulo':    c=>`<svg viewBox="0 0 100 100"><rect x="6" y="26" width="88" height="48" rx="7" fill="${c}"/></svg>`,
-  'losango':      c=>`<svg viewBox="0 0 100 100"><polygon points="50,5 95,50 50,95 5,50" fill="${c}"/></svg>`
+  'círculo':   c=>`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="${c}"/></svg>`,
+  'quadrado':  c=>`<svg viewBox="0 0 100 100"><rect x="8" y="8" width="84" height="84" rx="8" fill="${c}"/></svg>`,
+  'triângulo': c=>`<svg viewBox="0 0 100 100"><polygon points="50,8 94,90 6,90" fill="${c}"/></svg>`,
+  'estrela':   c=>`<svg viewBox="0 0 100 100"><polygon points="50,5 61,38 96,38 68,59 79,93 50,72 21,93 32,59 4,38 39,38" fill="${c}"/></svg>`,
+  'coração':   c=>`<svg viewBox="0 0 100 100"><path d="M50 88 L14 52 A21 21 0 0 1 50 24 A21 21 0 0 1 86 52 Z" fill="${c}"/></svg>`,
+  'retângulo': c=>`<svg viewBox="0 0 100 100"><rect x="6" y="26" width="88" height="48" rx="7" fill="${c}"/></svg>`,
+  'losango':   c=>`<svg viewBox="0 0 100 100"><polygon points="50,5 95,50 50,95 5,50" fill="${c}"/></svg>`
 };
 const NOMES_FORMAS = Object.keys(FORMAS);
-// artigo de cada forma, para as frases ficarem corretas em português
 const ARTIGO = {'círculo':'o','quadrado':'o','triângulo':'o','estrela':'a','coração':'o','retângulo':'o','losango':'o'};
 
-const ELOGIOS = ['Muito bem!','Isso mesmo!','Boa!','Você é craque!','Acertou!','Perfeito!','Uhul!'];
-const ANIMOS  = ['Quase! Tenta de novo.','Ops! Olha de novo.','Não faz mal, tenta outra vez.'];
+// palavras para o jogo de anagrama (8-11 anos)
+const PALAVRAS_GRANDES = [
+  {p:'ESCOLA',e:'🏫'},{p:'CACHORRO',e:'🐶'},{p:'BICICLETA',e:'🚲'},{p:'GIRAFA',e:'🦒'},
+  {p:'COMPUTADOR',e:'💻'},{p:'FLORESTA',e:'🌳'},{p:'GUITARRA',e:'🎸'},{p:'MONTANHA',e:'⛰️'},
+  {p:'SORVETE',e:'🍦'},{p:'FOGUETE',e:'🚀'},{p:'DINOSSAURO',e:'🦕'},{p:'BORBOLETA',e:'🦋'},
+  {p:'ELEFANTE',e:'🐘'},{p:'ABACAXI',e:'🍍'},{p:'CHOCOLATE',e:'🍫'},{p:'TARTARUGA',e:'🐢'},
+  {p:'BIBLIOTECA',e:'📚'},{p:'TELEFONE',e:'☎️'},{p:'PINGUIM',e:'🐧'},{p:'CASTELO',e:'🏰'},
+  {p:'MORANGO',e:'🍓'},{p:'PLANETA',e:'🪐'},{p:'ORQUESTRA',e:'🎻'},{p:'VULCAO',e:'🌋'}
+];
+
+// quiz: fatos escolares consolidados
+const QUIZ = [
+  {q:'Qual é a capital do Brasil?', c:'Brasília', e:['Rio de Janeiro','São Paulo','Salvador']},
+  {q:'Qual é a capital da Bahia?', c:'Salvador', e:['Recife','Fortaleza','Natal']},
+  {q:'Qual é a capital de Minas Gerais?', c:'Belo Horizonte', e:['Uberlândia','Ouro Preto','Goiânia']},
+  {q:'Qual é a capital do Amazonas?', c:'Manaus', e:['Belém','Boa Vista','Porto Velho']},
+  {q:'Qual é a capital do Rio Grande do Sul?', c:'Porto Alegre', e:['Curitiba','Florianópolis','Pelotas']},
+  {q:'Qual é a capital do Ceará?', c:'Fortaleza', e:['Natal','Teresina','São Luís']},
+  {q:'Qual é o maior planeta do Sistema Solar?', c:'Júpiter', e:['Saturno','Terra','Netuno']},
+  {q:'Qual planeta fica mais perto do Sol?', c:'Mercúrio', e:['Vênus','Marte','Terra']},
+  {q:'Quantos planetas tem o Sistema Solar?', c:'8', e:['7','9','10']},
+  {q:'Qual é o satélite natural da Terra?', c:'A Lua', e:['O Sol','Marte','Vênus']},
+  {q:'Qual é o maior oceano do mundo?', c:'Oceano Pacífico', e:['Oceano Atlântico','Oceano Índico','Oceano Ártico']},
+  {q:'Qual é o maior mamífero do mundo?', c:'Baleia-azul', e:['Elefante','Girafa','Urso-polar']},
+  {q:'Qual é o animal terrestre mais rápido?', c:'Guepardo', e:['Leão','Cavalo','Avestruz']},
+  {q:'Quantas patas tem uma aranha?', c:'8', e:['6','4','10']},
+  {q:'Qual órgão bombeia o sangue pelo corpo?', c:'O coração', e:['O pulmão','O fígado','O estômago']},
+  {q:'Qual gás as plantas absorvem na fotossíntese?', c:'Gás carbônico', e:['Oxigênio','Nitrogênio','Hidrogênio']},
+  {q:'A água ferve a quantos graus, no nível do mar?', c:'100 °C', e:['50 °C','80 °C','120 °C']},
+  {q:'Quantos minutos tem uma hora?', c:'60', e:['30','90','100']},
+  {q:'Quantos dias tem um ano bissexto?', c:'366', e:['365','364','367']},
+  {q:'Quantos lados tem um hexágono?', c:'6', e:['5','7','8']},
+  {q:'Quantos lados tem um pentágono?', c:'5', e:['4','6','7']},
+  {q:'Qual é a moeda oficial do Brasil?', c:'Real', e:['Peso','Dólar','Euro']},
+  {q:'Qual é o idioma oficial do Brasil?', c:'Português', e:['Espanhol','Inglês','Italiano']},
+  {q:'Em que país fica a Torre Eiffel?', c:'França', e:['Itália','Inglaterra','Espanha']},
+  {q:'Quem escreveu "O Sítio do Picapau Amarelo"?', c:'Monteiro Lobato', e:['Machado de Assis','Cecília Meireles','Jorge Amado']},
+  {q:'Quantos jogadores de um time ficam em campo no futebol?', c:'11', e:['10','9','12']},
+  {q:'Qual é o maior estado brasileiro em área?', c:'Amazonas', e:['Pará','Minas Gerais','Bahia']},
+  {q:'Que animal é famoso por mudar de cor?', c:'Camaleão', e:['Jacaré','Tucano','Coruja']},
+  {q:'Qual instrumento tem teclas pretas e brancas?', c:'Piano', e:['Violino','Flauta','Bateria']},
+  {q:'Quantas cores costumam ser citadas no arco-íris?', c:'7', e:['5','6','8']}
+];
+
+const ELOGIOS = ['Muito bem!','Isso mesmo!','Boa!','Você é craque!','Acertou!','Perfeito!','Uhul!','Que legal!','Arrasou!'];
+const ANIMOS  = ['Quase! Tenta de novo.','Ops! Olha de novo.','Não faz mal, tenta outra vez.','Calma, você consegue!'];
 
 /* ============ estado ============ */
-const TOTAL_RODADAS = 8;
-let jogoAtual=null, rodada=0, estrelas=0, bloqueado=false;
+let jogoAtual=null, rodada=0, estrelas=0, bloqueado=false, totalRodadas=8, grupoAtual='p', maxPontos=8;
 
 function atualizaPlacar(){
   $('#placar').textContent = '⭐ ' + estrelas;
-  $('#barraProg').style.width = Math.min(100, (rodada/TOTAL_RODADAS)*100) + '%';
+  $('#barraProg').style.width = Math.min(100, (rodada/totalRodadas)*100) + '%';
 }
-
 function acertou(msg){
   estrelas++; somAcerto(); aviso(escolha(ELOGIOS), true);
-  falar(msg || escolha(ELOGIOS), false);
+  falar(escolha(ELOGIOS) + (msg ? ' ' + msg : ''), false, 'festa');
 }
 function errou(){
-  somErro(); aviso('Ops!', false); falar(escolha(ANIMOS), false);
+  somErro(); aviso('Ops!', false); falar(escolha(ANIMOS), false, 'calmo');
 }
 
-/* ============ JOGO 1 — LETRAS ============ */
-function jogoLetras(){
-  const alvo = escolha(PALAVRAS);
-  const outras = embaralhar(PALAVRAS.filter(p=>p.l!==alvo.l)).slice(0,2);
-  const ops = embaralhar([alvo, ...outras]);
-  const modo = Math.random()<0.5 ? 'letra' : 'figura';
-  const palco = $('#palco');
-
-  if(modo==='letra'){
-    // mostra a figura, criança escolhe a LETRA
-    palco.innerHTML = `
-      <div class="pergunta">Com que letra começa <b>${alvo.p}</b>?</div>
-      <div class="destaque pequeno">${alvo.e}</div>
-      <div class="opcoes">${ops.map(o=>`<button class="op" data-l="${o.l}">${o.l}</button>`).join('')}</div>`;
-    falar(`Com que letra começa ${alvo.p}?`);
-    palco.querySelectorAll('.op').forEach(b=>b.onclick=()=>responder(b, b.dataset.l===alvo.l,
-      `${alvo.p} começa com ${alvo.l}!`, palco.querySelector(`.op[data-l="${alvo.l}"]`)));
-  }else{
-    // mostra a letra, criança escolhe a FIGURA
-    palco.innerHTML = `
-      <div class="pergunta">Toque no que começa com a letra</div>
-      <div class="destaque">${alvo.l}</div>
-      <div class="opcoes">${ops.map(o=>`<button class="op" data-p="${o.p}">${o.e}</button>`).join('')}</div>`;
-    falar(`Toque no que começa com a letra ${alvo.l}`);
-    palco.querySelectorAll('.op').forEach(b=>b.onclick=()=>responder(b, b.dataset.p===alvo.p,
-      `${alvo.p} começa com ${alvo.l}!`, palco.querySelector(`.op[data-p="${alvo.p}"]`)));
-  }
-}
-
-/* ============ JOGO 2 — NÚMEROS ============ */
-function jogoNumeros(){
-  const n = 1 + rnd(10);
-  const obj = escolha(OBJETOS);
-  const cand = new Set([n]);
-  while(cand.size<3){ let v = Math.max(1, Math.min(10, n + (rnd(5)-2))); if(v!==n||cand.size<1) cand.add(v); if(cand.size<3) cand.add(1+rnd(10)); }
-  const ops = embaralhar([...cand]).slice(0,3);
-  if(!ops.includes(n)) ops[0]=n;
-  const palco = $('#palco');
-  palco.innerHTML = `
-    <div class="pergunta">Quantos você vê?</div>
-    <div class="contagem" style="grid-template-columns:repeat(${Math.min(n,5)},auto)">${Array.from({length:n},(_,i)=>`<span style="animation-delay:${i*0.05}s">${obj}</span>`).join('')}</div>
-    <div class="opcoes">${embaralhar(ops).map(v=>`<button class="op" data-v="${v}">${v}</button>`).join('')}</div>`;
-  falar('Quantos você vê? Conte com o dedinho!');
-  palco.querySelectorAll('.op').forEach(b=>b.onclick=()=>responder(b, +b.dataset.v===n,
-    `São ${NUM_NOME[n]}!`, palco.querySelector(`.op[data-v="${n}"]`)));
-}
-
-/* ============ JOGO 3 — CORES E FORMAS ============ */
-function jogoCores(){
-  const palco = $('#palco');
-  const modo = Math.random()<0.5 ? 'cor' : 'forma';
-
-  if(modo==='cor'){
-    const cs = embaralhar(CORES).slice(0,3);
-    const alvo = cs[0];
-    const f = escolha(NOMES_FORMAS);
-    palco.innerHTML = `
-      <div class="pergunta">Toque no <b>${alvo.n.toUpperCase()}</b></div>
-      <div class="opcoes">${embaralhar(cs).map(c=>`<button class="op" data-c="${c.n}">${FORMAS[f](c.h)}</button>`).join('')}</div>`;
-    falar(`Toque no ${alvo.n}`);
-    palco.querySelectorAll('.op').forEach(b=>b.onclick=()=>responder(b, b.dataset.c===alvo.n,
-      `Esse é o ${alvo.n}!`, palco.querySelector(`.op[data-c="${alvo.n}"]`)));
-  }else{
-    const fs = embaralhar(NOMES_FORMAS).slice(0,3);
-    const alvo = fs[0];
-    const cor = escolha(CORES).h;
-    const art = ARTIGO[alvo] || 'o';
-    const dem = art === 'a' ? 'Essa é a' : 'Esse é o';
-    palco.innerHTML = `
-      <div class="pergunta">Onde está ${art} <b>${alvo.toUpperCase()}</b>?</div>
-      <div class="opcoes">${embaralhar(fs).map(f=>`<button class="op" data-f="${f}">${FORMAS[f](cor)}</button>`).join('')}</div>`;
-    falar(`Onde está ${art} ${alvo}?`);
-    palco.querySelectorAll('.op').forEach(b=>b.onclick=()=>responder(b, b.dataset.f===alvo,
-      `${dem} ${alvo}!`, palco.querySelector(`.op[data-f="${alvo}"]`)));
-  }
-}
-
-/* resposta padrão dos jogos 1-3 */
-async function responder(botao, certo, fala, botaoCerto){
+/* resposta padrão dos jogos de múltipla escolha */
+async function responder(botao, certo, fala){
   if(bloqueado) return;
   somToque();
   if(certo){
@@ -490,17 +624,289 @@ async function responder(botao, certo, fala, botaoCerto){
     setTimeout(()=>botao.classList.remove('errado'),450);
   }
 }
+// monta um bloco de opções e liga os cliques
+function ligarOpcoes(valorCerto, fala, attr='v'){
+  $('#palco').querySelectorAll('.op').forEach(b=>{
+    b.onclick = ()=>responder(b, b.dataset[attr] === String(valorCerto), fala);
+  });
+}
+// gera distratores numéricos próximos do valor certo
+function distratores(certo, qtd, min, max){
+  const s = new Set([certo]);
+  let tentativas = 0;
+  while(s.size < qtd+1 && tentativas < 200){
+    tentativas++;
+    let d = certo + (rnd(2)?1:-1) * (1 + rnd(Math.max(3, Math.round(Math.abs(certo)*0.25))));
+    if(d < min) d = min + rnd(3);
+    if(d > max) d = max - rnd(3);
+    if(Number.isFinite(d)) s.add(d);
+  }
+  let n = min;
+  while(s.size < qtd+1){ if(!s.has(n)) s.add(n); n++; }
+  const arr = [...s].filter(v=>v!==certo).slice(0,qtd);
+  return embaralhar([certo, ...arr]);
+}
 
-/* ============ JOGO 4 — MEMÓRIA ============ */
-let memPrimeira=null, memPares=0, memTotal=0;
-function jogoMemoria(){
-  const pares = 6;
-  memPares = 0; memTotal = pares; memPrimeira = null;
-  const bichos = embaralhar(['🐶','🐱','🐼','🦊','🐸','🦁','🐵','🐷','🐰','🐨','🐮','🐔']).slice(0,pares);
-  const cartas = embaralhar([...bichos,...bichos]);
+/* ============ 5-7: LETRAS ============ */
+function jogoLetras(){
+  const alvo = escolha(PALAVRAS);
+  const outras = embaralhar(PALAVRAS.filter(p=>p.l!==alvo.l)).slice(0,2);
+  const ops = embaralhar([alvo, ...outras]);
   const palco = $('#palco');
-  const cols = 4;
-  palco.innerHTML = `
+  if(Math.random()<0.5){
+    palco.innerHTML = `
+      <div class="pergunta">Com que letra começa <b>${alvo.p}</b>?</div>
+      <div class="destaque pequeno">${alvo.e}</div>
+      <div class="opcoes">${ops.map(o=>`<button class="op" data-v="${o.l}">${o.l}</button>`).join('')}</div>`;
+    falar(`Com que letra começa ${alvo.p}?`);
+    ligarOpcoes(alvo.l, `${alvo.p} começa com ${alvo.l}.`);
+  }else{
+    palco.innerHTML = `
+      <div class="pergunta">Toque no que começa com a letra</div>
+      <div class="destaque">${alvo.l}</div>
+      <div class="opcoes">${ops.map(o=>`<button class="op" data-v="${esc(o.p)}">${o.e}</button>`).join('')}</div>`;
+    falar(`Toque no que começa com a letra ${alvo.l}`);
+    ligarOpcoes(alvo.p, `${alvo.p} começa com ${alvo.l}.`);
+  }
+}
+
+/* ============ 5-7: CONTAR ============ */
+function jogoNumeros(){
+  const n = 1 + rnd(10);
+  const obj = escolha(OBJETOS);
+  const ops = distratores(n, 2, 1, 10);
+  $('#palco').innerHTML = `
+    <div class="pergunta">Quantos você vê?</div>
+    <div class="contagem" style="grid-template-columns:repeat(${Math.min(n,5)},auto)">${
+      Array.from({length:n},(_,i)=>`<span style="animation-delay:${i*0.05}s">${obj}</span>`).join('')}</div>
+    <div class="opcoes num">${ops.map(v=>`<button class="op" data-v="${v}">${v}</button>`).join('')}</div>`;
+  falar('Quantos você vê? Conte com o dedinho!');
+  ligarOpcoes(n, `São ${NUM_NOME[n]}.`);
+}
+
+/* ============ 5-7: CORES E FORMAS ============ */
+function jogoCores(){
+  const palco = $('#palco');
+  if(Math.random()<0.5){
+    const cs = embaralhar(CORES).slice(0,3);
+    const alvo = cs[0];
+    const f = escolha(NOMES_FORMAS);
+    palco.innerHTML = `
+      <div class="pergunta">Toque no <b>${alvo.n.toUpperCase()}</b></div>
+      <div class="opcoes">${embaralhar(cs).map(c=>`<button class="op" data-v="${c.n}">${FORMAS[f](c.h)}</button>`).join('')}</div>`;
+    falar(`Toque no ${alvo.n}`);
+    ligarOpcoes(alvo.n, `Esse é o ${alvo.n}.`);
+  }else{
+    const fs = embaralhar(NOMES_FORMAS).slice(0,3);
+    const alvo = fs[0];
+    const cor = escolha(CORES).h;
+    const art = ARTIGO[alvo] || 'o';
+    palco.innerHTML = `
+      <div class="pergunta">Onde está ${art} <b>${alvo.toUpperCase()}</b>?</div>
+      <div class="opcoes">${embaralhar(fs).map(f=>`<button class="op" data-v="${esc(f)}">${FORMAS[f](cor)}</button>`).join('')}</div>`;
+    falar(`Onde está ${art} ${alvo}?`);
+    ligarOpcoes(alvo, `${art==='a'?'Essa é a':'Esse é o'} ${alvo}.`);
+  }
+}
+
+/* ============ 5-7: O QUE VEM DEPOIS? ============ */
+function jogoPadrao(){
+  const bichos = embaralhar(['🍎','🌟','🐸','🚗','🎈','🐝','🍀','🐠','🌸','🧁']);
+  const tipo = escolha(['AB','AAB','ABC','ABB']);
+  const [A,B,C] = bichos;
+  let base;
+  if(tipo==='AB') base=[A,B];
+  else if(tipo==='AAB') base=[A,A,B];
+  else if(tipo==='ABB') base=[A,B,B];
+  else base=[A,B,C];
+  const seq = [];
+  while(seq.length < 7) seq.push(base[seq.length % base.length]);
+  const resposta = seq[6];
+  const mostrados = seq.slice(0,6);
+  const ops = embaralhar([...new Set([resposta, ...bichos.filter(b=>b!==resposta).slice(0,2)])]);
+  $('#palco').innerHTML = `
+    <div class="pergunta">O que vem depois?</div>
+    <div class="sequencia">${mostrados.map(s=>`<span class="item">${s}</span>`).join('')}<span class="item vazio">?</span></div>
+    <div class="opcoes">${ops.map(o=>`<button class="op" data-v="${o}">${o}</button>`).join('')}</div>`;
+  falar('Olhe a fileira. O que vem depois?');
+  ligarOpcoes(resposta, 'A sequência se repete!');
+}
+
+/* ============ 5-7: SOMAR ATÉ 10 ============ */
+function jogoSoma10(){
+  const a = 1 + rnd(5);
+  const b = 1 + rnd(Math.min(5, 10-a));
+  const total = a + b;
+  const obj = escolha(OBJETOS);
+  const ops = distratores(total, 2, 1, 12);
+  $('#palco').innerHTML = `
+    <div class="pergunta">Quantos ficam ao todo?</div>
+    <div class="grupos">
+      <span class="caixa">${obj.repeat(a)}</span>
+      <span class="mais">+</span>
+      <span class="caixa">${obj.repeat(b)}</span>
+    </div>
+    <div class="opcoes num">${ops.map(v=>`<button class="op" data-v="${v}">${v}</button>`).join('')}</div>`;
+  falar(`${NUM_NOME[a]} mais ${NUM_NOME[b]}. Quantos ficam ao todo?`);
+  ligarOpcoes(total, `${a} mais ${b} são ${total}.`);
+}
+
+/* ============ 8-11: TABUADA ============ */
+function jogoTabuada(){
+  const a = 2 + rnd(9), b = 2 + rnd(9);
+  const r = a*b;
+  const ops = distratores(r, 3, 4, 110);
+  $('#palco').innerHTML = `
+    <div class="pergunta">Quanto é?</div>
+    <div class="conta">${a} × ${b}</div>
+    <div class="opcoes num">${ops.map(v=>`<button class="op" data-v="${v}">${v}</button>`).join('')}</div>`;
+  falar(`Quanto é ${a} vezes ${b}?`);
+  ligarOpcoes(r, `${a} vezes ${b} é igual a ${r}.`);
+}
+
+/* ============ 8-11: CONTAS RÁPIDAS ============ */
+function jogoContas(){
+  const op = escolha(['+','-','×','÷']);
+  let a,b,r,fala;
+  if(op==='+'){ a=10+rnd(90); b=10+rnd(90); r=a+b; fala=`${a} mais ${b}`; }
+  else if(op==='-'){ a=20+rnd(80); b=1+rnd(a-1); r=a-b; fala=`${a} menos ${b}`; }
+  else if(op==='×'){ a=2+rnd(11); b=2+rnd(11); r=a*b; fala=`${a} vezes ${b}`; }
+  else { b=2+rnd(9); r=2+rnd(11); a=b*r; fala=`${a} dividido por ${b}`; }
+  const ops = distratores(r, 3, 1, Math.max(20, r*2));
+  $('#palco').innerHTML = `
+    <div class="pergunta">Resolva:</div>
+    <div class="conta">${a} ${op} ${b}</div>
+    <div class="opcoes num">${ops.map(v=>`<button class="op" data-v="${v}">${v}</button>`).join('')}</div>`;
+  falar(`Quanto é ${fala}?`);
+  ligarOpcoes(r, `O resultado é ${r}.`);
+}
+
+/* ============ 8-11: SEQUÊNCIA NUMÉRICA ============ */
+function jogoSequencia(){
+  const tipo = escolha(['soma','subtrai','dobra','quadrados','fib']);
+  let seq = [], dica = '';
+  if(tipo==='soma'){
+    const ini = 1+rnd(12), passo = 2+rnd(8);
+    for(let i=0;i<6;i++) seq.push(ini + i*passo);
+    dica = `A regra é somar ${passo} a cada passo.`;
+  }else if(tipo==='subtrai'){
+    const passo = 2+rnd(7), ini = 60+rnd(40);
+    for(let i=0;i<6;i++) seq.push(ini - i*passo);
+    dica = `A regra é tirar ${passo} a cada passo.`;
+  }else if(tipo==='dobra'){
+    const ini = 1+rnd(4);
+    for(let i=0;i<6;i++) seq.push(ini * Math.pow(2,i));
+    dica = 'A regra é dobrar o número anterior.';
+  }else if(tipo==='quadrados'){
+    const ini = 1+rnd(3);
+    for(let i=0;i<6;i++){ const n = ini+i; seq.push(n*n); }
+    dica = 'São os números multiplicados por eles mesmos.';
+  }else{
+    seq = [1,1,2,3,5,8,13];
+    dica = 'Cada número é a soma dos dois anteriores.';
+  }
+  const resposta = seq[5] !== undefined ? seq[5] : seq[seq.length-1];
+  const mostrados = seq.slice(0,5);
+  const ops = distratores(resposta, 3, 1, Math.max(20, resposta*2));
+  $('#palco').innerHTML = `
+    <div class="pergunta">Qual é o próximo número?</div>
+    <div class="sequencia">${mostrados.map(s=>`<span class="item num">${s}</span>`).join('')}<span class="item num vazio">?</span></div>
+    <div class="opcoes num">${ops.map(v=>`<button class="op" data-v="${v}">${v}</button>`).join('')}</div>`;
+  falar('Olhe a sequência. Qual é o próximo número?');
+  ligarOpcoes(resposta, dica);
+}
+
+/* ============ 8-11: QUIZ ============ */
+let quizUsadas = [];
+function jogoQuiz(){
+  let pool = QUIZ.filter(q=>!quizUsadas.includes(q.q));
+  if(!pool.length){ quizUsadas = []; pool = QUIZ; }
+  const q = escolha(pool);
+  quizUsadas.push(q.q);
+  const ops = embaralhar([q.c, ...q.e]);
+  $('#palco').innerHTML = `
+    <div class="pergunta">${esc(q.q)}</div>
+    <div class="opcoes texto">${ops.map(o=>`<button class="op" data-v="${esc(o)}">${esc(o)}</button>`).join('')}</div>`;
+  falar(q.q);
+  ligarOpcoes(q.c, `A resposta é ${q.c}.`);
+}
+
+/* ============ 8-11: PALAVRA EMBARALHADA ============ */
+let anagramaAtual = null;
+function jogoAnagrama(){
+  const item = escolha(PALAVRAS_GRANDES);
+  const letras = item.p.split('');
+  let mistura = embaralhar(letras);
+  if(mistura.join('') === item.p) mistura = embaralhar(mistura);
+  anagramaAtual = { palavra:item.p, montado:[], usados:[] };
+  $('#palco').innerHTML = `
+    <div class="pergunta">Monte a palavra</div>
+    <div class="destaque pequeno">${item.e}</div>
+    <div class="montada" id="montada">${letras.map(()=>`<span class="slot"></span>`).join('')}</div>
+    <div class="letras" id="letras">${mistura.map((l,i)=>`<button class="letra" data-i="${i}" data-l="${l}">${l}</button>`).join('')}</div>
+    <button class="btn-apagar" id="btnApagar">⌫ Apagar</button>`;
+  falar('Monte a palavra tocando nas letras.');
+  $('#letras').querySelectorAll('.letra').forEach(b=>b.onclick=()=>porLetra(b));
+  $('#btnApagar').onclick = tirarLetra;
+}
+function desenharAnagrama(){
+  const slots = $('#montada').querySelectorAll('.slot');
+  slots.forEach((s,i)=>{
+    const l = anagramaAtual.montado[i] || '';
+    s.textContent = l;
+    s.classList.toggle('cheio', !!l);
+  });
+}
+async function porLetra(botao){
+  if(bloqueado || anagramaAtual.montado.length >= anagramaAtual.palavra.length) return;
+  somToque();
+  anagramaAtual.montado.push(botao.dataset.l);
+  anagramaAtual.usados.push(botao);
+  botao.classList.add('usada');
+  desenharAnagrama();
+  if(anagramaAtual.montado.length === anagramaAtual.palavra.length){
+    if(anagramaAtual.montado.join('') === anagramaAtual.palavra){
+      bloqueado = true;
+      acertou(`A palavra é ${anagramaAtual.palavra}.`);
+      confete(16);
+      rodada++; atualizaPlacar();
+      await espera(1400);
+      bloqueado = false;
+      proximaRodada();
+    }else{
+      errou();
+      const m = $('#montada');
+      m.style.animation='tremer .4s';
+      await espera(700);
+      m.style.animation='';
+      limparAnagrama();
+    }
+  }
+}
+function tirarLetra(){
+  if(bloqueado || !anagramaAtual || !anagramaAtual.montado.length) return;
+  somToque();
+  anagramaAtual.montado.pop();
+  const b = anagramaAtual.usados.pop();
+  if(b) b.classList.remove('usada');
+  desenharAnagrama();
+}
+function limparAnagrama(){
+  anagramaAtual.montado = [];
+  anagramaAtual.usados.forEach(b=>b.classList.remove('usada'));
+  anagramaAtual.usados = [];
+  desenharAnagrama();
+}
+
+/* ============ MEMÓRIA (os dois grupos) ============ */
+let memPrimeira=null, memPares=0, memTotal=0;
+function jogoMemoria(pares){
+  memPares = 0; memTotal = pares; memPrimeira = null; maxPontos = pares;
+  const banco = ['🐶','🐱','🐼','🦊','🐸','🦁','🐵','🐷','🐰','🐨','🐮','🐔','🦄','🐢','🦋','🐳'];
+  const bichos = embaralhar(banco).slice(0,pares);
+  const cartas = embaralhar([...bichos,...bichos]);
+  const cols = pares > 6 ? 4 : 4;
+  $('#palco').innerHTML = `
     <div class="pergunta">Ache os pares iguais!</div>
     <div class="grade" style="grid-template-columns:repeat(${cols},1fr)">
       ${cartas.map((c,i)=>`
@@ -510,30 +916,27 @@ function jogoMemoria(){
         </div>`).join('')}
     </div>`;
   falar('Ache os pares iguais!');
-  palco.querySelectorAll('.carta').forEach(el=>el.onclick=()=>virarCarta(el));
+  $('#palco').querySelectorAll('.carta').forEach(el=>el.onclick=()=>virarCarta(el));
   $('#barraProg').style.width='0%';
 }
-
 async function virarCarta(el){
   if(bloqueado || el.classList.contains('virada') || el.classList.contains('achada')) return;
   somToque();
   el.classList.add('virada');
   if(!memPrimeira){ memPrimeira = el; return; }
   if(memPrimeira === el) return;
-
   bloqueado = true;
   const a = memPrimeira, b = el;
   memPrimeira = null;
   if(a.dataset.e === b.dataset.e){
     await espera(320);
     a.classList.add('achada'); b.classList.add('achada');
-    memPares++; estrelas++; atualizaPlacarMemoria();
-    somAcerto(); aviso(escolha(ELOGIOS), true); falar('Achou um par!', false); confete(10);
+    memPares++; estrelas++;
+    $('#placar').textContent = '⭐ ' + estrelas;
+    $('#barraProg').style.width = (memPares/memTotal*100) + '%';
+    somAcerto(); aviso(escolha(ELOGIOS), true); falar('Achou um par! ' + escolha(ELOGIOS), false, 'festa'); confete(10);
     bloqueado=false;
-    if(memPares === memTotal){
-      await espera(900);
-      fimDeJogo();
-    }
+    if(memPares === memTotal){ await espera(900); fimDeJogo(); }
   }else{
     errou();
     await espera(900);
@@ -541,59 +944,275 @@ async function virarCarta(el){
     bloqueado=false;
   }
 }
-function atualizaPlacarMemoria(){
-  $('#placar').textContent = '⭐ ' + estrelas;
-  $('#barraProg').style.width = (memPares/memTotal*100) + '%';
+
+/* ============ CORRIDA (toque rápido) ============ */
+let corridaAtiva = false, corridaNum = 0, corridaTotal = 3;
+function jogoCorrida(dificil){
+  corridaTotal = 3; corridaNum = 0; maxPontos = corridaTotal;
+  novaCorrida(dificil);
 }
+function novaCorrida(dificil){
+  corridaNum++;
+  const meuCarro = dificil ? '🏎️' : '🚗';
+  const rival = dificil ? '🚙' : '🐢';
+  let posEu = 0, posRival = 0;
+  corridaAtiva = true;
+  const passoEu = dificil ? 2.6 : 3.4;              // quanto anda por toque
+  const velRival = dificil ? 1.25 : 0.85;           // quanto o rival anda a cada tique
+
+  $('#palco').innerHTML = `
+    <div class="pergunta">Corrida ${corridaNum} de ${corridaTotal}</div>
+    <div class="subtexto">Toque bem rápido no botão para acelerar!</div>
+    <div class="pista">
+      <div class="faixa eu"><span class="quem">VOCÊ</span><span class="chegada"></span>
+        <span class="veiculo" id="vEu" style="left:8%">${meuCarro}</span></div>
+      <div class="faixa"><span class="quem">RIVAL</span><span class="chegada"></span>
+        <span class="veiculo" id="vRival" style="left:8%">${rival}</span></div>
+    </div>
+    <button class="btn-turbo" id="btnTurbo">🏁 ACELERAR!</button>`;
+
+  const elEu = $('#vEu'), elRival = $('#vRival');
+  const desenhar = ()=>{
+    elEu.style.left = (8 + posEu*0.82) + '%';
+    elRival.style.left = (8 + posRival*0.82) + '%';
+    $('#barraProg').style.width = Math.max(posEu, posRival) + '%';
+  };
+  falar(dificil ? 'Prepara... vai! Toque rápido para acelerar.' : 'Prepara... vai! Toque bem rápido!');
+
+  const acelerar = ()=>{
+    if(!corridaAtiva) return;
+    posEu = Math.min(100, posEu + passoEu);
+    tocar([420 + rnd(160)], 0.05, 'square', 0.06);
+    desenhar();
+    if(posEu >= 100) terminarCorrida(true, dificil);
+  };
+  const btn = $('#btnTurbo');
+  btn.onclick = acelerar;
+
+  repetir(()=>{
+    if(!corridaAtiva) return;
+    posRival = Math.min(100, posRival + velRival*(0.7 + Math.random()*0.7));
+    desenhar();
+    if(posRival >= 100) terminarCorrida(false, dificil);
+  }, 90);
+}
+async function terminarCorrida(ganhou, dificil){
+  if(!corridaAtiva) return;
+  corridaAtiva = false;
+  limparTimers();
+  if(ganhou){
+    estrelas++; $('#placar').textContent = '⭐ ' + estrelas;
+    somAcerto(); aviso('Você ganhou! 🏆', true); falar('Uhul! Você ganhou a corrida!', false, 'festa'); confete(24);
+  }else{
+    somErro(); aviso('O rival chegou primeiro!', false); falar('Quase! Na próxima você ganha.', false, 'calmo');
+  }
+  await espera(1600);
+  if(corridaNum >= corridaTotal) fimDeJogo();
+  else novaCorrida(dificil);
+}
+
+/* ============ QUEBRA-CABEÇA ============ */
+const CENAS = [
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><rect width="300" height="300" fill="#87CEEB"/><circle cx="238" cy="58" r="34" fill="#FFD93B"/><path d="M0 300 L95 145 L180 300Z" fill="#4CAF50"/><path d="M130 300 L225 120 L300 300Z" fill="#2E7D32"/><rect y="262" width="300" height="38" fill="#8D6E63"/><circle cx="70" cy="70" r="20" fill="#fff" opacity=".9"/><circle cx="95" cy="70" r="26" fill="#fff" opacity=".9"/></svg>`,
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><rect width="300" height="300" fill="#FFF3D6"/><rect x="140" y="150" width="16" height="130" fill="#4CAF50"/><ellipse cx="110" cy="200" rx="42" ry="20" fill="#66BB6A"/><ellipse cx="190" cy="225" rx="40" ry="18" fill="#66BB6A"/><g fill="#FF6FB5"><circle cx="148" cy="90" r="42"/><circle cx="100" cy="120" r="40"/><circle cx="196" cy="120" r="40"/><circle cx="120" cy="168" r="38"/><circle cx="176" cy="168" r="38"/></g><circle cx="148" cy="130" r="30" fill="#FFC93C"/></svg>`,
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><rect width="300" height="300" fill="#1B1B3A"/><g fill="#fff"><circle cx="40" cy="50" r="4"/><circle cx="250" cy="40" r="5"/><circle cx="90" cy="120" r="3"/><circle cx="260" cy="180" r="4"/><circle cx="50" cy="240" r="3"/><circle cx="200" cy="260" r="4"/></g><circle cx="235" cy="235" r="45" fill="#FFC93C"/><ellipse cx="235" cy="235" rx="70" ry="16" fill="none" stroke="#FF9448" stroke-width="8"/><path d="M150 40 C185 85 190 150 165 195 L135 195 C110 150 115 85 150 40Z" fill="#ECEFF1"/><circle cx="150" cy="110" r="22" fill="#3AA3F5"/><path d="M135 195 L110 240 L140 225Z" fill="#E53935"/><path d="M165 195 L190 240 L160 225Z" fill="#E53935"/><path d="M140 225 L150 275 L160 225Z" fill="#FF9448"/></svg>`,
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><rect width="300" height="300" fill="#1E88E5"/><rect y="245" width="300" height="55" fill="#FDD835"/><g fill="#4DD0E1" opacity=".5"><circle cx="60" cy="60" r="14"/><circle cx="110" cy="35" r="9"/><circle cx="240" cy="90" r="12"/></g><ellipse cx="150" cy="150" rx="80" ry="52" fill="#FF7043"/><polygon points="228,150 285,110 285,190" fill="#FF7043"/><circle cx="110" cy="135" r="12" fill="#fff"/><circle cx="106" cy="135" r="6" fill="#263238"/><path d="M150 100 q30 -30 55 -10" stroke="#FFB74D" stroke-width="10" fill="none"/><g fill="#2E7D32"><path d="M20 300 q15 -60 35 -70 q-5 45 5 70Z"/><path d="M265 300 q-15 -60 -35 -70 q5 45 -5 70Z"/></g></svg>`,
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><rect width="300" height="300" fill="#B3E5FC"/><rect y="230" width="300" height="70" fill="#81C784"/><rect x="70" y="140" width="160" height="110" fill="#FFE0B2"/><polygon points="150,60 255,145 45,145" fill="#E53935"/><rect x="130" y="185" width="42" height="65" fill="#8D6E63"/><circle cx="163" cy="220" r="4" fill="#FFC93C"/><rect x="88" y="165" width="34" height="34" fill="#4FC3F7" stroke="#fff" stroke-width="4"/><rect x="180" y="165" width="34" height="34" fill="#4FC3F7" stroke="#fff" stroke-width="4"/><circle cx="252" cy="52" r="26" fill="#FFD93B"/></svg>`
+];
+let puzN = 3, puzOrdem = [], puzSel = -1, puzImg = '';
+function jogoPuzzle(n){
+  puzN = n;
+  const svg = escolha(CENAS);
+  puzImg = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  const total = n*n;
+  do { puzOrdem = embaralhar([...Array(total).keys()]); } while (puzOrdem.every((v,i)=>v===i));
+  puzSel = -1;
+  $('#palco').innerHTML = `
+    <div class="pergunta">Monte a figura</div>
+    <div class="subtexto">Toque em duas peças para trocar de lugar</div>
+    <img class="miniatura" src="${puzImg}" alt="figura completa">
+    <div class="puzzle" id="puzzle" style="grid-template-columns:repeat(${n},1fr)"></div>`;
+  desenharPuzzle();
+  falar('Monte a figura! Toque em duas peças para trocar de lugar.');
+}
+function desenharPuzzle(){
+  const n = puzN, cont = $('#puzzle');
+  cont.innerHTML = puzOrdem.map((peca,pos)=>{
+    const c = peca % n, r = Math.floor(peca / n);
+    const px = n>1 ? (c/(n-1))*100 : 0, py = n>1 ? (r/(n-1))*100 : 0;
+    return `<div class="peca${pos===puzSel?' sel':''}" data-pos="${pos}"
+      style="background-image:url('${puzImg}');background-size:${n*100}% ${n*100}%;background-position:${px}% ${py}%"></div>`;
+  }).join('');
+  cont.querySelectorAll('.peca').forEach(p=>p.onclick=()=>tocarPeca(+p.dataset.pos));
+}
+async function tocarPeca(pos){
+  if(bloqueado) return;
+  somToque();
+  if(puzSel < 0){ puzSel = pos; desenharPuzzle(); return; }
+  if(puzSel === pos){ puzSel = -1; desenharPuzzle(); return; }
+  const a = puzSel, b = pos;
+  [puzOrdem[a], puzOrdem[b]] = [puzOrdem[b], puzOrdem[a]];
+  puzSel = -1;
+  desenharPuzzle();
+  if(puzOrdem.every((v,i)=>v===i)){
+    bloqueado = true;
+    acertou('Você montou a figura!');
+    confete(22);
+    rodada++; atualizaPlacar();
+    await espera(1600);
+    bloqueado = false;
+    proximaRodada();
+  }
+}
+
+/* ============ MIRA ============ */
+let miraRestantes = 0, miraTotal = 12;
+function jogoMira(dificil){
+  miraTotal = 12; miraRestantes = miraTotal; maxPontos = miraTotal;
+  $('#palco').innerHTML = `
+    <div class="pergunta">Toque nos alvos!</div>
+    <div class="subtexto">${dificil ? 'Cuidado: não toque nas bombas 💣' : 'Seja rápido!'}</div>
+    <div class="arena" id="arena"></div>`;
+  falar(dificil ? 'Toque nos alvos! Mas não toque nas bombas.' : 'Toque nos alvos bem rápido!');
+  agendar(()=>soltarAlvo(dificil), 500);
+}
+function soltarAlvo(dificil){
+  const arena = $('#arena');
+  if(!arena || miraRestantes <= 0) return;
+  const bomba = dificil && Math.random() < 0.28;
+  const vida = dificil ? 1150 : 1700;
+  const el = document.createElement('button');
+  el.className = 'alvo' + (dificil ? ' pequeno' : '');
+  el.textContent = bomba ? '💣' : escolha(['🎯','🐤','🎈','🍎','⭐','🐸','🍓','🦋']);
+  el.style.left = (14 + Math.random()*72) + '%';
+  el.style.top  = (16 + Math.random()*68) + '%';
+  arena.appendChild(el);
+  requestAnimationFrame(()=>el.classList.add('entrou'));
+
+  let tratado = false;
+  const sumir = ()=>{
+    if(tratado) return; tratado = true;
+    el.classList.remove('entrou');
+    agendar(()=>el.remove(), 200);
+    if(!bomba){ miraRestantes--; $('#barraProg').style.width = ((miraTotal-miraRestantes)/miraTotal*100)+'%'; }
+    if(miraRestantes <= 0) agendar(fimDeJogo, 500);
+    else agendar(()=>soltarAlvo(dificil), 260 + rnd(320));
+  };
+  el.onclick = ()=>{
+    if(tratado) return;
+    if(bomba){
+      tratado = true;
+      somErro(); aviso('Bomba! 💣', false); falar('Essa era uma bomba! Cuidado.', false, 'calmo');
+      if(estrelas > 0){ estrelas--; $('#placar').textContent = '⭐ ' + estrelas; }
+      el.remove();
+      agendar(()=>soltarAlvo(dificil), 400);
+      return;
+    }
+    tratado = true;
+    estrelas++; $('#placar').textContent = '⭐ ' + estrelas;
+    miraRestantes--; $('#barraProg').style.width = ((miraTotal-miraRestantes)/miraTotal*100)+'%';
+    somAcerto(); aviso(escolha(ELOGIOS), true); confete(8);
+    el.style.transform = 'translate(-50%,-50%) scale(1.6)';
+    el.style.opacity = '0';
+    agendar(()=>el.remove(), 200);
+    if(miraRestantes <= 0) agendar(fimDeJogo, 700);
+    else agendar(()=>soltarAlvo(dificil), 240 + rnd(280));
+  };
+  agendar(sumir, vida);
+}
+
+/* ============ catálogo ============ */
+const CATALOGO = [
+  // 5 a 7 anos
+  {id:'letras',   g:'p', ico:'🔤', nome:'Letras e Sons',    desc:'Com que letra começa?',   cor:'c1', fn:jogoLetras},
+  {id:'numeros',  g:'p', ico:'🔢', nome:'Contar',           desc:'Quantos você vê?',        cor:'c2', fn:jogoNumeros},
+  {id:'cores',    g:'p', ico:'🎨', nome:'Cores e Formas',   desc:'Ache o certo!',           cor:'c3', fn:jogoCores},
+  {id:'padrao',   g:'p', ico:'🔁', nome:'O que vem depois?',desc:'Complete a fileira',      cor:'c5', fn:jogoPadrao},
+  {id:'soma10',   g:'p', ico:'➕', nome:'Somar até 10',     desc:'Junte e conte',           cor:'c6', fn:jogoSoma10},
+  {id:'memoria',  g:'p', ico:'🧠', nome:'Memória',          desc:'6 pares de bichinhos',    cor:'c4', fn:()=>jogoMemoria(6)},
+  {id:'corrida',  g:'p', ico:'🚗', nome:'Corrida',          desc:'Toque rápido e vença',    cor:'c2', fn:()=>jogoCorrida(false), rodadas:3},
+  {id:'puzzle',   g:'p', ico:'🧩', nome:'Quebra-cabeça',    desc:'Monte a figura (3×3)',    cor:'c3', fn:()=>jogoPuzzle(3), rodadas:3},
+  {id:'mira',     g:'p', ico:'🎯', nome:'Mira Certeira',    desc:'Toque nos alvos',         cor:'c1', fn:()=>jogoMira(false), rodadas:12},
+  // 8 a 11 anos
+  {id:'tabuada',  g:'g', ico:'✖️', nome:'Tabuada',          desc:'Do 2 ao 10',              cor:'c2', fn:jogoTabuada},
+  {id:'contas',   g:'g', ico:'🧮', nome:'Contas Rápidas',   desc:'+  −  ×  ÷',              cor:'c3', fn:jogoContas},
+  {id:'anagrama', g:'g', ico:'🔡', nome:'Palavra Embaralhada', desc:'Monte a palavra',      cor:'c1', fn:jogoAnagrama},
+  {id:'sequencia',g:'g', ico:'📈', nome:'Sequência Numérica', desc:'Qual é o próximo?',     cor:'c5', fn:jogoSequencia},
+  {id:'quiz',     g:'g', ico:'🌎', nome:'Quiz Rápido',      desc:'Conhecimentos gerais',    cor:'c6', fn:jogoQuiz},
+  {id:'memoria2', g:'g', ico:'🧠', nome:'Memória Turbo',    desc:'8 pares',                 cor:'c4', fn:()=>jogoMemoria(8)},
+  {id:'corrida2', g:'g', ico:'🏎️', nome:'Corrida Turbo',    desc:'Rival mais rápido',       cor:'c2', fn:()=>jogoCorrida(true), rodadas:3},
+  {id:'puzzle2',  g:'g', ico:'🧩', nome:'Quebra-cabeça',    desc:'Monte a figura (4×4)',    cor:'c3', fn:()=>jogoPuzzle(4), rodadas:3},
+  {id:'mira2',    g:'g', ico:'🎯', nome:'Mira Turbo',       desc:'Alvos rápidos e bombas',  cor:'c1', fn:()=>jogoMira(true), rodadas:12}
+];
+const porId = id => CATALOGO.find(j=>j.id===id);
 
 /* ============ fluxo ============ */
-const JOGOS = {
-  letras:  {titulo:'🔤 Letras e Sons', fn:jogoLetras},
-  numeros: {titulo:'🔢 Contar',        fn:jogoNumeros},
-  cores:   {titulo:'🎨 Cores e Formas',fn:jogoCores},
-  memoria: {titulo:'🧠 Memória',       fn:jogoMemoria}
-};
-
-function iniciarJogo(nome){
-  jogoAtual = nome; rodada = 0; estrelas = 0; bloqueado = false;
-  $('#tituloJogo').textContent = JOGOS[nome].titulo;
+function abrirMenu(grupo){
+  grupoAtual = grupo;
+  $('#tituloMenu').textContent = grupo==='p' ? '🧸 5 a 7 anos' : '🚀 8 a 11 anos';
+  $('#cartoes').innerHTML = CATALOGO.filter(j=>j.g===grupo).map(j=>`
+    <button class="cartao ${j.cor}" data-jogo="${j.id}">
+      <span class="ico">${j.ico}</span>
+      <span class="nome">${j.nome}</span>
+      <span class="desc">${j.desc}</span>
+    </button>`).join('');
+  $('#cartoes').querySelectorAll('.cartao').forEach(c=>{
+    c.onclick = ()=>{ audio(); somToque(); iniciarJogo(c.dataset.jogo); };
+  });
+  mostrarTela('menu');
+}
+function iniciarJogo(id){
+  const j = porId(id); if(!j) return;
+  limparTimers();
+  jogoAtual = id; rodada = 0; estrelas = 0; bloqueado = false;
+  totalRodadas = j.rodadas || (j.g === 'g' ? 10 : 8);
+  maxPontos = totalRodadas;
+  $('#tituloJogo').textContent = j.ico + ' ' + j.nome;
   atualizaPlacar();
   mostrarTela('jogo');
-  JOGOS[nome].fn();
+  j.fn();
 }
 function proximaRodada(){
-  if(rodada >= TOTAL_RODADAS){ fimDeJogo(); return; }
-  JOGOS[jogoAtual].fn();
+  if(rodada >= totalRodadas){ fimDeJogo(); return; }
+  porId(jogoAtual).fn();
 }
 function fimDeJogo(){
-  const max = jogoAtual==='memoria' ? memTotal : TOTAL_RODADAS;
+  limparTimers();
+  const max = maxPontos;
   $('#fimTexto').textContent = `Você ganhou ${estrelas} ${estrelas===1?'estrela':'estrelas'} de ${max}! ⭐`;
   $('#fimTitulo').textContent = estrelas>=max ? 'Perfeito!' : 'Muito bem!';
   mostrarTela('fim');
   somFesta(); confete(50);
-  falar(estrelas>=max ? 'Perfeito! Você acertou tudo!' : 'Muito bem! Você conseguiu!', false);
+  falar(estrelas>=max ? 'Perfeito! Você acertou tudo! Parabéns!' : 'Muito bem! Você conseguiu!', false, 'festa');
 }
 
 /* ============ eventos ============ */
 $('#btnComecar').onclick = ()=>{
   audio(); destravarVoz(); somToque();
-  mostrarTela('menu');
-  falar('Escolha uma brincadeira!', false);
+  mostrarTela('idades');
+  setTimeout(()=>falar('Oi! Quantos anos você tem?', false, 'festa'), 250);
 };
-document.querySelectorAll('.cartao').forEach(c=>{
-  c.onclick = ()=>{ audio(); somToque(); iniciarJogo(c.dataset.jogo); };
+document.querySelectorAll('.idade').forEach(b=>{
+  b.onclick = ()=>{ audio(); somToque(); abrirMenu(b.dataset.grupo); falar('Escolha uma brincadeira.', false); };
 });
-$('#btnVoltar').onclick = ()=>{ if('speechSynthesis' in window) speechSynthesis.cancel(); somToque(); mostrarTela('menu'); };
-$('#btnMenu').onclick   = ()=>{ somToque(); mostrarTela('menu'); };
+$('#btnVoltarIdades').onclick = ()=>{ somToque(); if('speechSynthesis' in window) speechSynthesis.cancel(); mostrarTela('idades'); };
+$('#btnVoltar').onclick = ()=>{ if('speechSynthesis' in window) speechSynthesis.cancel(); somToque(); abrirMenu(grupoAtual); };
+$('#btnMenu').onclick   = ()=>{ somToque(); abrirMenu(grupoAtual); };
 $('#btnDeNovo').onclick = ()=>{ somToque(); iniciarJogo(jogoAtual); };
 $('#btnRepetir').onclick= ()=>{ somToque(); falar(ultimaFala, false); };
 $('#btnVoz').onclick = ()=>{
   vozLigada = !vozLigada;
-  $('#btnVoz').textContent = vozLigada ? '🔊 Voz' : '🔇 Voz';
+  $('#btnVoz').textContent = vozLigada ? '🔊' : '🔇';
   $('#btnVoz').setAttribute('aria-pressed', String(vozLigada));
   if(!vozLigada && 'speechSynthesis' in window) speechSynthesis.cancel();
-  else falar('Voz ligada!', false);
+  else falar('Oi! Vamos brincar?', false, 'festa');
   somToque();
+};
+$('#selVoz').onchange = (e)=>{
+  vozEscolhida = vozesPt.find(v=>v.name===e.target.value) || vozEscolhida;
+  vozLigada = true;
+  $('#btnVoz').textContent = '🔊';
+  falar('Oi! Eu sou a sua amiga dos jogos. Vamos brincar?', false, 'festa');
 };
 
 // evita zoom por duplo toque no iOS
@@ -604,8 +1223,15 @@ document.addEventListener('touchend', e=>{
   ultimoToque = agora;
 }, {passive:false});
 
-// expõe para testes automatizados
-window.__jogo = {iniciarJogo, get estado(){return {jogoAtual, rodada, estrelas};}};
+// para testes automatizados
+window.__jogo = {
+  abrirMenu, iniciarJogo,
+  ids: CATALOGO.map(j=>j.id),
+  get estado(){ return {jogoAtual, rodada, estrelas, totalRodadas, grupoAtual}; },
+  get anagrama(){ return anagramaAtual ? {palavra:anagramaAtual.palavra, montado:anagramaAtual.montado.slice()} : null; },
+  get puzzle(){ return {n:puzN, ordem:puzOrdem.slice(), sel:puzSel}; },
+  get maxPontos(){ return maxPontos; }
+};
 })();
 </script>
 </body>
