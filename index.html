@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#5B4BE0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Mundo dos Jogos</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎈</text></svg>">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<style>
+  :root{
+    --roxo:#5B4BE0; --roxo2:#8B7CF6;
+    --amarelo:#FFC93C; --verde:#2FBF71; --vermelho:#FF5D5D;
+    --azul:#3AA3F5; --rosa:#FF7BC1; --laranja:#FF9448;
+    --fundo:#F4F1FF; --escuro:#2C2350;
+    --raio:26px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    margin:0; font-family:"Baloo 2",'Comic Sans MS','Trebuchet MS',system-ui,-apple-system,sans-serif;
+    background:var(--fundo); color:var(--escuro);
+    overscroll-behavior:none; touch-action:manipulation;
+    user-select:none;-webkit-user-select:none;
+    padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    display:flex; flex-direction:column; min-height:100dvh; overflow-x:hidden;
+  }
+  button{font-family:inherit; cursor:pointer; border:none; background:none; color:inherit}
+
+  /* ---------- telas ---------- */
+  .tela{display:none; flex:1; flex-direction:column; min-height:0}
+  .tela.ativa{display:flex}
+
+  /* ---------- capa ---------- */
+  #capa{
+    align-items:center; justify-content:center; text-align:center; gap:6px; padding:20px;
+    background:linear-gradient(160deg,#6C5CE7,#8B7CF6 45%,#3AA3F5);
+    color:#fff;
+  }
+  #capa h1{font-size:clamp(34px,10vw,64px); margin:0; line-height:1.05; text-shadow:0 6px 0 rgba(0,0,0,.15)}
+  #capa p{font-size:clamp(15px,4.2vw,20px); opacity:.92; margin:4px 0 22px; max-width:22ch}
+  .btn-grande{
+    background:var(--amarelo); color:#5a3d00; font-size:clamp(22px,6.5vw,30px); font-weight:800;
+    padding:20px 42px; border-radius:999px; box-shadow:0 8px 0 #d99f00, 0 14px 26px rgba(0,0,0,.25);
+    transition:transform .08s, box-shadow .08s;
+  }
+  .btn-grande:active{transform:translateY(6px); box-shadow:0 2px 0 #d99f00}
+  .emojizinhos{font-size:clamp(30px,9vw,46px); letter-spacing:6px; margin-bottom:6px}
+
+  /* ---------- menu ---------- */
+  #menu{padding:14px 14px 22px}
+  .topo{display:flex; align-items:center; gap:10px; margin-bottom:12px; flex-wrap:wrap}
+  .topo h2{margin:0; font-size:clamp(20px,5.5vw,28px); flex:1}
+  .cartoes{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px;
+    flex:1; align-content:center; width:100%; max-width:760px; margin:0 auto;
+  }
+  .cartao{
+    border-radius:var(--raio); padding:18px 14px; color:#fff; text-align:center;
+    box-shadow:0 8px 0 rgba(0,0,0,.18), 0 12px 24px rgba(0,0,0,.12);
+    display:flex; flex-direction:column; align-items:center; gap:8px; min-height:150px; justify-content:center;
+    transition:transform .1s, box-shadow .1s;
+  }
+  .cartao:active{transform:translateY(5px); box-shadow:0 3px 0 rgba(0,0,0,.18)}
+  .cartao .ico{font-size:clamp(40px,12vw,58px); line-height:1}
+  .cartao .nome{font-size:clamp(17px,4.6vw,21px); font-weight:800}
+  .cartao .desc{font-size:13px; opacity:.9; line-height:1.25}
+  .c1{background:linear-gradient(150deg,#FF7BC1,#E5468F)}
+  .c2{background:linear-gradient(150deg,#3AA3F5,#1E6FD9)}
+  .c3{background:linear-gradient(150deg,#2FBF71,#159B58)}
+  .c4{background:linear-gradient(150deg,#FF9448,#EA6A1B)}
+
+  /* ---------- barra do jogo ---------- */
+  .barra{
+    display:flex; align-items:center; gap:10px; padding:10px 12px;
+    background:#fff; border-bottom:3px solid rgba(0,0,0,.06); position:sticky; top:0; z-index:5;
+  }
+  .btn-icone{
+    width:52px; height:52px; border-radius:18px; background:#EDE9FF; color:var(--roxo);
+    font-size:26px; display:flex; align-items:center; justify-content:center; font-weight:800; flex:0 0 auto;
+  }
+  .btn-icone:active{background:#ddd6ff}
+  .titulo-jogo{flex:1; font-size:clamp(16px,4.6vw,21px); font-weight:800; text-align:center}
+  .placar{
+    background:#FFF4D1; color:#8a6100; font-weight:800; border-radius:16px; padding:8px 12px;
+    font-size:clamp(15px,4.2vw,19px); white-space:nowrap;
+  }
+  .progresso{height:10px; background:#E6E1FA}
+  .progresso i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--verde),#7BE3AE); transition:width .3s}
+
+  /* ---------- area de jogo ---------- */
+  .palco{
+    flex:1; display:flex; flex-direction:column; align-items:center; justify-content:space-evenly;
+    gap:10px; padding:16px 14px 26px; min-height:0; text-align:center;
+  }
+  .pergunta{font-size:clamp(19px,5vw,30px); font-weight:800; line-height:1.25; max-width:24ch}
+  .destaque{
+    font-size:min(26vw,22vh,170px); font-weight:900; line-height:1;
+    color:var(--roxo); text-shadow:0 6px 0 rgba(91,75,224,.18);
+  }
+  .destaque.pequeno{font-size:min(20vw,18vh,130px)}
+  .contagem{
+    display:grid; gap:6px 10px; justify-items:center; align-items:center;
+    max-width:min(92vw,560px); font-size:min(13vw,8vh,68px); line-height:1;
+  }
+  .contagem span{animation:pop .3s backwards}
+  @keyframes pop{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+
+  .opcoes{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; width:100%; max-width:620px}
+  .op{
+    background:#fff; border-radius:var(--raio); box-shadow:0 6px 0 rgba(0,0,0,.12), 0 10px 20px rgba(0,0,0,.08);
+    min-width:104px; min-height:min(28vw,110px); flex:1 1 104px; max-width:190px;
+    display:flex; align-items:center; justify-content:center; padding:12px;
+    font-size:min(13vw,8vh,70px); font-weight:900; color:var(--escuro);
+    transition:transform .1s, box-shadow .1s;
+  }
+  .op:active{transform:translateY(4px); box-shadow:0 2px 0 rgba(0,0,0,.12)}
+  .op.certo{background:#D6F7E6; box-shadow:0 6px 0 #2FBF71; animation:tada .5s}
+  .op.errado{background:#FFE0E0; box-shadow:0 6px 0 #FF5D5D; animation:tremer .4s}
+  .op.apagado{opacity:.35}
+  .op svg{width:min(18vw,10vh,100px); height:min(18vw,10vh,100px)}
+  @keyframes tada{0%{transform:scale(1)}30%{transform:scale(1.16) rotate(-4deg)}60%{transform:scale(1.16) rotate(4deg)}100%{transform:scale(1)}}
+  @keyframes tremer{0%,100%{transform:translateX(0)}25%{transform:translateX(-9px)}75%{transform:translateX(9px)}}
+
+  /* ---------- memoria ---------- */
+  .grade{display:grid; gap:10px; width:100%; max-width:min(460px,58vh); margin:auto}
+  .carta{position:relative; aspect-ratio:1/1; perspective:700px}
+  .carta .face{
+    position:absolute; inset:0; border-radius:20px; display:flex; align-items:center; justify-content:center;
+    font-size:clamp(30px,10vw,52px); backface-visibility:hidden; -webkit-backface-visibility:hidden;
+    transition:transform .35s; box-shadow:0 5px 0 rgba(0,0,0,.14);
+  }
+  .carta .costas{background:linear-gradient(150deg,var(--roxo2),var(--roxo)); color:#fff}
+  .carta .frente{background:#fff; transform:rotateY(180deg)}
+  .carta.virada .costas{transform:rotateY(180deg)}
+  .carta.virada .frente{transform:rotateY(360deg)}
+  .carta.achada .frente{background:#D6F7E6; box-shadow:0 5px 0 #2FBF71}
+  .carta.achada{animation:tada .5s}
+
+  /* ---------- feedback / fim ---------- */
+  .aviso{
+    position:fixed; left:50%; top:16%; transform:translate(-50%,-20px); z-index:20;
+    background:#fff; padding:14px 26px; border-radius:999px; font-size:clamp(20px,5.5vw,28px); font-weight:900;
+    box-shadow:0 10px 30px rgba(0,0,0,.2); opacity:0; pointer-events:none; transition:opacity .2s, transform .2s;
+  }
+  .aviso.mostra{opacity:1; transform:translate(-50%,0)}
+  .aviso.bom{color:var(--verde)} .aviso.ops{color:var(--vermelho)}
+
+  #fim{align-items:center; justify-content:center; text-align:center; gap:14px; padding:24px;
+       background:linear-gradient(160deg,#FFD86F,#FC9842)}
+  #fim .troféu{font-size:clamp(70px,22vw,130px); animation:tada 1s infinite}
+  #fim h2{font-size:clamp(26px,8vw,44px); margin:0; color:#6b3d00; max-width:16ch}
+  #fim p{font-size:clamp(16px,4.4vw,23px); margin:0; color:#7a4a00; font-weight:700; max-width:20ch; line-height:1.3}
+  .linha-botoes{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:10px}
+  .btn2{background:#fff; color:var(--roxo); font-weight:800; font-size:clamp(17px,4.6vw,21px);
+        padding:16px 26px; border-radius:999px; box-shadow:0 6px 0 rgba(0,0,0,.15)}
+  .btn2:active{transform:translateY(4px); box-shadow:0 2px 0 rgba(0,0,0,.15)}
+
+  .confete{position:fixed; top:-20px; font-size:24px; z-index:15; pointer-events:none; animation:cair linear forwards}
+  @keyframes cair{to{transform:translateY(110vh) rotate(720deg); opacity:.2}}
+
+  .rodape{text-align:center; font-size:12px; opacity:.5; padding:8px}
+  .sw{display:flex; align-items:center; gap:6px; font-size:14px; font-weight:700; color:#fff;
+      background:rgba(255,255,255,.18); padding:8px 12px; border-radius:999px}
+  #menu .sw{color:var(--roxo); background:#EDE9FF}
+</style>
+</head>
+<body>
+
+<!-- ================= CAPA ================= -->
+<section id="capa" class="tela ativa">
+  <div class="emojizinhos">🎈 🧸 🚀 🦄 🐠</div>
+  <h1>Mundo dos Jogos</h1>
+  <p>Brincadeiras para aprender letras, números, cores e memória</p>
+  <button class="btn-grande" id="btnComecar">▶ Começar</button>
+</section>
+
+<!-- ================= MENU ================= -->
+<section id="menu" class="tela">
+  <div class="topo">
+    <h2>Escolha uma brincadeira</h2>
+    <button class="sw" id="btnVoz" aria-pressed="true">🔊 Voz</button>
+  </div>
+  <div class="cartoes">
+    <button class="cartao c1" data-jogo="letras">
+      <span class="ico">🔤</span><span class="nome">Letras e Sons</span>
+      <span class="desc">Com que letra começa?</span>
+    </button>
+    <button class="cartao c2" data-jogo="numeros">
+      <span class="ico">🔢</span><span class="nome">Contar</span>
+      <span class="desc">Quantos você vê?</span>
+    </button>
+    <button class="cartao c3" data-jogo="cores">
+      <span class="ico">🎨</span><span class="nome">Cores e Formas</span>
+      <span class="desc">Ache o certo!</span>
+    </button>
+    <button class="cartao c4" data-jogo="memoria">
+      <span class="ico">🧠</span><span class="nome">Memória</span>
+      <span class="desc">Ache os pares</span>
+    </button>
+  </div>
+  <div class="rodape">Feito com carinho • funciona sem internet</div>
+</section>
+
+<!-- ================= JOGO ================= -->
+<section id="jogo" class="tela">
+  <div class="barra">
+    <button class="btn-icone" id="btnVoltar" aria-label="Voltar">←</button>
+    <div class="titulo-jogo" id="tituloJogo">Jogo</div>
+    <button class="btn-icone" id="btnRepetir" aria-label="Repetir instrução">🔁</button>
+    <div class="placar" id="placar">⭐ 0</div>
+  </div>
+  <div class="progresso"><i id="barraProg"></i></div>
+  <div class="palco" id="palco"></div>
+</section>
+
+<!-- ================= FIM ================= -->
+<section id="fim" class="tela">
+  <div class="troféu">🏆</div>
+  <h2 id="fimTitulo">Muito bem!</h2>
+  <p id="fimTexto"></p>
+  <div class="linha-botoes">
+    <button class="btn2" id="btnDeNovo">🔁 Jogar de novo</button>
+    <button class="btn2" id="btnMenu">🏠 Outros jogos</button>
+  </div>
+</section>
+
+<div class="aviso" id="aviso"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============ utilidades ============ */
+const $ = s => document.querySelector(s);
+const rnd = n => Math.floor(Math.random()*n);
+const escolha = a => a[rnd(a.length)];
+const embaralhar = a => { const b=a.slice(); for(let i=b.length-1;i>0;i--){const j=rnd(i+1);[b[i],b[j]]=[b[j],b[i]];} return b; };
+const espera = ms => new Promise(r=>setTimeout(r,ms));
+
+function mostrarTela(id){
+  document.querySelectorAll('.tela').forEach(t=>t.classList.remove('ativa'));
+  $('#'+id).classList.add('ativa');
+  document.querySelectorAll('.confete').forEach(c=>c.remove());
+  window.scrollTo(0,0);
+}
+
+/* ============ som ============ */
+let ctx=null;
+function audio(){
+  if(!ctx){ try{ ctx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ return null; } }
+  if(ctx.state==='suspended') ctx.resume();
+  return ctx;
+}
+function tocar(freqs, dur=0.14, tipo='sine', vol=0.18){
+  const c = audio(); if(!c) return;
+  freqs.forEach((f,i)=>{
+    const o=c.createOscillator(), g=c.createGain();
+    o.type=tipo; o.frequency.value=f;
+    const t0=c.currentTime + i*dur;
+    g.gain.setValueAtTime(0,t0);
+    g.gain.linearRampToValueAtTime(vol,t0+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);
+    o.connect(g); g.connect(c.destination);
+    o.start(t0); o.stop(t0+dur+0.02);
+  });
+}
+const somAcerto = ()=>tocar([523,659,784,1047],0.12,'triangle',0.22);
+const somErro   = ()=>tocar([300,220],0.16,'sine',0.15);
+const somToque  = ()=>tocar([660],0.06,'square',0.08);
+const somFesta  = ()=>tocar([523,659,784,1047,1319,1047,1319],0.13,'triangle',0.2);
+
+/* ============ voz (pt-BR) ============ */
+let vozLigada = true;
+let vozPtBr = null;
+function carregarVozes(){
+  if(!('speechSynthesis' in window)) return;
+  const vs = speechSynthesis.getVoices()||[];
+  vozPtBr = vs.find(v=>/pt[-_]BR/i.test(v.lang)) || vs.find(v=>/^pt/i.test(v.lang)) || null;
+}
+if('speechSynthesis' in window){
+  carregarVozes();
+  speechSynthesis.onvoiceschanged = carregarVozes;
+}
+let ultimaFala = '';
+function falar(texto, guardar=true){
+  if(guardar) ultimaFala = texto;
+  if(!vozLigada || !('speechSynthesis' in window) || !texto) return;
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(texto);
+    u.lang = 'pt-BR';
+    if(vozPtBr) u.voice = vozPtBr;
+    u.rate = 0.92; u.pitch = 1.15;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+function destravarVoz(){
+  if(!('speechSynthesis' in window)) return;
+  try{ const u=new SpeechSynthesisUtterance(' '); u.volume=0; speechSynthesis.speak(u); }catch(e){}
+  carregarVozes();
+}
+
+/* ============ feedback visual ============ */
+let timerAviso=null;
+function aviso(txt, bom=true){
+  const el=$('#aviso');
+  el.textContent=txt;
+  el.className='aviso mostra '+(bom?'bom':'ops');
+  clearTimeout(timerAviso);
+  timerAviso=setTimeout(()=>el.classList.remove('mostra'),1100);
+}
+function confete(qtd=26){
+  const emo=['🎉','⭐','🎊','✨','🌟','🎈'];
+  for(let i=0;i<qtd;i++){
+    const d=document.createElement('div');
+    d.className='confete'; d.textContent=escolha(emo);
+    d.style.left=Math.random()*100+'vw';
+    d.style.animationDuration=(1.6+Math.random()*1.4)+'s';
+    d.style.animationDelay=(Math.random()*0.5)+'s';
+    document.body.appendChild(d);
+    setTimeout(()=>d.remove(),3600);
+  }
+}
+
+/* ============ dados ============ */
+const PALAVRAS = [
+  {l:'A',e:'🍍',p:'abacaxi'},{l:'A',e:'🌳',p:'árvore'},{l:'A',e:'🐝',p:'abelha'},
+  {l:'B',e:'🍌',p:'banana'},{l:'B',e:'⚽',p:'bola'},{l:'B',e:'🚢',p:'barco'},
+  {l:'C',e:'🏠',p:'casa'},{l:'C',e:'🥕',p:'cenoura'},{l:'C',e:'🐴',p:'cavalo'},
+  {l:'D',e:'🦕',p:'dinossauro'},{l:'D',e:'🐉',p:'dragão'},
+  {l:'E',e:'🐘',p:'elefante'},{l:'E',e:'⭐',p:'estrela'},{l:'E',e:'🪜',p:'escada'},
+  {l:'F',e:'🌻',p:'flor'},{l:'F',e:'🔥',p:'fogo'},{l:'F',e:'🐜',p:'formiga'},
+  {l:'G',e:'🐈',p:'gato'},{l:'G',e:'🐔',p:'galinha'},{l:'G',e:'🎸',p:'guitarra'},
+  {l:'I',e:'🏝️',p:'ilha'},{l:'I',e:'🧲',p:'ímã'},
+  {l:'J',e:'🐊',p:'jacaré'},{l:'J',e:'🪟',p:'janela'},
+  {l:'L',e:'🦁',p:'leão'},{l:'L',e:'🍋',p:'limão'},{l:'L',e:'🌙',p:'lua'},
+  {l:'M',e:'🍎',p:'maçã'},{l:'M',e:'🐒',p:'macaco'},{l:'M',e:'🤚',p:'mão'},
+  {l:'N',e:'👃',p:'nariz'},{l:'N',e:'☁️',p:'nuvem'},
+  {l:'O',e:'🥚',p:'ovo'},{l:'O',e:'🐑',p:'ovelha'},{l:'O',e:'👁️',p:'olho'},
+  {l:'P',e:'🍞',p:'pão'},{l:'P',e:'🐦',p:'passarinho'},{l:'P',e:'🦶',p:'pé'},
+  {l:'Q',e:'🧀',p:'queijo'},
+  {l:'R',e:'🌹',p:'rosa'},{l:'R',e:'🤖',p:'robô'},{l:'R',e:'🐁',p:'rato'},
+  {l:'S',e:'☀️',p:'sol'},{l:'S',e:'🐸',p:'sapo'},{l:'S',e:'👟',p:'sapato'},
+  {l:'T',e:'🐢',p:'tartaruga'},{l:'T',e:'🥁',p:'tambor'},{l:'T',e:'🍅',p:'tomate'},
+  {l:'U',e:'🍇',p:'uva'},{l:'U',e:'🐻',p:'urso'},
+  {l:'V',e:'🐄',p:'vaca'},{l:'V',e:'🎻',p:'violino'},{l:'V',e:'🧹',p:'vassoura'},
+  {l:'X',e:'☕',p:'xícara'},
+  {l:'Z',e:'🦓',p:'zebra'}
+];
+const OBJETOS = ['🍎','🐥','🐟','🌸','🚗','🎈','🍓','⭐','🐞','🧁','🦋','🐢','🍀','🐧','🍩'];
+const NUM_NOME = ['zero','um','dois','três','quatro','cinco','seis','sete','oito','nove','dez'];
+
+const CORES = [
+  {n:'vermelho', h:'#FF3B30'}, {n:'azul', h:'#2D7FF9'}, {n:'amarelo', h:'#FFC93C'},
+  {n:'verde', h:'#2FBF71'}, {n:'laranja', h:'#FF8A2B'}, {n:'roxo', h:'#8B5CF6'},
+  {n:'rosa', h:'#FF6FB5'}, {n:'marrom', h:'#A0693C'}
+];
+const FORMAS = {
+  'círculo':      c=>`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="${c}"/></svg>`,
+  'quadrado':     c=>`<svg viewBox="0 0 100 100"><rect x="8" y="8" width="84" height="84" rx="8" fill="${c}"/></svg>`,
+  'triângulo':    c=>`<svg viewBox="0 0 100 100"><polygon points="50,8 94,90 6,90" fill="${c}"/></svg>`,
+  'estrela':      c=>`<svg viewBox="0 0 100 100"><polygon points="50,5 61,38 96,38 68,59 79,93 50,72 21,93 32,59 4,38 39,38" fill="${c}"/></svg>`,
+  'coração':      c=>`<svg viewBox="0 0 100 100"><path d="M50 88 L14 52 A21 21 0 0 1 50 24 A21 21 0 0 1 86 52 Z" fill="${c}"/></svg>`,
+  'retângulo':    c=>`<svg viewBox="0 0 100 100"><rect x="6" y="26" width="88" height="48" rx="7" fill="${c}"/></svg>`,
+  'losango':      c=>`<svg viewBox="0 0 100 100"><polygon points="50,5 95,50 50,95 5,50" fill="${c}"/></svg>`
+};
+const NOMES_FORMAS = Object.keys(FORMAS);
+// artigo de cada forma, para as frases ficarem corretas em português
+const ARTIGO = {'círculo':'o','quadrado':'o','triângulo':'o','estrela':'a','coração':'o','retângulo':'o','losango':'o'};
+
+const ELOGIOS = ['Muito bem!','Isso mesmo!','Boa!','Você é craque!','Acertou!','Perfeito!','Uhul!'];
+const ANIMOS  = ['Quase! Tenta de novo.','Ops! Olha de novo.','Não faz mal, tenta outra vez.'];
+
+/* ============ estado ============ */
+const TOTAL_RODADAS = 8;
+let jogoAtual=null, rodada=0, estrelas=0, bloqueado=false;
+
+function atualizaPlacar(){
+  $('#placar').textContent = '⭐ ' + estrelas;
+  $('#barraProg').style.width = Math.min(100, (rodada/TOTAL_RODADAS)*100) + '%';
+}
+
+function acertou(msg){
+  estrelas++; somAcerto(); aviso(escolha(ELOGIOS), true);
+  falar(msg || escolha(ELOGIOS), false);
+}
+function errou(){
+  somErro(); aviso('Ops!', false); falar(escolha(ANIMOS), false);
+}
+
+/* ============ JOGO 1 — LETRAS ============ */
+function jogoLetras(){
+  const alvo = escolha(PALAVRAS);
+  const outras = embaralhar(PALAVRAS.filter(p=>p.l!==alvo.l)).slice(0,2);
+  const ops = embaralhar([alvo, ...outras]);
+  const modo = Math.random()<0.5 ? 'letra' : 'figura';
+  const palco = $('#palco');
+
+  if(modo==='letra'){
+    // mostra a figura, criança escolhe a LETRA
+    palco.innerHTML = `
+      <div class="pergunta">Com que letra começa <b>${alvo.p}</b>?</div>
+      <div class="destaque pequeno">${alvo.e}</div>
+      <div class="opcoes">${ops.map(o=>`<button class="op" data-l="${o.l}">${o.l}</button>`).join('')}</div>`;
+    falar(`Com que letra começa ${alvo.p}?`);
+    palco.querySelectorAll('.op').forEach(b=>b.onclick=()=>responder(b, b.dataset.l===alvo.l,
+      `${alvo.p} começa com ${alvo.l}!`, palco.querySelector(`.op[data-l="${alvo.l}"]`)));
+  }else{
+    // mostra a letra, criança escolhe a FIGURA
+    palco.innerHTML = `
+      <div class="pergunta">Toque no que começa com a letra</div>
+      <div class="destaque">${alvo.l}</div>
+      <div class="opcoes">${ops.map(o=>`<button class="op" data-p="${o.p}">${o.e}</button>`).join('')}</div>`;
+    falar(`Toque no que começa com a letra ${alvo.l}`);
+    palco.querySelectorAll('.op').forEach(b=>b.onclick=()=>responder(b, b.dataset.p===alvo.p,
+      `${alvo.p} começa com ${alvo.l}!`, palco.querySelector(`.op[data-p="${alvo.p}"]`)));
+  }
+}
+
+/* ============ JOGO 2 — NÚMEROS ============ */
+function jogoNumeros(){
+  const n = 1 + rnd(10);
+  const obj = escolha(OBJETOS);
+  const cand = new Set([n]);
+  while(cand.size<3){ let v = Math.max(1, Math.min(10, n + (rnd(5)-2))); if(v!==n||cand.size<1) cand.add(v); if(cand.size<3) cand.add(1+rnd(10)); }
+  const ops = embaralhar([...cand]).slice(0,3);
+  if(!ops.includes(n)) ops[0]=n;
+  const palco = $('#palco');
+  palco.innerHTML = `
+    <div class="pergunta">Quantos você vê?</div>
+    <div class="contagem" style="grid-template-columns:repeat(${Math.min(n,5)},auto)">${Array.from({length:n},(_,i)=>`<span style="animation-delay:${i*0.05}s">${obj}</span>`).join('')}</div>
+    <div class="opcoes">${embaralhar(ops).map(v=>`<button class="op" data-v="${v}">${v}</button>`).join('')}</div>`;
+  falar('Quantos você vê? Conte com o dedinho!');
+  palco.querySelectorAll('.op').forEach(b=>b.onclick=()=>responder(b, +b.dataset.v===n,
+    `São ${NUM_NOME[n]}!`, palco.querySelector(`.op[data-v="${n}"]`)));
+}
+
+/* ============ JOGO 3 — CORES E FORMAS ============ */
+function jogoCores(){
+  const palco = $('#palco');
+  const modo = Math.random()<0.5 ? 'cor' : 'forma';
+
+  if(modo==='cor'){
+    const cs = embaralhar(CORES).slice(0,3);
+    const alvo = cs[0];
+    const f = escolha(NOMES_FORMAS);
+    palco.innerHTML = `
+      <div class="pergunta">Toque no <b>${alvo.n.toUpperCase()}</b></div>
+      <div class="opcoes">${embaralhar(cs).map(c=>`<button class="op" data-c="${c.n}">${FORMAS[f](c.h)}</button>`).join('')}</div>`;
+    falar(`Toque no ${alvo.n}`);
+    palco.querySelectorAll('.op').forEach(b=>b.onclick=()=>responder(b, b.dataset.c===alvo.n,
+      `Esse é o ${alvo.n}!`, palco.querySelector(`.op[data-c="${alvo.n}"]`)));
+  }else{
+    const fs = embaralhar(NOMES_FORMAS).slice(0,3);
+    const alvo = fs[0];
+    const cor = escolha(CORES).h;
+    const art = ARTIGO[alvo] || 'o';
+    const dem = art === 'a' ? 'Essa é a' : 'Esse é o';
+    palco.innerHTML = `
+      <div class="pergunta">Onde está ${art} <b>${alvo.toUpperCase()}</b>?</div>
+      <div class="opcoes">${embaralhar(fs).map(f=>`<button class="op" data-f="${f}">${FORMAS[f](cor)}</button>`).join('')}</div>`;
+    falar(`Onde está ${art} ${alvo}?`);
+    palco.querySelectorAll('.op').forEach(b=>b.onclick=()=>responder(b, b.dataset.f===alvo,
+      `${dem} ${alvo}!`, palco.querySelector(`.op[data-f="${alvo}"]`)));
+  }
+}
+
+/* resposta padrão dos jogos 1-3 */
+async function responder(botao, certo, fala, botaoCerto){
+  if(bloqueado) return;
+  somToque();
+  if(certo){
+    bloqueado = true;
+    botao.classList.add('certo');
+    acertou(fala);
+    confete(14);
+    rodada++; atualizaPlacar();
+    await espera(1250);
+    bloqueado = false;
+    proximaRodada();
+  }else{
+    botao.classList.add('errado','apagado');
+    botao.style.pointerEvents='none';
+    errou();
+    setTimeout(()=>botao.classList.remove('errado'),450);
+  }
+}
+
+/* ============ JOGO 4 — MEMÓRIA ============ */
+let memPrimeira=null, memPares=0, memTotal=0;
+function jogoMemoria(){
+  const pares = 6;
+  memPares = 0; memTotal = pares; memPrimeira = null;
+  const bichos = embaralhar(['🐶','🐱','🐼','🦊','🐸','🦁','🐵','🐷','🐰','🐨','🐮','🐔']).slice(0,pares);
+  const cartas = embaralhar([...bichos,...bichos]);
+  const palco = $('#palco');
+  const cols = 4;
+  palco.innerHTML = `
+    <div class="pergunta">Ache os pares iguais!</div>
+    <div class="grade" style="grid-template-columns:repeat(${cols},1fr)">
+      ${cartas.map((c,i)=>`
+        <div class="carta" data-e="${c}" data-i="${i}">
+          <div class="face costas">?</div>
+          <div class="face frente">${c}</div>
+        </div>`).join('')}
+    </div>`;
+  falar('Ache os pares iguais!');
+  palco.querySelectorAll('.carta').forEach(el=>el.onclick=()=>virarCarta(el));
+  $('#barraProg').style.width='0%';
+}
+
+async function virarCarta(el){
+  if(bloqueado || el.classList.contains('virada') || el.classList.contains('achada')) return;
+  somToque();
+  el.classList.add('virada');
+  if(!memPrimeira){ memPrimeira = el; return; }
+  if(memPrimeira === el) return;
+
+  bloqueado = true;
+  const a = memPrimeira, b = el;
+  memPrimeira = null;
+  if(a.dataset.e === b.dataset.e){
+    await espera(320);
+    a.classList.add('achada'); b.classList.add('achada');
+    memPares++; estrelas++; atualizaPlacarMemoria();
+    somAcerto(); aviso(escolha(ELOGIOS), true); falar('Achou um par!', false); confete(10);
+    bloqueado=false;
+    if(memPares === memTotal){
+      await espera(900);
+      fimDeJogo();
+    }
+  }else{
+    errou();
+    await espera(900);
+    a.classList.remove('virada'); b.classList.remove('virada');
+    bloqueado=false;
+  }
+}
+function atualizaPlacarMemoria(){
+  $('#placar').textContent = '⭐ ' + estrelas;
+  $('#barraProg').style.width = (memPares/memTotal*100) + '%';
+}
+
+/* ============ fluxo ============ */
+const JOGOS = {
+  letras:  {titulo:'🔤 Letras e Sons', fn:jogoLetras},
+  numeros: {titulo:'🔢 Contar',        fn:jogoNumeros},
+  cores:   {titulo:'🎨 Cores e Formas',fn:jogoCores},
+  memoria: {titulo:'🧠 Memória',       fn:jogoMemoria}
+};
+
+function iniciarJogo(nome){
+  jogoAtual = nome; rodada = 0; estrelas = 0; bloqueado = false;
+  $('#tituloJogo').textContent = JOGOS[nome].titulo;
+  atualizaPlacar();
+  mostrarTela('jogo');
+  JOGOS[nome].fn();
+}
+function proximaRodada(){
+  if(rodada >= TOTAL_RODADAS){ fimDeJogo(); return; }
+  JOGOS[jogoAtual].fn();
+}
+function fimDeJogo(){
+  const max = jogoAtual==='memoria' ? memTotal : TOTAL_RODADAS;
+  $('#fimTexto').textContent = `Você ganhou ${estrelas} ${estrelas===1?'estrela':'estrelas'} de ${max}! ⭐`;
+  $('#fimTitulo').textContent = estrelas>=max ? 'Perfeito!' : 'Muito bem!';
+  mostrarTela('fim');
+  somFesta(); confete(50);
+  falar(estrelas>=max ? 'Perfeito! Você acertou tudo!' : 'Muito bem! Você conseguiu!', false);
+}
+
+/* ============ eventos ============ */
+$('#btnComecar').onclick = ()=>{
+  audio(); destravarVoz(); somToque();
+  mostrarTela('menu');
+  falar('Escolha uma brincadeira!', false);
+};
+document.querySelectorAll('.cartao').forEach(c=>{
+  c.onclick = ()=>{ audio(); somToque(); iniciarJogo(c.dataset.jogo); };
+});
+$('#btnVoltar').onclick = ()=>{ if('speechSynthesis' in window) speechSynthesis.cancel(); somToque(); mostrarTela('menu'); };
+$('#btnMenu').onclick   = ()=>{ somToque(); mostrarTela('menu'); };
+$('#btnDeNovo').onclick = ()=>{ somToque(); iniciarJogo(jogoAtual); };
+$('#btnRepetir').onclick= ()=>{ somToque(); falar(ultimaFala, false); };
+$('#btnVoz').onclick = ()=>{
+  vozLigada = !vozLigada;
+  $('#btnVoz').textContent = vozLigada ? '🔊 Voz' : '🔇 Voz';
+  $('#btnVoz').setAttribute('aria-pressed', String(vozLigada));
+  if(!vozLigada && 'speechSynthesis' in window) speechSynthesis.cancel();
+  else falar('Voz ligada!', false);
+  somToque();
+};
+
+// evita zoom por duplo toque no iOS
+let ultimoToque = 0;
+document.addEventListener('touchend', e=>{
+  const agora = Date.now();
+  if(agora - ultimoToque < 320) e.preventDefault();
+  ultimoToque = agora;
+}, {passive:false});
+
+// expõe para testes automatizados
+window.__jogo = {iniciarJogo, get estado(){return {jogoAtual, rodada, estrelas};}};
+})();
+</script>
+</body>
+</html>
